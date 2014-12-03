@@ -1,0 +1,44 @@
+# NAME
+
+Data::Object - Data Type Objects for Perl 5
+
+# VERSION
+
+version 0.02
+
+# STATUS
+
+<a href="https://travis-ci.org/alnewkirk/Data-Object"><img src="https://travis-ci.org/alnewkirk/Data-Object.svg?branch=master"></a>
+
+# SYNOPSIS
+
+    use Data::Object;
+
+# DESCRIPTION
+
+Data::Object provides functions for promoting to Perl 5 native data types to
+objects which provide common methods for operating on the data.
+
+# SEE ALSO
+
+- [Data::Object::Array](http://search.cpan.org/perldoc?Data::Object::Array)
+- [Data::Object::Code](http://search.cpan.org/perldoc?Data::Object::Code)
+- [Data::Object::Float](http://search.cpan.org/perldoc?Data::Object::Float)
+- [Data::Object::Hash](http://search.cpan.org/perldoc?Data::Object::Hash)
+- [Data::Object::Integer](http://search.cpan.org/perldoc?Data::Object::Integer)
+- [Data::Object::Number](http://search.cpan.org/perldoc?Data::Object::Number)
+- [Data::Object::Scalar](http://search.cpan.org/perldoc?Data::Object::Scalar)
+- [Data::Object::String](http://search.cpan.org/perldoc?Data::Object::String)
+- [Data::Object::Undef](http://search.cpan.org/perldoc?Data::Object::Undef)
+- [Data::Object::Universal](http://search.cpan.org/perldoc?Data::Object::Universal)
+
+# AUTHOR
+
+Al Newkirk <anewkirk@ana.io>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Al Newkirk.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
