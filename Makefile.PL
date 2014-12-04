@@ -21,9 +21,9 @@ my %WriteMakefileArgs = (
   "MIN_PERL_VERSION" => "5.010000",
   "NAME" => "Data::Object",
   "PREREQ_PM" => {},
-  "VERSION" => "0.02",
+  "VERSION" => "0.03",
   "test" => {
-    "TESTS" => "t/data/*.t"
+    "TESTS" => "t/data/*.t t/data/object/*.t"
   }
 );
 

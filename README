@@ -2,14 +2,135 @@ NAME
     Data::Object - Data Type Objects for Perl 5
 
 VERSION
-    version 0.02
+    version 0.03
 
 SYNOPSIS
-        use Data::Object;
+        use Data::Object 'deduce';
+
+        my $object = deduce [1..9];
+
+        $object->count; # 9
 
 DESCRIPTION
-    Data::Object provides functions for promoting to Perl 5 native data
-    types to objects which provide common methods for operating on the data.
+    Data::Object provides functions for promoting Perl 5 native data types
+    to objects which provide common methods for operating on the data.
+
+FUNCTIONS
+  load
+        # given 'List::Util';
+
+        $package = load 'List::Util'; # List::Util if loaded
+
+    The load function attempts to dynamically load a module and either dies
+    or returns the package name of the loaded module.
+
+  deduce
+        # given qr/\w+/;
+
+        $object = deduce qr/\w+/;
+        $object->isa('Data::Object::Scalar');
+
+    The deduce function returns a data type object instance based upon the
+    deduced type of data provided.
+
+  type_array
+        # given [2..5];
+
+        $object = type_array [2..5];
+        $object->isa('Data::Object::Array');
+
+    The type_array function returns a Data::Object::Array instance which
+    wraps the provided data type and can be used to perform operations on
+    the data.
+
+  type_code
+        # given sub { 1 };
+
+        $object = type_code sub { 1 };
+        $object->isa('Data::Object::Code');
+
+    The type_code function returns a Data::Object::Code instance which wraps
+    the provided data type and can be used to perform operations on the
+    data.
+
+  type_float
+        # given 5.25;
+
+        $object = type_float 5.25;
+        $object->isa('Data::Object::Float');
+
+    The type_float function returns a Data::Object::Float instance which
+    wraps the provided data type and can be used to perform operations on
+    the data.
+
+  type_hash
+        # given {1..4};
+
+        $object = type_hash {1..4};
+        $object->isa('Data::Object::Hash');
+
+    The type_hash function returns a Data::Object::Hash instance which wraps
+    the provided data type and can be used to perform operations on the
+    data.
+
+  type_integer
+        # given 100;
+
+        $object = type_integer 100;
+        $object->isa('Data::Object::Integer');
+
+    The type_integer function returns a Data::Object::Object instance which
+    wraps the provided data type and can be used to perform operations on
+    the data.
+
+  type_number
+        # given "-900";
+
+        $object = type_number "-900";
+
+    The type_number function returns a Data::Object::Number instance which
+    wraps the provided data type and can be used to perform operations on
+    the data.
+
+  type_scalar
+        # given qr/\w+/;
+
+        $object = type_scalar qr/\w+/;
+        $object->isa('Data::Object::Scalar');
+
+    The type_scalar function returns a Data::Object::Scalar instance which
+    wraps the provided data type and can be used to perform operations on
+    the data.
+
+  type_string
+        # given 'abcdefghi';
+
+        $object = type_string 'abcdefghi';
+        $object->isa('Data::Object::String');
+
+    The type_string function returns a Data::Object::String instance which
+    wraps the provided data type and can be used to perform operations on
+    the data.
+
+  type_undef
+        # given undef;
+
+        $object = type_undef undef;
+        $object->isa('Data::Object::Undef');
+
+    The type_undef function returns a Data::Object::Undef instance which
+    wraps the provided data type and can be used to perform operations on
+    the data.
+
+  type_universal
+        # given 0;
+
+        $object = type_universal 0;
+        $object->isa('Data::Object::Universal');
+
+    The type_universal function returns a Data::Object::Universal instance
+    which wraps the provided data type and can be used to perform operations
+    on the data.
 
 SEE ALSO
     *   Data::Object::Array

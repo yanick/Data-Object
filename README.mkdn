@@ -4,7 +4,7 @@ Data::Object - Data Type Objects for Perl 5
 
 # VERSION
 
-version 0.02
+version 0.03
 
 # STATUS
 
@@ -12,12 +12,136 @@ version 0.02
 
 # SYNOPSIS
 
-    use Data::Object;
+    use Data::Object 'deduce';
+
+    my $object = deduce [1..9];
+
+    $object->count; # 9
 
 # DESCRIPTION
 
-Data::Object provides functions for promoting to Perl 5 native data types to
+Data::Object provides functions for promoting Perl 5 native data types to
 objects which provide common methods for operating on the data.
+
+# FUNCTIONS
+
+## load
+
+    # given 'List::Util';
+
+    $package = load 'List::Util'; # List::Util if loaded
+
+The load function attempts to dynamically load a module and either dies or
+returns the package name of the loaded module.
+
+## deduce
+
+    # given qr/\w+/;
+
+    $object = deduce qr/\w+/;
+    $object->isa('Data::Object::Scalar');
+
+The deduce function returns a data type object instance based upon the deduced
+type of data provided.
+
+## type\_array
+
+    # given [2..5];
+
+    $object = type_array [2..5];
+    $object->isa('Data::Object::Array');
+
+The type\_array function returns a [Data::Object::Array](http://search.cpan.org/perldoc?Data::Object::Array) instance which wraps
+the provided data type and can be used to perform operations on the data.
+
+## type\_code
+
+    # given sub { 1 };
+
+    $object = type_code sub { 1 };
+    $object->isa('Data::Object::Code');
+
+The type\_code function returns a [Data::Object::Code](http://search.cpan.org/perldoc?Data::Object::Code) instance which wraps the
+provided data type and can be used to perform operations on the data.
+
+## type\_float
+
+    # given 5.25;
+
+    $object = type_float 5.25;
+    $object->isa('Data::Object::Float');
+
+The type\_float function returns a [Data::Object::Float](http://search.cpan.org/perldoc?Data::Object::Float) instance which wraps
+the provided data type and can be used to perform operations on the data.
+
+## type\_hash
+
+    # given {1..4};
+
+    $object = type_hash {1..4};
+    $object->isa('Data::Object::Hash');
+
+The type\_hash function returns a [Data::Object::Hash](http://search.cpan.org/perldoc?Data::Object::Hash) instance which wraps the
+provided data type and can be used to perform operations on the data.
+
+## type\_integer
+
+    # given 100;
+
+    $object = type_integer 100;
+    $object->isa('Data::Object::Integer');
+
+The type\_integer function returns a [Data::Object::Object](http://search.cpan.org/perldoc?Data::Object::Object) instance which wraps
+the provided data type and can be used to perform operations on the data.
+
+## type\_number
+
+    # given "-900";
+
+    $object = type_number "-900";
+
+The type\_number function returns a [Data::Object::Number](http://search.cpan.org/perldoc?Data::Object::Number) instance which wraps
+the provided data type and can be used to perform operations on the data.
+
+## type\_scalar
+
+    # given qr/\w+/;
+
+    $object = type_scalar qr/\w+/;
+    $object->isa('Data::Object::Scalar');
+
+The type\_scalar function returns a [Data::Object::Scalar](http://search.cpan.org/perldoc?Data::Object::Scalar) instance which wraps
+the provided data type and can be used to perform operations on the data.
+
+## type\_string
+
+    # given 'abcdefghi';
+
+    $object = type_string 'abcdefghi';
+    $object->isa('Data::Object::String');
+
+The type\_string function returns a [Data::Object::String](http://search.cpan.org/perldoc?Data::Object::String) instance which wraps
+the provided data type and can be used to perform operations on the data.
+
+## type\_undef
+
+    # given undef;
+
+    $object = type_undef undef;
+    $object->isa('Data::Object::Undef');
+
+The type\_undef function returns a [Data::Object::Undef](http://search.cpan.org/perldoc?Data::Object::Undef) instance which wraps
+the provided data type and can be used to perform operations on the data.
+
+## type\_universal
+
+    # given 0;
+
+    $object = type_universal 0;
+    $object->isa('Data::Object::Universal');
+
+The type\_universal function returns a [Data::Object::Universal](http://search.cpan.org/perldoc?Data::Object::Universal) instance which
+wraps the provided data type and can be used to perform operations on the data.
 
 # SEE ALSO
 

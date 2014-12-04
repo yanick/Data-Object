@@ -1,5 +1,10 @@
 Changelog for Data-Object
 
-0.02 2014-12-03T11:01:36
+0.03 2014-12-04T04:21:43
+ - Added object construction functions. (Wed Dec  3 23:21:32 EST 2014)
+ - Added object construction functions.
+
+0.02 2014-12-03T11:01:41
+ - v0.02
  - Initial commit.
 
