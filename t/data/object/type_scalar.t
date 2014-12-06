@@ -9,6 +9,7 @@ use Data::Object 'type_scalar';
 use Scalar::Util 'refaddr';
 
 can_ok 'Data::Object', 'type_scalar';
+
 subtest 'test the type_scalar function' => sub {
     my $scalar1 = type_scalar qr/\w+/;
     my $scalar2 = type_scalar qr/\w+/;

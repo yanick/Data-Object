@@ -9,6 +9,7 @@ use Data::Object 'type_string';
 use Scalar::Util 'refaddr';
 
 can_ok 'Data::Object', 'type_string';
+
 subtest 'test the type_string function' => sub {
     my $string1 = type_string "Hello";
     my $string2 = type_string "Hello";

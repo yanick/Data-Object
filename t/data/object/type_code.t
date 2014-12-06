@@ -9,6 +9,7 @@ use Data::Object 'type_code';
 use Scalar::Util 'refaddr';
 
 can_ok 'Data::Object', 'type_code';
+
 subtest 'test the type_code function' => sub {
     my $code1 = type_code sub {1};
     my $code2 = type_code sub {1};

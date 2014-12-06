@@ -4,7 +4,7 @@ Data::Object - Data Type Objects for Perl 5
 
 # VERSION
 
-version 0.03
+version 0.04
 
 # STATUS
 
@@ -21,7 +21,9 @@ version 0.03
 # DESCRIPTION
 
 Data::Object provides functions for promoting Perl 5 native data types to
-objects which provide common methods for operating on the data.
+objects which provide common methods for operating on the data. __Note: This is
+an early release available for testing and feedback and as such is subject to
+change.__
 
 # FUNCTIONS
 
@@ -142,6 +144,598 @@ the provided data type and can be used to perform operations on the data.
 
 The type\_universal function returns a [Data::Object::Universal](http://search.cpan.org/perldoc?Data::Object::Universal) instance which
 wraps the provided data type and can be used to perform operations on the data.
+
+# ASSERTIONS
+
+The type assertions functions exported can be used on to help ensure data
+integrity and prevent invalid usage patterns. The following is a list of
+standard type assertion functions whose routines map to those corresponding in
+the [Types::Standard](http://search.cpan.org/perldoc?Types::Standard) library.
+
+## asa\_aref
+
+    my $thing = undef;
+    asa_aref $thing;
+
+The aref function asserts that the argument is an array reference. If the
+argument is not an array reference, the program will die.
+
+## asa\_arrayref
+
+    my $thing = undef;
+    asa_arrayref $thing;
+
+The arrayref function asserts that the argument is an array reference. If the
+argument is not an array reference, the program will die.
+
+## asa\_bool
+
+    my $thing = undef;
+    asa_bool $thing;
+
+The bool function asserts that the argument is a boolean value. If the argument
+is not a boolean value, the program will die.
+
+## asa\_boolean
+
+    my $thing = undef;
+    asa_boolean $thing;
+
+The boolean function asserts that the argument is a boolean value. If the
+argument is not a boolean value, the program will die.
+
+## asa\_class
+
+    my $thing = undef;
+    asa_class $thing;
+
+The class function asserts that the argument is a class name. If the argument is
+not a class name, the program will die.
+
+## asa\_classname
+
+    my $thing = undef;
+    asa_classname $thing;
+
+The classname function asserts that the argument is a class name. If the
+argument is not a class name, the program will die.
+
+## asa\_coderef
+
+    my $thing = undef;
+    asa_coderef $thing;
+
+The coderef function asserts that the argument is a code reference. If the
+argument is not a code reference, the program will die.
+
+## asa\_cref
+
+    my $thing = undef;
+    asa_cref $thing;
+
+The cref function asserts that the argument is a code reference. If the argument
+is not a code reference, the program will die.
+
+## asa\_def
+
+    my $thing = undef;
+    asa_def $thing;
+
+The def function asserts that the argument is a defined value. If the argument
+is not a defined value, the program will die.
+
+## asa\_defined
+
+    my $thing = undef;
+    asa_defined $thing;
+
+The defined function asserts that the argument is a defined value. If the
+argument is not a defined value, the program will die.
+
+## asa\_fh
+
+    my $thing = undef;
+    asa_fh $thing;
+
+The fh function asserts that the argument is a file handle. If the argument is
+not a file handle, the program will die.
+
+## asa\_filehandle
+
+    my $thing = undef;
+    asa_filehandle $thing;
+
+The filehandle function asserts that the argument is a file handle. If the
+argument is not a file handle, the program will die.
+
+## asa\_glob
+
+    my $thing = undef;
+    asa_glob $thing;
+
+The glob function asserts that the argument is a glob reference. If the argument
+is not a glob reference, the program will die.
+
+## asa\_globref
+
+    my $thing = undef;
+    asa_globref $thing;
+
+The globref function asserts that the argument is a glob reference. If the
+argument is not a glob reference, the program will die.
+
+## asa\_hashref
+
+    my $thing = undef;
+    asa_hashref $thing;
+
+The hashref function asserts that the argument is a hash reference. If the
+argument is not a hash reference, the program will die.
+
+## asa\_href
+
+    my $thing = undef;
+    asa_href $thing;
+
+The href function asserts that the argument is a hash reference. If the argument
+is not a hash reference, the program will die.
+
+## asa\_int
+
+    my $thing = undef;
+    asa_int $thing;
+
+The int function asserts that the argument is an integer. If the argument is not
+an integer, the program will die.
+
+## asa\_integer
+
+    my $thing = undef;
+    asa_integer $thing;
+
+The integer function asserts that the argument is an integer. If the argument is
+not an integer, the program will die.
+
+## asa\_num
+
+    my $thing = undef;
+    asa_num $thing;
+
+The num function asserts that the argument is a number. If the argument is not a
+number, the program will die.
+
+## asa\_number
+
+    my $thing = undef;
+    asa_number $thing;
+
+The number function asserts that the argument is a number. If the argument is
+not a number, the program will die.
+
+## asa\_obj
+
+    my $thing = undef;
+    asa_obj $thing;
+
+The obj function asserts that the argument is an object. If the argument is not
+an object, the program will die.
+
+## asa\_object
+
+    my $thing = undef;
+    asa_object $thing;
+
+The object function asserts that the argument is an object. If the argument is
+not an object, the program will die.
+
+## asa\_ref
+
+    my $thing = undef;
+    asa_ref $thing;
+
+The ref function asserts that the argument is a reference. If the argument is
+not a reference, the program will die.
+
+## asa\_reference
+
+    my $thing = undef;
+    asa_reference $thing;
+
+The reference function asserts that the argument is a reference. If the argument
+is not a reference, the program will die.
+
+## asa\_regexpref
+
+    my $thing = undef;
+    asa_regexpref $thing;
+
+The regexpref function asserts that the argument is a regular expression
+reference. If the argument is not a regular expression reference, the program
+will die.
+
+## asa\_rref
+
+    my $thing = undef;
+    asa_rref $thing;
+
+The rref function asserts that the argument is a regular expression reference.
+If the argument is not a regular expression reference, the program will die.
+
+## asa\_scalarref
+
+    my $thing = undef;
+    asa_scalarref $thing;
+
+The scalarref function asserts that the argument is a scalar reference. If the
+argument is not a scalar reference, the program will die.
+
+## asa\_sref
+
+    my $thing = undef;
+    asa_sref $thing;
+
+The sref function asserts that the argument is a scalar reference. If the
+argument is not a scalar reference, the program will die.
+
+## asa\_str
+
+    my $thing = undef;
+    asa_str $thing;
+
+The str function asserts that the argument is a string. If the argument is not a
+string, the program will die.
+
+## asa\_string
+
+    my $thing = undef;
+    asa_string $thing;
+
+The string function asserts that the argument is a string. If the argument is
+not a string, the program will die.
+
+## asa\_nil
+
+    my $thing = undef;
+    asa_nil $thing;
+
+The nil function asserts that the argument is an undefined value. If the
+argument is not an undefined value, the program will die.
+
+## asa\_null
+
+    my $thing = undef;
+    asa_null $thing;
+
+The null function asserts that the argument is an undefined value. If the
+argument is not an undefined value, the program will die.
+
+## asa\_undef
+
+    my $thing = undef;
+    asa_undef $thing;
+
+The undef function asserts that the argument is an undefined value. If the
+argument is not an undefined value, the program will die.
+
+## asa\_undefined
+
+    my $thing = undef;
+    asa_undefined $thing;
+
+The undefined function asserts that the argument is an undefined value. If the
+argument is not an undefined value, the program will die.
+
+## asa\_val
+
+    my $thing = undef;
+    asa_val $thing;
+
+The val function asserts that the argument is a value. If the argument is not a
+value, the program will die.
+
+## asa\_value
+
+    my $thing = undef;
+    asa_value $thing;
+
+The value method asserts that the argument is a value. If the argument is not a
+value, the program will die.
+
+# VALIDATIONS
+
+The type validation functions can be used to help control the flow of
+operations. The following is a list of standard type checking functions whose
+routines map to those corresponding in the [Types::Standard](http://search.cpan.org/perldoc?Types::Standard) library.
+
+## isa\_aref
+
+    my $thing = undef;
+    isa_aref $thing;
+
+The aref function checks that the argument is an array reference. If the
+argument is not an array reference, the function will return false.
+
+## isa\_arrayref
+
+    my $thing = undef;
+    isa_arrayref $thing;
+
+The arrayref function checks that the argument is an array reference. If the
+argument is not an array reference, the function will return false.
+
+## isa\_bool
+
+    my $thing = undef;
+    isa_bool $thing;
+
+The bool function checks that the argument is a boolean value. If the argument
+is not a boolean value, the function will return false.
+
+## isa\_boolean
+
+    my $thing = undef;
+    isa_boolean $thing;
+
+The boolean function checks that the argument is a boolean value. If the
+argument is not a boolean value, the function will return false.
+
+## isa\_class
+
+    my $thing = undef;
+    isa_class $thing;
+
+The class function checks that the argument is a class name. If the argument is
+not a class name, the function will return false.
+
+## isa\_classname
+
+    my $thing = undef;
+    isa_classname $thing;
+
+The classname function checks that the argument is a class name. If the argument
+is not a class name, the function will return false.
+
+## isa\_coderef
+
+    my $thing = undef;
+    isa_coderef $thing;
+
+The coderef function checks that the argument is a code reference. If the
+argument is not a code reference, the function will return false.
+
+## isa\_cref
+
+    my $thing = undef;
+    isa_cref $thing;
+
+The cref function checks that the argument is a code reference. If the argument
+is not a code reference, the function will return false.
+
+## isa\_def
+
+    my $thing = undef;
+    isa_def $thing;
+
+The def function checks that the argument is a defined value. If the argument is
+not a defined value, the function will return false.
+
+## isa\_defined
+
+    my $thing = undef;
+    isa_defined $thing;
+
+The defined function checks that the argument is a defined value. If the
+argument is not a defined value, the function will return false.
+
+## isa\_fh
+
+    my $thing = undef;
+    isa_fh $thing;
+
+The fh function checks that the argument is a file handle. If the argument is
+not a file handle, the function will return false.
+
+## isa\_filehandle
+
+    my $thing = undef;
+    isa_filehandle $thing;
+
+The filehandle function checks that the argument is a file handle. If the
+argument is not a file handle, the function will return false.
+
+## isa\_glob
+
+    my $thing = undef;
+    isa_glob $thing;
+
+The glob function checks that the argument is a glob reference. If the argument
+is not a glob reference, the function will return false.
+
+## isa\_globref
+
+    my $thing = undef;
+    isa_globref $thing;
+
+The globref function checks that the argument is a glob reference. If the
+argument is not a glob reference, the function will return false.
+
+## isa\_hashref
+
+    my $thing = undef;
+    isa_hashref $thing;
+
+The hashref function checks that the argument is a hash reference. If the
+argument is not a hash reference, the function will return false.
+
+## isa\_href
+
+    my $thing = undef;
+    isa_href $thing;
+
+The href function checks that the argument is a hash reference. If the argument
+is not a hash reference, the function will return false.
+
+## isa\_int
+
+    my $thing = undef;
+    isa_int $thing;
+
+The int function checks that the argument is an integer. If the argument is not
+an integer, the function will return false.
+
+## isa\_integer
+
+    my $thing = undef;
+    isa_integer $thing;
+
+The integer function checks that the argument is an integer. If the argument is
+not an integer, the function will return false.
+
+## isa\_num
+
+    my $thing = undef;
+    isa_num $thing;
+
+The num function checks that the argument is a number. If the argument is not a
+number, the function will return false.
+
+## isa\_number
+
+    my $thing = undef;
+    isa_number $thing;
+
+The number function checks that the argument is a number. If the argument is not
+a number, the function will return false.
+
+## isa\_obj
+
+    my $thing = undef;
+    isa_obj $thing;
+
+The obj function checks that the argument is an object. If the argument is not
+an object, the function will return false.
+
+## isa\_object
+
+    my $thing = undef;
+    isa_object $thing;
+
+The object function checks that the argument is an object. If the argument is
+not an object, the function will return false.
+
+## isa\_ref
+
+    my $thing = undef;
+    isa_ref $thing;
+
+The ref function checks that the argument is a reference. If the argument is not
+a reference, the function will return false.
+
+## isa\_reference
+
+    my $thing = undef;
+    isa_reference $thing;
+
+The reference function checks that the argument is a reference. If the argument
+is not a reference, the function will return false.
+
+## isa\_regexpref
+
+    my $thing = undef;
+    isa_regexpref $thing;
+
+The regexpref function checks that the argument is a regular expression
+reference. If the argument is not a regular expression reference, the function
+will return false.
+
+## isa\_rref
+
+    my $thing = undef;
+    isa_rref $thing;
+
+The rref function checks that the argument is a regular expression reference. If
+the argument is not a regular expression reference, the function will return
+false.
+
+## isa\_scalarref
+
+    my $thing = undef;
+    isa_scalarref $thing;
+
+The scalarref function checks that the argument is a scalar reference. If the
+argument is not a scalar reference, the function will return false.
+
+## isa\_sref
+
+    my $thing = undef;
+    isa_sref $thing;
+
+The sref function checks that the argument is a scalar reference. If the
+argument is not a scalar reference, the function will return false.
+
+## isa\_str
+
+    my $thing = undef;
+    isa_str $thing;
+
+The str function checks that the argument is a string. If the argument is not a
+string, the function will return false.
+
+## isa\_string
+
+    my $thing = undef;
+    isa_string $thing;
+
+The string function checks that the argument is a string. If the argument is not
+a string, the function will return false.
+
+## isa\_nil
+
+    my $thing = undef;
+    isa_nil $thing;
+
+The nil function checks that the argument is an undefined value. If the argument
+is not an undefined value, the function will return false.
+
+## isa\_null
+
+    my $thing = undef;
+    isa_null $thing;
+
+The null function checks that the argument is an undefined value. If the
+argument is not an undefined value, the function will return false.
+
+## isa\_undef
+
+    my $thing = undef;
+    isa_undef $thing;
+
+The undef function checks that the argument is an undefined value. If the
+argument is not an undefined value, the function will return false.
+
+## isa\_undefined
+
+    my $thing = undef;
+    isa_undefined $thing;
+
+The undefined function checks that the argument is an undefined value. If the
+argument is not an undefined value, the function will return false.
+
+## isa\_val
+
+    my $thing = undef;
+    isa_val $thing;
+
+The val function checks that the argument is a value. If the argument is not a
+value, the function will return false.
+
+## isa\_value
+
+    my $thing = undef;
+    isa_value $thing;
+
+The value function checks that the argument is a value. If the argument is not a
+value, the function will return false.
 
 # SEE ALSO
 

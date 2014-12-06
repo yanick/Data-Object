@@ -9,6 +9,7 @@ use Data::Object 'type_universal';
 use Scalar::Util 'refaddr';
 
 can_ok 'Data::Object', 'type_universal';
+
 subtest 'test the type_universal function' => sub {
     my $universal1 = type_universal +Test::More;
     my $universal2 = type_universal +Test::More;

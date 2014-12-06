@@ -9,6 +9,7 @@ use Data::Object 'type_undef';
 use Scalar::Util 'refaddr';
 
 can_ok 'Data::Object', 'type_undef';
+
 subtest 'test the type_undef function' => sub {
     my $undef1 = type_undef undef;
     my $undef2 = type_undef undef;

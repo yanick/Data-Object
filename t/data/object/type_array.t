@@ -9,6 +9,7 @@ use Data::Object 'type_array';
 use Scalar::Util 'refaddr';
 
 can_ok 'Data::Object', 'type_array';
+
 subtest 'test the type_array function' => sub {
     my $array1 = type_array [1..5];
     my $array2 = type_array [1..5];
