@@ -4,7 +4,7 @@ Data::Object - Data Type Objects for Perl 5
 
 # VERSION
 
-version 0.04
+version 0.05
 
 # STATUS
 
@@ -45,6 +45,15 @@ returns the package name of the loaded module.
 
 The deduce function returns a data type object instance based upon the deduced
 type of data provided.
+
+## deduce\_type
+
+    # given qr/\w+/;
+
+    $type = deduce_type qr/\w+/; # SCALAR
+
+The deduce\_type function returns a data type description for the type of data
+provided, represented as a string in capital letters.
 
 ## type\_array
 

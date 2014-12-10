@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.04 2014-12-07T21:12:36
+0.05 2014-12-10T15:47:53
+ - No changes found
+
+0.04 2014-12-07T21:13:04
+ - v0.04
  - Added overloading and deducing, and other undocumented functionality.
 
 0.03 2014-12-04T04:26:57

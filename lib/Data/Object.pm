@@ -17,6 +17,7 @@ use Scalar::Util qw(
 
 our @EXPORT_OK = qw(
     deduce
+    deduce_type
     load
     type_array
     type_code
@@ -214,6 +215,26 @@ sub deduce ($) {
     return type_undef $scalar;
 }
 
+sub deduce_type ($) {
+    my $object = deduce shift;
+
+    return 'ARRAY'     if $object->isa('Data::Object::Array');
+    return 'HASH'      if $object->isa('Data::Object::Hash');
+    return 'CODE'      if $object->isa('Data::Object::Code');
+
+    return 'FLOAT'     if $object->isa('Data::Object::Float');
+    return 'NUMBER'    if $object->isa('Data::Object::Number');
+    return 'INTEGER'   if $object->isa('Data::Object::Integer');
+
+    return 'STRING'    if $object->isa('Data::Object::String');
+    return 'SCALAR'    if $object->isa('Data::Object::Scalar');
+
+    return 'UNDEF'     if $object->isa('Data::Object::Undef');
+    return 'UNIVERSAL' if $object->isa('Data::Object::Universal');
+
+    return undef;
+}
+
 {
     no warnings 'once';
     *asa_aref       = \&Types::Standard::assert_ArrayRef;
@@ -331,6 +352,17 @@ returns the package name of the loaded module.
 
 The deduce function returns a data type object instance based upon the deduced
 type of data provided.
+
+=cut
+
+=function deduce_type
+
+    # given qr/\w+/;
+
+    $type = deduce_type qr/\w+/; # SCALAR
+
+The deduce_type function returns a data type description for the type of data
+provided, represented as a string in capital letters.
 
 =cut
 
