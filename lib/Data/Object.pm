@@ -17,6 +17,7 @@ use Scalar::Util qw(
 
 our @EXPORT_OK = qw(
     deduce
+    deduce_deep
     deduce_type
     load
     type_array
@@ -215,6 +216,30 @@ sub deduce ($) {
     return type_undef $scalar;
 }
 
+sub deduce_deep {
+    my @objects = @_;
+
+    for my $object (@objects) {
+        my $type = deduce_type($object);
+
+        if ($type and $type eq 'HASH') {
+            for my $i (keys %$object) {
+                my $val = $object->{$i};
+                $object->{$i} = ref($val) ? deduce_deep($val) : deduce($val);
+            }
+        }
+
+        if ($type and $type eq 'ARRAY') {
+            for (my $i = 0; $i < @$object; $i++) {
+                my $val = $object->[$i];
+                $object->[$i] = ref($val) ? deduce_deep($val) : deduce($val);
+            }
+        }
+    }
+
+    return wantarray ? (@objects) : $objects[0];
+}
+
 sub deduce_type ($) {
     my $object = deduce shift;
 
@@ -352,6 +377,26 @@ returns the package name of the loaded module.
 
 The deduce function returns a data type object instance based upon the deduced
 type of data provided.
+
+=cut
+
+=function deduce_deep
+
+    # given {1,2,3,{4,5,6,[-1]}}
+
+    $deep = deduce_deep {1,2,3,{4,5,6,[-1]}}; # produces ...
+
+    # Data::Object::Hash {
+    #     1 => Data::Object::Number ( 2 ),
+    #     3 => Data::Object::Hash {
+    #          4 => Data::Object::Number ( 5 ),
+    #          6 => Data::Object::Array [ Data::Object::Integer ( -1 ) ],
+    #     },
+    # }
+
+The deduce_deep function returns a data type object. If the data provided is
+complex, this function traverses the data converting all nested data to objects.
+Note, blessed objects are not traversed.
 
 =cut
 
