@@ -298,6 +298,9 @@ sub deduce_type ($) {
     *asa_undefined  = \&Types::Standard::assert_Undef;
     *asa_val        = \&Types::Standard::assert_Value;
     *asa_value      = \&Types::Standard::assert_Value;
+}
+{
+    no warnings 'once';
     *isa_aref       = \&Types::Standard::is_ArrayRef;
     *isa_arrayref   = \&Types::Standard::is_ArrayRef;
     *isa_bool       = \&Types::Standard::is_Bool;
@@ -396,7 +399,7 @@ type of data provided.
 
 The deduce_deep function returns a data type object. If the data provided is
 complex, this function traverses the data converting all nested data to objects.
-Note, blessed objects are not traversed.
+Note: Blessed objects are not traversed.
 
 =cut
 
@@ -407,7 +410,9 @@ Note, blessed objects are not traversed.
     $type = deduce_type qr/\w+/; # SCALAR
 
 The deduce_type function returns a data type description for the type of data
-provided, represented as a string in capital letters.
+provided, represented as a string in capital letters. Note: This function calls
+L<deduce> on the argument before determining its type which means the argument
+will be promoted to an object as a result.
 
 =cut
 
@@ -1313,6 +1318,10 @@ L<Data::Object::Undef>
 =item *
 
 L<Data::Object::Universal>
+
+=item *
+
+L<Data::Object::Autobox>
 
 =back
 

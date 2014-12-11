@@ -10,7 +10,7 @@ subtest 'test the exp method' => sub {
     my $exp = $number->exp();
 
     isnt refaddr($number), refaddr($exp);
-    is $exp, 2.71828182845905;
+    like $exp, qr/2.71828182845905/;
 
     isa_ok $number, 'Data::Object::Number';
     isa_ok $exp, 'Data::Object::Float';

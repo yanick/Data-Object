@@ -35,13 +35,32 @@ FUNCTIONS
     The deduce function returns a data type object instance based upon the
     deduced type of data provided.
 
+  deduce_deep
+        # given {1,2,3,{4,5,6,[-1]}}
+
+        $deep = deduce_deep {1,2,3,{4,5,6,[-1]}}; # produces ...
+
+        # Data::Object::Hash {
+        #     1 => Data::Object::Number ( 2 ),
+        #     3 => Data::Object::Hash {
+        #          4 => Data::Object::Number ( 5 ),
+        #          6 => Data::Object::Array [ Data::Object::Integer ( -1 ) ],
+        #     },
+        # }
+
+    The deduce_deep function returns a data type object. If the data
+    provided is complex, this function traverses the data converting all
+    nested data to objects. Note: Blessed objects are not traversed.
+
   deduce_type
         # given qr/\w+/;
 
         $type = deduce_type qr/\w+/; # SCALAR
 
     The deduce_type function returns a data type description for the type of
-    data provided, represented as a string in capital letters.
+    data provided, represented as a string in capital letters. Note: This
+    function calls deduce on the argument before determining its type which
+    means the argument will be promoted to an object as a result.
 
   type_array
         # given [2..5];
@@ -684,6 +703,8 @@ SEE ALSO
     *   Data::Object::Undef
 
     *   Data::Object::Universal
+
+    *   Data::Object::Autobox
 
 AUTHOR
     Al Newkirk <anewkirk@ana.io>

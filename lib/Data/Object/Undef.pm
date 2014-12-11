@@ -53,7 +53,18 @@ sub value {
 =head1 DESCRIPTION
 
 Data::Object::Undef provides common methods for operating on Perl 5 undefined
-data.
+data. Undef methods work on undefined values.
+
+=cut
+
+=method defined
+
+    # given undef
+
+    $undef->defined ? 'Yes' : 'No'; # No
+
+The defined method always returns false. This method returns a
+L<Data::Object::Number> object.
 
 =cut
 
@@ -100,6 +111,10 @@ L<Data::Object::Undef>
 =item *
 
 L<Data::Object::Universal>
+
+=item *
+
+L<Data::Object::Autobox>
 
 =back
 

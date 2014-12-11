@@ -21,6 +21,7 @@ my %WriteMakefileArgs = (
   "MIN_PERL_VERSION" => "5.010000",
   "NAME" => "Data::Object",
   "PREREQ_PM" => {
+    "Clone" => "0.37",
     "Moo" => "1.006001",
     "Type::Tiny" => "1.000005"
   },
@@ -32,6 +33,7 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
+  "Clone" => "0.37",
   "ExtUtils::MakeMaker" => 0,
   "Moo" => "1.006001",
   "Type::Tiny" => "1.000005"

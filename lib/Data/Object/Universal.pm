@@ -84,6 +84,10 @@ L<Data::Object::Undef>
 
 L<Data::Object::Universal>
 
+=item *
+
+L<Data::Object::Autobox>
+
 =back
 
 =cut
