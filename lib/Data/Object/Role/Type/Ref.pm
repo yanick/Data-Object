@@ -1,7 +1,7 @@
 # A Reference Data Type Role for Perl 5
 package Data::Object::Role::Type::Ref;
 
-use 5.10.0;
+use 5.010;
 use Moo::Role;
 
 with 'Data::Object::Role::Type::Defined';

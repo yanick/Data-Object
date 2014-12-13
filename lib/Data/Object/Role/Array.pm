@@ -1,7 +1,7 @@
 # ABSTRACT: An Array Object Role for Perl 5
 package Data::Object::Role::Array;
 
-use 5.10.0;
+use 5.010;
 use Moo::Role;
 
 use Scalar::Util 'looks_like_number';

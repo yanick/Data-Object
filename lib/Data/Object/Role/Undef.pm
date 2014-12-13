@@ -1,7 +1,7 @@
 # ABSTRACT: An Undef Object Role for Perl 5
 package Data::Object::Role::Undef;
 
-use 5.10.0;
+use 5.010;
 use Moo::Role;
 
 # VERSION

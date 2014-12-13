@@ -1,7 +1,7 @@
 # ABSTRACT: A Hash Object for Perl 5
 package Data::Object::Hash;
 
-use 5.10.0;
+use 5.010;
 
 use Moo 'with';
 use Scalar::Util 'blessed';
