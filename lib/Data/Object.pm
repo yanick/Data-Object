@@ -349,6 +349,7 @@ sub deduce_type ($) {
 
     my $object = deduce [1..9];
 
+    $object->isa('Data::Object::Array'); # 1
     $object->count; # 9
 
 =head1 DESCRIPTION
@@ -466,9 +467,9 @@ provided data type and can be used to perform operations on the data.
 
 =function type_integer
 
-    # given 100;
+    # given -100;
 
-    $object = type_integer 100;
+    $object = type_integer -100;
     $object->isa('Data::Object::Integer');
 
 The type_integer function returns a L<Data::Object::Object> instance which wraps
@@ -478,9 +479,10 @@ the provided data type and can be used to perform operations on the data.
 
 =function type_number
 
-    # given "-900";
+    # given 100;
 
-    $object = type_number "-900";
+    $object = type_number 100;
+    $object->isa('Data::Object::Number');
 
 The type_number function returns a L<Data::Object::Number> instance which wraps
 the provided data type and can be used to perform operations on the data.
