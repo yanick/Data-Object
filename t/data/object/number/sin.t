@@ -10,7 +10,7 @@ subtest 'test the sin method' => sub {
     my $sin = $number->sin();
 
     isnt refaddr($number), refaddr($sin);
-    is $sin, -0.993771636455681;
+    like $sin, qr/-0.99377/;
 
     isa_ok $number, 'Data::Object::Number';
     isa_ok $sin, 'Data::Object::Float';

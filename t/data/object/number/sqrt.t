@@ -10,7 +10,7 @@ subtest 'test the sqrt method' => sub {
     my $sqrt = $number->sqrt();
 
     isnt refaddr($number), refaddr($sqrt);
-    like $sqrt, qr/111.108055513541/;
+    like $sqrt, qr/111.10805/;
 
     isa_ok $number, 'Data::Object::Number';
     isa_ok $sqrt, 'Data::Object::Float';

@@ -10,7 +10,7 @@ subtest 'test the cos method' => sub {
     my $cos = $number->cos();
 
     isnt refaddr($number), refaddr($cos);
-    like $cos, qr/0.843853958732492/;
+    like $cos, qr/0.84385/;
 
     isa_ok $number, 'Data::Object::Number';
     isa_ok $cos, 'Data::Object::Float';
