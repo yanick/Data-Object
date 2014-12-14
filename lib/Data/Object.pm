@@ -2,23 +2,23 @@
 package Data::Object;
 
 use 5.010;
-
 use strict;
 use warnings;
 
 use Carp;
-use Exporter 'import';
 
+use Data::Dumper ();
 use Types::Standard ();
-use Scalar::Util qw(
-    blessed
-    looks_like_number
-);
+
+use Exporter qw(import);
+use Scalar::Util qw(blessed looks_like_number);
 
 our @EXPORT_OK = qw(
     deduce
     deduce_deep
     deduce_type
+    detract
+    detract_deep
     load
     type_array
     type_code
@@ -260,6 +260,54 @@ sub deduce_type ($) {
     return undef;
 }
 
+sub detract ($) {
+    my $object = shift;
+    my $type   = deduce_type $object;
+
+    return $object if !$type and blessed($object);
+    return undef   if !$type;
+
+    return [@$object] if $type eq 'ARRAY';
+    return {%$object} if $type eq 'HASH';
+
+    return $$object   if $type eq 'FLOAT';
+    return $$object   if $type eq 'NUMBER';
+    return $$object   if $type eq 'INTEGER';
+    return $$object   if $type eq 'STRING';
+
+    return $object    if $type eq 'UNIVERSAL';
+    return $object    if $type eq 'SCALAR';
+    return undef      if $type eq 'UNDEF';
+
+    return sub { goto &{$object} } if $type eq 'CODE';
+
+    return undef;
+}
+
+sub detract_deep {
+    my @objects = @_;
+
+    for my $object (@objects) {
+        $object = detract($object);
+
+        if ($object and 'HASH' eq ref $object) {
+            for my $i (keys %$object) {
+                my $val = $object->{$i};
+                $object->{$i} = ref($val) ? detract_deep($val) : detract($val);
+            }
+        }
+
+        if ($object and 'ARRAY' eq ref $object) {
+            for (my $i = 0; $i < @$object; $i++) {
+                my $val = $object->[$i];
+                $object->[$i] = ref($val) ? detract_deep($val) : detract($val);
+            }
+        }
+    }
+
+    return wantarray ? (@objects) : $objects[0];
+}
+
 {
     no warnings 'once';
     *asa_aref       = \&Types::Standard::assert_ArrayRef;
@@ -414,6 +462,39 @@ The deduce_type function returns a data type description for the type of data
 provided, represented as a string in capital letters. Note: This function calls
 L<deduce> on the argument before determining its type which means the argument
 will be promoted to an object as a result.
+
+=cut
+
+=function detract
+
+    # given bless({1..4}, 'Data::Object::Hash');
+
+    $object = detract $object; # {1..4}
+
+The detract function returns a value of native type, based upon the underlying
+reference of the data type object provided.
+
+=cut
+
+=function detract_deep
+
+    # given {1,2,3,{4,5,6,[-1, 99, bless({}), sub { 123 }]}};
+
+    my $object = deduce_deep $object;
+    my $revert = detract_deep $object; # produces ...
+
+    # {
+    #     '1' => 2,
+    #     '3' => {
+    #         '4' => 5,
+    #         '6' => [ -1, 99, bless({}, 'main'), sub { ... } ]
+    #       }
+    # }
+
+The detract_deep function returns a value of native type. If the data provided
+is complex, this function traverses the data converting all nested data type
+objects into native values using the objects underlying reference. Note:
+Blessed objects are not traversed.
 
 =cut
 
