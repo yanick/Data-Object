@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.06 2014-12-14T02:10:55
+0.06 2014-12-14T02:14:57
+ - Updated documentation.
  - Rewrote history a bit.
  - Added detract and detract_deep functions.
  - Relocated the object type roles.
