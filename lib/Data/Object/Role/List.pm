@@ -1,10 +1,10 @@
 # A List Data Type Role for Perl 5
-package Data::Object::Role::Type::List;
+package Data::Object::Role::List;
 
 use 5.010;
 use Moo::Role;
 
-with 'Data::Object::Role::Type::Value';
+with 'Data::Object::Role::Value';
 
 # VERSION
 

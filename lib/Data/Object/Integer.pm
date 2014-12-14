@@ -9,7 +9,7 @@ use Types::Standard 'Int';
 use Data::Object 'deduce';
 
 with 'Data::Object::Role::Integer';
-with 'Data::Object::Role::Type::Numeric';
+with 'Data::Object::Role::Numeric';
 
 use overload
     'bool'   => \&value,

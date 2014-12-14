@@ -1,5 +1,5 @@
 # A Coercive Data Type Role for Perl 5
-package Data::Object::Role::Type::Coercive;
+package Data::Object::Role::Coercive;
 
 use 5.010;
 use Moo::Role;

@@ -1,10 +1,10 @@
 # A Comparison Data Type Role for Perl 5
-package Data::Object::Role::Type::Comparison;
+package Data::Object::Role::Comparison;
 
 use 5.010;
 use Moo::Role;
 
-with 'Data::Object::Role::Type::Item';
+with 'Data::Object::Role::Item';
 
 # VERSION
 
