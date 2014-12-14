@@ -2,13 +2,14 @@ NAME
     Data::Object - Data Type Objects for Perl 5
 
 VERSION
-    version 0.05
+    version 0.06
 
 SYNOPSIS
         use Data::Object 'deduce';
 
         my $object = deduce [1..9];
 
+        $object->isa('Data::Object::Array'); # 1
         $object->count; # 9
 
 DESCRIPTION
@@ -62,6 +63,33 @@ FUNCTIONS
     function calls deduce on the argument before determining its type which
     means the argument will be promoted to an object as a result.
 
+  detract
+        # given bless({1..4}, 'Data::Object::Hash');
+
+        $object = detract $object; # {1..4}
+
+    The detract function returns a value of native type, based upon the
+    underlying reference of the data type object provided.
+
+  detract_deep
+        # given {1,2,3,{4,5,6,[-1, 99, bless({}), sub { 123 }]}};
+
+        my $object = deduce_deep $object;
+        my $revert = detract_deep $object; # produces ...
+
+        # {
+        #     '1' => 2,
+        #     '3' => {
+        #         '4' => 5,
+        #         '6' => [ -1, 99, bless({}, 'main'), sub { ... } ]
+        #       }
+        # }
+
+    The detract_deep function returns a value of native type. If the data
+    provided is complex, this function traverses the data converting all
+    nested data type objects into native values using the objects underlying
+    reference. Note: Blessed objects are not traversed.
+
   type_array
         # given [2..5];
 
@@ -103,9 +131,9 @@ FUNCTIONS
     data.
 
   type_integer
-        # given 100;
+        # given -100;
 
-        $object = type_integer 100;
+        $object = type_integer -100;
         $object->isa('Data::Object::Integer');
 
     The type_integer function returns a Data::Object::Object instance which
@@ -113,9 +141,10 @@ FUNCTIONS
     the data.
 
   type_number
-        # given "-900";
+        # given 100;
 
-        $object = type_number "-900";
+        $object = type_number 100;
+        $object->isa('Data::Object::Number');
 
     The type_number function returns a Data::Object::Number instance which
     wraps the provided data type and can be used to perform operations on

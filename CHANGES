@@ -1,6 +1,15 @@
 Changelog for Data-Object
 
-0.05 2014-12-11T20:15:20
+0.06 2014-12-14T02:10:55
+ - Rewrote history a bit.
+ - Added detract and detract_deep functions.
+ - Relocated the object type roles.
+ - Fixed fractional numeric tests.
+ - Updated the required Perl version.
+ - Fixed documentation.
+
+0.05 2014-12-11T20:15:49
+ - v0.05
  - Added some initial documentation.
  - Added deduce_deep function.
  - Added deduce_type function.
