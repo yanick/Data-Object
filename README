@@ -2,7 +2,7 @@ NAME
     Data::Object - Data Type Objects for Perl 5
 
 VERSION
-    version 0.06
+    version 0.07
 
 SYNOPSIS
         use Data::Object 'deduce';
