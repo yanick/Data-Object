@@ -11,7 +11,7 @@ use Data::Dumper ();
 use Types::Standard ();
 
 use Exporter qw(import);
-use Scalar::Util qw(blessed looks_like_number);
+use Scalar::Util qw(blessed looks_like_number reftype);
 
 our @EXPORT_OK = qw(
     deduce
@@ -32,7 +32,8 @@ our @EXPORT_OK = qw(
     type_universal
 );
 
-push @EXPORT_OK, qw(
+push @EXPORT_OK,
+our  @ASSERTIONS = qw(
     asa_aref
     asa_arrayref
     asa_bool
@@ -69,6 +70,10 @@ push @EXPORT_OK, qw(
     asa_undefined
     asa_val
     asa_value
+);
+
+push @EXPORT_OK,
+our  @VALIDATION = qw(
     isa_aref
     isa_arrayref
     isa_bool
@@ -220,7 +225,10 @@ sub deduce_deep {
     my @objects = @_;
 
     for my $object (@objects) {
-        my $type = deduce_type($object);
+        my $type;
+
+        $object = deduce($object);
+        $type   = deduce_type($object);
 
         if ($type and $type eq 'HASH') {
             for my $i (keys %$object) {
@@ -261,25 +269,47 @@ sub deduce_type ($) {
 }
 
 sub detract ($) {
-    my $object = shift;
+    my $object = deduce shift;
     my $type   = deduce_type $object;
 
-    return $object if !$type and blessed($object);
-    return undef   if !$type;
+    INSPECT:
+    if (blessed($object) and ($object->isa('Regexp') or not $type)) {
+        return $object;
+    }
 
     return [@$object] if $type eq 'ARRAY';
     return {%$object} if $type eq 'HASH';
-
     return $$object   if $type eq 'FLOAT';
     return $$object   if $type eq 'NUMBER';
     return $$object   if $type eq 'INTEGER';
     return $$object   if $type eq 'STRING';
-
-    return $object    if $type eq 'UNIVERSAL';
-    return $object    if $type eq 'SCALAR';
     return undef      if $type eq 'UNDEF';
 
-    return sub { goto &{$object} } if $type eq 'CODE';
+    if ($type eq 'SCALAR' or $type eq 'UNIVERSAL') {
+        $type = reftype $object // '';
+
+        return [@$object] if $type eq 'ARRAY';
+        return {%$object} if $type eq 'HASH';
+        return $$object   if $type eq 'FLOAT';
+        return $$object   if $type eq 'INTEGER';
+        return $$object   if $type eq 'NUMBER';
+        return $$object   if $type eq 'REGEXP';
+        return $$object   if $type eq 'SCALAR';
+        return $$object   if $type eq 'STRING';
+        return undef      if $type eq 'UNDEF';
+
+        if ($type eq 'REF') {
+            $type = deduce_type($object = $$object) and goto INSPECT;
+        }
+
+        if ($type eq 'CODE') {
+            return sub { goto &{$object} };
+        }
+    }
+
+    if ($type eq 'CODE') {
+        return sub { goto &{$object} };
+    }
 
     return undef;
 }
@@ -459,9 +489,7 @@ Note: Blessed objects are not traversed.
     $type = deduce_type qr/\w+/; # SCALAR
 
 The deduce_type function returns a data type description for the type of data
-provided, represented as a string in capital letters. Note: This function calls
-L<deduce> on the argument before determining its type which means the argument
-will be promoted to an object as a result.
+provided, represented as a string in capital letters.
 
 =cut
 

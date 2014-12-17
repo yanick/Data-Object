@@ -1,11 +1,11 @@
 use Test::More;
 
 use_ok 'Data::Object::Undef';
-can_ok 'Data::Object::Undef', 'value';
+can_ok 'Data::Object::Undef', 'data';
 
-subtest 'test the value method' => sub {
+subtest 'test the data method' => sub {
     my $string = Data::Object::Undef->new(undef);
-    is $string->value, undef;
+    is $string->data, undef;
 };
 
 ok 1 and done_testing;

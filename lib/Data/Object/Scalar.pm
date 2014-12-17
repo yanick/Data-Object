@@ -6,9 +6,10 @@ use 5.010;
 use Moo 'with';
 use Scalar::Util 'blessed';
 use Types::Standard 'Defined';
-use Data::Object 'deduce';
+use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Scalar';
+with 'Data::Object::Role::Detract';
 
 # VERSION
 
@@ -17,8 +18,13 @@ sub new {
     my $data  = shift;
 
     $class = ref($class) || $class;
-    $data  = Defined->($data)
-        unless blessed($data) && $data->isa($class);
+    unless (blessed($data) && $data->isa($class)) {
+        $data = Defined->($data);
+    }
+
+    if (blessed($data) && $data->isa('Regexp') && $^V <= v5.12.0) {
+        $data = do {\(my $q = qr/$data/)};
+    }
 
     return bless ref($data) ? $data : \$data, $class;
 }
@@ -26,25 +32,33 @@ sub new {
 around 'and' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
+
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return detract_deep shift;
+}
 
 around 'not' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'or' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'xor' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 1;

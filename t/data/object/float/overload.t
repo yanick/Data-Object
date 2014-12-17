@@ -10,7 +10,7 @@ subtest 'test object overloading' => sub {
     ok $float;
     ok $float == '.01';
     ok $float =~ qr/.01/;
-    is "$float", '0.01';
+    is "$float", '.01';
 };
 
 ok 1 and done_testing;

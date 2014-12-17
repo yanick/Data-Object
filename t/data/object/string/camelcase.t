@@ -10,7 +10,7 @@ subtest 'test the camelcase method' => sub {
     my $camelcased = $string->camelcase;
 
     is refaddr($string), refaddr($camelcased);
-    is $camelcased->value, 'HelloWorld'; # HelloWorld
+    is "$camelcased", 'HelloWorld'; # HelloWorld
 
     isa_ok $string, 'Data::Object::String';
 
@@ -18,7 +18,7 @@ subtest 'test the camelcase method' => sub {
     $camelcased = $string->camelcase;
 
     is refaddr($string), refaddr($camelcased);
-    is $camelcased->value, 'HelloWorld'; # HelloWorld
+    is "$camelcased", 'HelloWorld'; # HelloWorld
 
     isa_ok $string, 'Data::Object::String';
 };

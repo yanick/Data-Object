@@ -6,9 +6,10 @@ use 5.010;
 use Moo 'with';
 use Scalar::Util 'blessed';
 use Types::Standard 'CodeRef';
-use Data::Object 'deduce';
+use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Code';
+with 'Data::Object::Role::Detract';
 
 # VERSION
 
@@ -17,8 +18,9 @@ sub new {
     my $data  = shift;
 
     $class = ref($class) || $class;
-    $data  = CodeRef->($data)
-        unless blessed($data) && $data->isa($class);
+    unless (blessed($data) && $data->isa($class)) {
+        $data = CodeRef->($data);
+    }
 
     return bless $data, $class;
 }
@@ -26,46 +28,54 @@ sub new {
 around 'call' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'compose' => sub {
     my ($orig, $self, @args) = @_;
-    my $next = deduce shift @args;
+    my $next = deduce_deep shift @args;
     my $result = $self->$orig($next, @args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'conjoin' => sub {
     my ($orig, $self, @args) = @_;
-    my $next = deduce shift @args;
+    my $next = deduce_deep shift @args;
     my $result = $self->$orig($next, @args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'curry' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
+
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return detract_deep shift;
+}
 
 around 'disjoin' => sub {
     my ($orig, $self, @args) = @_;
-    my $next = deduce shift @args;
+    my $next = deduce_deep shift @args;
     my $result = $self->$orig($next, @args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'next' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'rcurry' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 1;

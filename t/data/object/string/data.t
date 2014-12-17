@@ -1,14 +1,14 @@
 use Test::More;
 
 use_ok 'Data::Object::String';
-can_ok 'Data::Object::String', 'value';
+can_ok 'Data::Object::String', 'data';
 
-subtest 'test the value method' => sub {
+subtest 'test the data method' => sub {
     my $string = Data::Object::String->new('');
-    is $string->value, '';
+    is $string->data, '';
 
     $string = Data::Object::String->new('longgggg');
-    is $string->value, 'longgggg';
+    is "$string", 'longgggg';
 };
 
 ok 1 and done_testing;

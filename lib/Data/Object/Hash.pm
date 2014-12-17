@@ -6,9 +6,11 @@ use 5.010;
 use Moo 'with';
 use Scalar::Util 'blessed';
 use Types::Standard 'HashRef';
-use Data::Object 'deduce';
+use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Hash';
+with 'Data::Object::Role::Detract';
+with 'Data::Object::Role::Values';
 
 # VERSION
 
@@ -17,8 +19,9 @@ sub new {
     my $data  = shift;
 
     $class = ref($class) || $class;
-    $data  = HashRef->($data)
-        unless blessed($data) && $data->isa($class);
+    unless (blessed($data) && $data->isa($class)) {
+        $data = HashRef->($data);
+    }
 
     return bless $data, $class;
 }
@@ -26,163 +29,175 @@ sub new {
 around 'array_slice' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'aslice' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'clear' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
+
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return detract_deep shift;
+}
 
 around 'defined' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'delete' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'each' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'each_key' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'each_n_values' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'each_value' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'empty' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'exists' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'filter_exclude' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'filter_include' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'get' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'hash_slice' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'hslice' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'invert' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'iterator' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'keys' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
+
+sub list {
+    goto &values;
+}
 
 around 'lookup' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'merge' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'pairs' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'pairs_array' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'reset' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'reverse' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'set' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'values' => sub {
     my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return deduce $result;
+    my $result = deduce_deep $self->$orig(@args);
+    return wantarray ? (@$result) : $result;
 };
 
 1;

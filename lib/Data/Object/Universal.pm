@@ -6,9 +6,10 @@ use 5.010;
 use Moo 'with';
 use Scalar::Util 'blessed';
 use Types::Standard 'Any';
-use Data::Object 'deduce';
+use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Universal';
+with 'Data::Object::Role::Detract';
 
 # VERSION
 
@@ -17,10 +18,23 @@ sub new {
     my $data  = shift;
 
     $class = ref($class) || $class;
-    $data  = Any->($data)
-        unless blessed($data) && $data->isa($class);
+    unless (blessed($data) && $data->isa($class)) {
+        $data = Any->($data);
+    }
+
+    if (blessed($data) && $data->isa('Regexp') && $^V <= v5.12.0) {
+        $data = do {\(my $q = qr/$data/)};
+    }
 
     return bless ref($data) ? $data : \$data, $class;
+}
+
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return detract_deep shift;
 }
 
 1;

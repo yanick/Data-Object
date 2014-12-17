@@ -6,15 +6,16 @@ use 5.010;
 use Moo 'with';
 use Scalar::Util 'blessed';
 use Types::Standard 'Num';
-use Data::Object 'deduce';
+use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Number';
+with 'Data::Object::Role::Detract';
 with 'Data::Object::Role::Numeric';
 
 use overload
-    'bool'   => \&value,
-    '""'     => \&value,
-    '~~'     => \&value,
+    'bool'   => \&data,
+    '""'     => \&data,
+    '~~'     => \&data,
     fallback => 1,
 ;
 
@@ -27,8 +28,9 @@ sub new {
     $data =~ s/^\+//; # not keen on this but ...
 
     $class = ref($class) || $class;
-    $data  = Num->($data)
-        unless blessed($data) && $data->isa($class);
+    unless (blessed($data) && $data->isa($class)) {
+        $data = Num->($data);
+    }
 
     return bless \$data, $class;
 }
@@ -36,145 +38,148 @@ sub new {
 around 'abs' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'atan2' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'cos' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
+
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return detract_deep shift;
+}
 
 around 'decr' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'downto' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'eq' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'exp' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'gt' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'gte' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'hex' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'incr' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'int' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'lt' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'lte' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'log' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'mod' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'ne' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'neg' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'pow' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'sin' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'sqrt' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'to' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
 
 around 'upto' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return deduce $result;
+    return scalar deduce_deep $result;
 };
-
-sub value {
-    my $self = shift;
-    return 0+${$self};
-}
 
 1;
 

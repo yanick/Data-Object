@@ -2,7 +2,7 @@ NAME
     Data::Object - Data Type Objects for Perl 5
 
 VERSION
-    version 0.07
+    version 0.08
 
 SYNOPSIS
         use Data::Object 'deduce';
@@ -59,9 +59,7 @@ FUNCTIONS
         $type = deduce_type qr/\w+/; # SCALAR
 
     The deduce_type function returns a data type description for the type of
-    data provided, represented as a string in capital letters. Note: This
-    function calls deduce on the argument before determining its type which
-    means the argument will be promoted to an object as a result.
+    data provided, represented as a string in capital letters.
 
   detract
         # given bless({1..4}, 'Data::Object::Hash');

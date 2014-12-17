@@ -1,11 +1,11 @@
 use Test::More;
 
 use_ok 'Data::Object::Number';
-can_ok 'Data::Object::Number', 'value';
+can_ok 'Data::Object::Number', 'data';
 
-subtest 'test the value method' => sub {
+subtest 'test the data method' => sub {
     my $integer = Data::Object::Number->new(99999);
-    is $integer->value, 99999;
+    is $integer->data, 99999;
 
     $integer = Data::Object::Number->new('99999');
     is "$integer", 99999;
