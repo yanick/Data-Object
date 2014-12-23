@@ -6,10 +6,12 @@ use 5.010;
 use Moo 'with';
 use Scalar::Util 'blessed';
 use Types::Standard 'ArrayRef';
+
 use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Array';
 with 'Data::Object::Role::Detract';
+with 'Data::Object::Role::Output';
 with 'Data::Object::Role::Values';
 
 # VERSION

@@ -299,11 +299,8 @@ sub detract ($) {
         return undef      if $type eq 'UNDEF';
 
         if ($type eq 'REF') {
-            $type = deduce_type($object = $$object) and goto INSPECT;
-        }
-
-        if ($type eq 'CODE') {
-            return sub { goto &{$object} };
+            $type = deduce_type($object = $$object)
+                and goto INSPECT;
         }
     }
 

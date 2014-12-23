@@ -4,30 +4,14 @@ package Data::Object::Universal;
 use 5.010;
 
 use Moo 'with';
-use Scalar::Util 'blessed';
-use Types::Standard 'Any';
-use Data::Object 'deduce_deep', 'detract_deep';
+use Data::Object 'detract_deep';
 
+with 'Data::Object::Role::Constructor';
 with 'Data::Object::Role::Universal';
 with 'Data::Object::Role::Detract';
+with 'Data::Object::Role::Output';
 
 # VERSION
-
-sub new {
-    my $class = shift;
-    my $data  = shift;
-
-    $class = ref($class) || $class;
-    unless (blessed($data) && $data->isa($class)) {
-        $data = Any->($data);
-    }
-
-    if (blessed($data) && $data->isa('Regexp') && $^V <= v5.12.0) {
-        $data = do {\(my $q = qr/$data/)};
-    }
-
-    return bless ref($data) ? $data : \$data, $class;
-}
 
 sub data {
     goto &detract;

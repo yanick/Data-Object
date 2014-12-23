@@ -6,10 +6,12 @@ use 5.010;
 use Moo 'with';
 use Scalar::Util 'blessed';
 use Types::Standard 'CodeRef';
+
 use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Code';
 with 'Data::Object::Role::Detract';
+with 'Data::Object::Role::Output';
 
 # VERSION
 
