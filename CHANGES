@@ -1,6 +1,6 @@
 Changelog for Data-Object
 
-0.09 2014-12-23T03:19:26
+0.09 2014-12-23T03:33:38
  - Added tests for the dump method on all data objects.
  - Added the Output role to all Data Objects.
 
