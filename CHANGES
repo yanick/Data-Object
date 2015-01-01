@@ -1,6 +1,11 @@
 Changelog for Data-Object
 
-0.09 2014-12-23T03:33:38
+0.10 2015-01-01T06:21:37
+ - Removed assertions and validations and added instantiation function
+   aliases.
+
+0.09 2014-12-23T03:34:14
+ - v0.09
  - Added tests for the dump method on all data objects.
  - Added the Output role to all Data Objects.
 

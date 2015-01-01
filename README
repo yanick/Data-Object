@@ -1,46 +1,129 @@
-NAME
-    Data::Object - Data Type Objects for Perl 5
-
-VERSION
-    version 0.09
-
 SYNOPSIS
+
         use Data::Object 'deduce';
-
+    
         my $object = deduce [1..9];
-
+    
         $object->isa('Data::Object::Array'); # 1
         $object->count; # 9
 
 DESCRIPTION
+
     Data::Object provides functions for promoting Perl 5 native data types
-    to objects which provide common methods for operating on the data. Note:
-    This is an early release available for testing and feedback and as such
-    is subject to change.
+    to objects which provide common methods for operating on the data.
+    Note: This is an early release available for testing and feedback and
+    as such is subject to change.
 
-FUNCTIONS
-  load
+        # given [2..5];
+    
+        $object = data_array [2..5];
+        $object->isa('Data::Object::Array');
+
+    The data_array function returns a Data::Object::Array instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_array function is an alias to this function.
+
+        # given sub { 1 };
+    
+        $object = data_code sub { 1 };
+        $object->isa('Data::Object::Code');
+
+    The data_code function returns a Data::Object::Code instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_code function is an alias to this function.
+
+        # given 5.25;
+    
+        $object = data_float 5.25;
+        $object->isa('Data::Object::Float');
+
+    The data_float function returns a Data::Object::Float instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_float function is an alias to this function.
+
+        # given {1..4};
+    
+        $object = data_hash {1..4};
+        $object->isa('Data::Object::Hash');
+
+    The data_hash function returns a Data::Object::Hash instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_hash function is an alias to this function.
+
+        # given -100;
+    
+        $object = data_integer -100;
+        $object->isa('Data::Object::Integer');
+
+    The data_integer function returns a Data::Object::Object instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_integer function is an alias to this function.
+
+        # given 100;
+    
+        $object = data_number 100;
+        $object->isa('Data::Object::Number');
+
+    The data_number function returns a Data::Object::Number instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_number function is an alias to this function.
+
+        # given qr/\w+/;
+    
+        $object = data_scalar qr/\w+/;
+        $object->isa('Data::Object::Scalar');
+
+    The data_scalar function returns a Data::Object::Scalar instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_scalar function is an alias to this function.
+
+        # given 'abcdefghi';
+    
+        $object = data_string 'abcdefghi';
+        $object->isa('Data::Object::String');
+
+    The data_string function returns a Data::Object::String instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_string function is an alias to this function.
+
+        # given undef;
+    
+        $object = data_undef undef;
+        $object->isa('Data::Object::Undef');
+
+    The data_undef function returns a Data::Object::Undef instance which
+    wraps the provided data type and can be used to perform operations on
+    the data. The type_undef function is an alias to this function.
+
+        # given 0;
+    
+        $object = data_universal 0;
+        $object->isa('Data::Object::Universal');
+
+    The data_universal function returns a Data::Object::Universal instance
+    which wraps the provided data type and can be used to perform
+    operations on the data. The type_universal function is an alias to this
+    function.
+
         # given 'List::Util';
-
+    
         $package = load 'List::Util'; # List::Util if loaded
 
     The load function attempts to dynamically load a module and either dies
     or returns the package name of the loaded module.
 
-  deduce
         # given qr/\w+/;
-
+    
         $object = deduce qr/\w+/;
         $object->isa('Data::Object::Scalar');
 
     The deduce function returns a data type object instance based upon the
     deduced type of data provided.
 
-  deduce_deep
         # given {1,2,3,{4,5,6,[-1]}}
-
+    
         $deep = deduce_deep {1,2,3,{4,5,6,[-1]}}; # produces ...
-
+    
         # Data::Object::Hash {
         #     1 => Data::Object::Number ( 2 ),
         #     3 => Data::Object::Hash {
@@ -53,28 +136,25 @@ FUNCTIONS
     provided is complex, this function traverses the data converting all
     nested data to objects. Note: Blessed objects are not traversed.
 
-  deduce_type
         # given qr/\w+/;
-
+    
         $type = deduce_type qr/\w+/; # SCALAR
 
-    The deduce_type function returns a data type description for the type of
-    data provided, represented as a string in capital letters.
+    The deduce_type function returns a data type description for the type
+    of data provided, represented as a string in capital letters.
 
-  detract
         # given bless({1..4}, 'Data::Object::Hash');
-
+    
         $object = detract $object; # {1..4}
 
     The detract function returns a value of native type, based upon the
     underlying reference of the data type object provided.
 
-  detract_deep
         # given {1,2,3,{4,5,6,[-1, 99, bless({}), sub { 123 }]}};
-
+    
         my $object = deduce_deep $object;
         my $revert = detract_deep $object; # produces ...
-
+    
         # {
         #     '1' => 2,
         #     '3' => {
@@ -85,660 +165,99 @@ FUNCTIONS
 
     The detract_deep function returns a value of native type. If the data
     provided is complex, this function traverses the data converting all
-    nested data type objects into native values using the objects underlying
-    reference. Note: Blessed objects are not traversed.
-
-  type_array
-        # given [2..5];
-
-        $object = type_array [2..5];
-        $object->isa('Data::Object::Array');
-
-    The type_array function returns a Data::Object::Array instance which
-    wraps the provided data type and can be used to perform operations on
-    the data.
-
-  type_code
-        # given sub { 1 };
-
-        $object = type_code sub { 1 };
-        $object->isa('Data::Object::Code');
-
-    The type_code function returns a Data::Object::Code instance which wraps
-    the provided data type and can be used to perform operations on the
-    data.
-
-  type_float
-        # given 5.25;
-
-        $object = type_float 5.25;
-        $object->isa('Data::Object::Float');
-
-    The type_float function returns a Data::Object::Float instance which
-    wraps the provided data type and can be used to perform operations on
-    the data.
-
-  type_hash
-        # given {1..4};
-
-        $object = type_hash {1..4};
-        $object->isa('Data::Object::Hash');
-
-    The type_hash function returns a Data::Object::Hash instance which wraps
-    the provided data type and can be used to perform operations on the
-    data.
-
-  type_integer
-        # given -100;
-
-        $object = type_integer -100;
-        $object->isa('Data::Object::Integer');
-
-    The type_integer function returns a Data::Object::Object instance which
-    wraps the provided data type and can be used to perform operations on
-    the data.
-
-  type_number
-        # given 100;
-
-        $object = type_number 100;
-        $object->isa('Data::Object::Number');
-
-    The type_number function returns a Data::Object::Number instance which
-    wraps the provided data type and can be used to perform operations on
-    the data.
-
-  type_scalar
-        # given qr/\w+/;
-
-        $object = type_scalar qr/\w+/;
-        $object->isa('Data::Object::Scalar');
-
-    The type_scalar function returns a Data::Object::Scalar instance which
-    wraps the provided data type and can be used to perform operations on
-    the data.
-
-  type_string
-        # given 'abcdefghi';
-
-        $object = type_string 'abcdefghi';
-        $object->isa('Data::Object::String');
-
-    The type_string function returns a Data::Object::String instance which
-    wraps the provided data type and can be used to perform operations on
-    the data.
-
-  type_undef
-        # given undef;
-
-        $object = type_undef undef;
-        $object->isa('Data::Object::Undef');
-
-    The type_undef function returns a Data::Object::Undef instance which
-    wraps the provided data type and can be used to perform operations on
-    the data.
-
-  type_universal
-        # given 0;
-
-        $object = type_universal 0;
-        $object->isa('Data::Object::Universal');
-
-    The type_universal function returns a Data::Object::Universal instance
-    which wraps the provided data type and can be used to perform operations
-    on the data.
-
-ASSERTIONS
-    The type assertions functions exported can be used on to help ensure
-    data integrity and prevent invalid usage patterns. The following is a
-    list of standard type assertion functions whose routines map to those
-    corresponding in the Types::Standard library.
-
-  asa_aref
-        my $thing = undef;
-        asa_aref $thing;
-
-    The aref function asserts that the argument is an array reference. If
-    the argument is not an array reference, the program will die.
-
-  asa_arrayref
-        my $thing = undef;
-        asa_arrayref $thing;
-
-    The arrayref function asserts that the argument is an array reference.
-    If the argument is not an array reference, the program will die.
-
-  asa_bool
-        my $thing = undef;
-        asa_bool $thing;
-
-    The bool function asserts that the argument is a boolean value. If the
-    argument is not a boolean value, the program will die.
-
-  asa_boolean
-        my $thing = undef;
-        asa_boolean $thing;
-
-    The boolean function asserts that the argument is a boolean value. If
-    the argument is not a boolean value, the program will die.
-
-  asa_class
-        my $thing = undef;
-        asa_class $thing;
-
-    The class function asserts that the argument is a class name. If the
-    argument is not a class name, the program will die.
-
-  asa_classname
-        my $thing = undef;
-        asa_classname $thing;
-
-    The classname function asserts that the argument is a class name. If the
-    argument is not a class name, the program will die.
-
-  asa_coderef
-        my $thing = undef;
-        asa_coderef $thing;
-
-    The coderef function asserts that the argument is a code reference. If
-    the argument is not a code reference, the program will die.
-
-  asa_cref
-        my $thing = undef;
-        asa_cref $thing;
-
-    The cref function asserts that the argument is a code reference. If the
-    argument is not a code reference, the program will die.
-
-  asa_def
-        my $thing = undef;
-        asa_def $thing;
-
-    The def function asserts that the argument is a defined value. If the
-    argument is not a defined value, the program will die.
-
-  asa_defined
-        my $thing = undef;
-        asa_defined $thing;
-
-    The defined function asserts that the argument is a defined value. If
-    the argument is not a defined value, the program will die.
-
-  asa_fh
-        my $thing = undef;
-        asa_fh $thing;
-
-    The fh function asserts that the argument is a file handle. If the
-    argument is not a file handle, the program will die.
-
-  asa_filehandle
-        my $thing = undef;
-        asa_filehandle $thing;
-
-    The filehandle function asserts that the argument is a file handle. If
-    the argument is not a file handle, the program will die.
-
-  asa_glob
-        my $thing = undef;
-        asa_glob $thing;
-
-    The glob function asserts that the argument is a glob reference. If the
-    argument is not a glob reference, the program will die.
-
-  asa_globref
-        my $thing = undef;
-        asa_globref $thing;
-
-    The globref function asserts that the argument is a glob reference. If
-    the argument is not a glob reference, the program will die.
-
-  asa_hashref
-        my $thing = undef;
-        asa_hashref $thing;
-
-    The hashref function asserts that the argument is a hash reference. If
-    the argument is not a hash reference, the program will die.
-
-  asa_href
-        my $thing = undef;
-        asa_href $thing;
-
-    The href function asserts that the argument is a hash reference. If the
-    argument is not a hash reference, the program will die.
-
-  asa_int
-        my $thing = undef;
-        asa_int $thing;
-
-    The int function asserts that the argument is an integer. If the
-    argument is not an integer, the program will die.
-
-  asa_integer
-        my $thing = undef;
-        asa_integer $thing;
-
-    The integer function asserts that the argument is an integer. If the
-    argument is not an integer, the program will die.
-
-  asa_num
-        my $thing = undef;
-        asa_num $thing;
-
-    The num function asserts that the argument is a number. If the argument
-    is not a number, the program will die.
-
-  asa_number
-        my $thing = undef;
-        asa_number $thing;
-
-    The number function asserts that the argument is a number. If the
-    argument is not a number, the program will die.
-
-  asa_obj
-        my $thing = undef;
-        asa_obj $thing;
-
-    The obj function asserts that the argument is an object. If the argument
-    is not an object, the program will die.
-
-  asa_object
-        my $thing = undef;
-        asa_object $thing;
-
-    The object function asserts that the argument is an object. If the
-    argument is not an object, the program will die.
-
-  asa_ref
-        my $thing = undef;
-        asa_ref $thing;
-
-    The ref function asserts that the argument is a reference. If the
-    argument is not a reference, the program will die.
-
-  asa_reference
-        my $thing = undef;
-        asa_reference $thing;
-
-    The reference function asserts that the argument is a reference. If the
-    argument is not a reference, the program will die.
-
-  asa_regexpref
-        my $thing = undef;
-        asa_regexpref $thing;
-
-    The regexpref function asserts that the argument is a regular expression
-    reference. If the argument is not a regular expression reference, the
-    program will die.
-
-  asa_rref
-        my $thing = undef;
-        asa_rref $thing;
-
-    The rref function asserts that the argument is a regular expression
-    reference. If the argument is not a regular expression reference, the
-    program will die.
-
-  asa_scalarref
-        my $thing = undef;
-        asa_scalarref $thing;
-
-    The scalarref function asserts that the argument is a scalar reference.
-    If the argument is not a scalar reference, the program will die.
-
-  asa_sref
-        my $thing = undef;
-        asa_sref $thing;
-
-    The sref function asserts that the argument is a scalar reference. If
-    the argument is not a scalar reference, the program will die.
-
-  asa_str
-        my $thing = undef;
-        asa_str $thing;
-
-    The str function asserts that the argument is a string. If the argument
-    is not a string, the program will die.
-
-  asa_string
-        my $thing = undef;
-        asa_string $thing;
-
-    The string function asserts that the argument is a string. If the
-    argument is not a string, the program will die.
-
-  asa_nil
-        my $thing = undef;
-        asa_nil $thing;
-
-    The nil function asserts that the argument is an undefined value. If the
-    argument is not an undefined value, the program will die.
-
-  asa_null
-        my $thing = undef;
-        asa_null $thing;
-
-    The null function asserts that the argument is an undefined value. If
-    the argument is not an undefined value, the program will die.
-
-  asa_undef
-        my $thing = undef;
-        asa_undef $thing;
-
-    The undef function asserts that the argument is an undefined value. If
-    the argument is not an undefined value, the program will die.
-
-  asa_undefined
-        my $thing = undef;
-        asa_undefined $thing;
-
-    The undefined function asserts that the argument is an undefined value.
-    If the argument is not an undefined value, the program will die.
-
-  asa_val
-        my $thing = undef;
-        asa_val $thing;
-
-    The val function asserts that the argument is a value. If the argument
-    is not a value, the program will die.
-
-  asa_value
-        my $thing = undef;
-        asa_value $thing;
-
-    The value method asserts that the argument is a value. If the argument
-    is not a value, the program will die.
-
-VALIDATIONS
-    The type validation functions can be used to help control the flow of
-    operations. The following is a list of standard type checking functions
-    whose routines map to those corresponding in the Types::Standard
-    library.
-
-  isa_aref
-        my $thing = undef;
-        isa_aref $thing;
-
-    The aref function checks that the argument is an array reference. If the
-    argument is not an array reference, the function will return false.
-
-  isa_arrayref
-        my $thing = undef;
-        isa_arrayref $thing;
-
-    The arrayref function checks that the argument is an array reference. If
-    the argument is not an array reference, the function will return false.
-
-  isa_bool
-        my $thing = undef;
-        isa_bool $thing;
-
-    The bool function checks that the argument is a boolean value. If the
-    argument is not a boolean value, the function will return false.
-
-  isa_boolean
-        my $thing = undef;
-        isa_boolean $thing;
-
-    The boolean function checks that the argument is a boolean value. If the
-    argument is not a boolean value, the function will return false.
-
-  isa_class
-        my $thing = undef;
-        isa_class $thing;
-
-    The class function checks that the argument is a class name. If the
-    argument is not a class name, the function will return false.
-
-  isa_classname
-        my $thing = undef;
-        isa_classname $thing;
-
-    The classname function checks that the argument is a class name. If the
-    argument is not a class name, the function will return false.
-
-  isa_coderef
-        my $thing = undef;
-        isa_coderef $thing;
-
-    The coderef function checks that the argument is a code reference. If
-    the argument is not a code reference, the function will return false.
-
-  isa_cref
-        my $thing = undef;
-        isa_cref $thing;
-
-    The cref function checks that the argument is a code reference. If the
-    argument is not a code reference, the function will return false.
-
-  isa_def
-        my $thing = undef;
-        isa_def $thing;
-
-    The def function checks that the argument is a defined value. If the
-    argument is not a defined value, the function will return false.
-
-  isa_defined
-        my $thing = undef;
-        isa_defined $thing;
-
-    The defined function checks that the argument is a defined value. If the
-    argument is not a defined value, the function will return false.
-
-  isa_fh
-        my $thing = undef;
-        isa_fh $thing;
-
-    The fh function checks that the argument is a file handle. If the
-    argument is not a file handle, the function will return false.
-
-  isa_filehandle
-        my $thing = undef;
-        isa_filehandle $thing;
-
-    The filehandle function checks that the argument is a file handle. If
-    the argument is not a file handle, the function will return false.
-
-  isa_glob
-        my $thing = undef;
-        isa_glob $thing;
-
-    The glob function checks that the argument is a glob reference. If the
-    argument is not a glob reference, the function will return false.
-
-  isa_globref
-        my $thing = undef;
-        isa_globref $thing;
-
-    The globref function checks that the argument is a glob reference. If
-    the argument is not a glob reference, the function will return false.
-
-  isa_hashref
-        my $thing = undef;
-        isa_hashref $thing;
-
-    The hashref function checks that the argument is a hash reference. If
-    the argument is not a hash reference, the function will return false.
-
-  isa_href
-        my $thing = undef;
-        isa_href $thing;
-
-    The href function checks that the argument is a hash reference. If the
-    argument is not a hash reference, the function will return false.
-
-  isa_int
-        my $thing = undef;
-        isa_int $thing;
-
-    The int function checks that the argument is an integer. If the argument
-    is not an integer, the function will return false.
-
-  isa_integer
-        my $thing = undef;
-        isa_integer $thing;
-
-    The integer function checks that the argument is an integer. If the
-    argument is not an integer, the function will return false.
-
-  isa_num
-        my $thing = undef;
-        isa_num $thing;
-
-    The num function checks that the argument is a number. If the argument
-    is not a number, the function will return false.
-
-  isa_number
-        my $thing = undef;
-        isa_number $thing;
-
-    The number function checks that the argument is a number. If the
-    argument is not a number, the function will return false.
-
-  isa_obj
-        my $thing = undef;
-        isa_obj $thing;
-
-    The obj function checks that the argument is an object. If the argument
-    is not an object, the function will return false.
-
-  isa_object
-        my $thing = undef;
-        isa_object $thing;
-
-    The object function checks that the argument is an object. If the
-    argument is not an object, the function will return false.
-
-  isa_ref
-        my $thing = undef;
-        isa_ref $thing;
-
-    The ref function checks that the argument is a reference. If the
-    argument is not a reference, the function will return false.
-
-  isa_reference
-        my $thing = undef;
-        isa_reference $thing;
-
-    The reference function checks that the argument is a reference. If the
-    argument is not a reference, the function will return false.
-
-  isa_regexpref
-        my $thing = undef;
-        isa_regexpref $thing;
-
-    The regexpref function checks that the argument is a regular expression
-    reference. If the argument is not a regular expression reference, the
-    function will return false.
-
-  isa_rref
-        my $thing = undef;
-        isa_rref $thing;
-
-    The rref function checks that the argument is a regular expression
-    reference. If the argument is not a regular expression reference, the
-    function will return false.
-
-  isa_scalarref
-        my $thing = undef;
-        isa_scalarref $thing;
-
-    The scalarref function checks that the argument is a scalar reference.
-    If the argument is not a scalar reference, the function will return
-    false.
-
-  isa_sref
-        my $thing = undef;
-        isa_sref $thing;
-
-    The sref function checks that the argument is a scalar reference. If the
-    argument is not a scalar reference, the function will return false.
-
-  isa_str
-        my $thing = undef;
-        isa_str $thing;
-
-    The str function checks that the argument is a string. If the argument
-    is not a string, the function will return false.
-
-  isa_string
-        my $thing = undef;
-        isa_string $thing;
-
-    The string function checks that the argument is a string. If the
-    argument is not a string, the function will return false.
-
-  isa_nil
-        my $thing = undef;
-        isa_nil $thing;
-
-    The nil function checks that the argument is an undefined value. If the
-    argument is not an undefined value, the function will return false.
-
-  isa_null
-        my $thing = undef;
-        isa_null $thing;
-
-    The null function checks that the argument is an undefined value. If the
-    argument is not an undefined value, the function will return false.
-
-  isa_undef
-        my $thing = undef;
-        isa_undef $thing;
-
-    The undef function checks that the argument is an undefined value. If
-    the argument is not an undefined value, the function will return false.
-
-  isa_undefined
-        my $thing = undef;
-        isa_undefined $thing;
-
-    The undefined function checks that the argument is an undefined value.
-    If the argument is not an undefined value, the function will return
-    false.
-
-  isa_val
-        my $thing = undef;
-        isa_val $thing;
-
-    The val function checks that the argument is a value. If the argument is
-    not a value, the function will return false.
-
-  isa_value
-        my $thing = undef;
-        isa_value $thing;
-
-    The value function checks that the argument is a value. If the argument
-    is not a value, the function will return false.
+    nested data type objects into native values using the objects
+    underlying reference. Note: Blessed objects are not traversed.
 
 SEE ALSO
-    *   Data::Object::Array
 
-    *   Data::Object::Code
+      * Data::Object::Array
 
-    *   Data::Object::Float
+      * Data::Object::Code
 
-    *   Data::Object::Hash
+      * Data::Object::Float
 
-    *   Data::Object::Integer
+      * Data::Object::Hash
 
-    *   Data::Object::Number
+      * Data::Object::Integer
 
-    *   Data::Object::Scalar
+      * Data::Object::Number
 
-    *   Data::Object::String
+      * Data::Object::Scalar
 
-    *   Data::Object::Undef
+      * Data::Object::String
 
-    *   Data::Object::Universal
+      * Data::Object::Undef
 
-    *   Data::Object::Autobox
+      * Data::Object::Universal
 
-AUTHOR
-    Al Newkirk <anewkirk@ana.io>
+      * Data::Object::Autobox
 
-COPYRIGHT AND LICENSE
-    This software is copyright (c) 2014 by Al Newkirk.
+POD ERRORS
 
-    This is free software; you can redistribute it and/or modify it under
-    the same terms as the Perl 5 programming language system itself.
+    Hey! The above document had some coding errors, which are explained
+    below:
+
+    Around line 19:
+
+      Unknown directive: =function
+
+    Around line 30:
+
+      Unknown directive: =function
+
+    Around line 41:
+
+      Unknown directive: =function
+
+    Around line 52:
+
+      Unknown directive: =function
+
+    Around line 63:
+
+      Unknown directive: =function
+
+    Around line 74:
+
+      Unknown directive: =function
+
+    Around line 85:
+
+      Unknown directive: =function
+
+    Around line 96:
+
+      Unknown directive: =function
+
+    Around line 107:
+
+      Unknown directive: =function
+
+    Around line 118:
+
+      Unknown directive: =function
+
+    Around line 129:
+
+      Unknown directive: =function
+
+    Around line 138:
+
+      Unknown directive: =function
+
+    Around line 148:
+
+      Unknown directive: =function
+
+    Around line 166:
+
+      Unknown directive: =function
+
+    Around line 175:
+
+      Unknown directive: =function
+
+    Around line 184:
+
+      Unknown directive: =function
 
