@@ -1,6 +1,6 @@
 Changelog for Data-Object
 
-0.10 2015-01-01T06:21:37
+0.10 2015-01-01T06:24:37
  - Removed assertions and validations and added instantiation function
    aliases.
 
