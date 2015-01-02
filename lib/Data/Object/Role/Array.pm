@@ -4,22 +4,15 @@ package Data::Object::Role::Array;
 use 5.010;
 use Moo::Role;
 
+use Data::Object 'codify';
 use Scalar::Util 'looks_like_number';
 
 # VERSION
 
-my $codify = sub {
-    return(eval(
-    CORE::sprintf('sub{%sdo{%s}}',
-    CORE::sprintf('my($%s)=@_;',
-    CORE::join   (',$', 'a'..'z')),
-    CORE::shift // 'return(@_)')) or die $@);
-};
-
 sub all {
     my ($array, $code, @arguments) = @_;
 
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     my $found = CORE::grep { $code->($_, @arguments) } @$array;
 
     return $found == @$array ? 1 : 0;
@@ -28,7 +21,7 @@ sub all {
 sub any {
     my ($array, $code, @arguments) = @_;
 
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     my $found = CORE::grep { $code->($_, @arguments) } @$array;
 
     return $found ? 1 : 0;
@@ -56,7 +49,7 @@ sub each {
     my ($array, $code, @arguments) = @_;
 
     my $i=0;
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     foreach my $value (@$array) {
         $code->($i, $value, @arguments); $i++;
     }
@@ -67,7 +60,7 @@ sub each {
 sub each_key {
     my ($array, $code, @arguments) = @_;
 
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     $code->($_, @arguments) for (0..$#{$array});
 
     return $array;
@@ -77,7 +70,7 @@ sub each_n_values {
     my ($array, $number, $code, @arguments) = @_;
 
     my @values = @$array;
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     $code->(splice(@values, 0, $number), @arguments) while @values;
 
     return $array;
@@ -86,7 +79,7 @@ sub each_n_values {
 sub each_value {
     my ($array, $code, @arguments) = @_;
 
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     $code->($array->[$_], @arguments) for (0..$#{$array});
 
     return $array;
@@ -115,7 +108,7 @@ sub get {
 
 sub grep {
     my ($array, $code, @arguments) = @_;
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     return $array->new([CORE::grep { $code->($_, @arguments) } @$array]);
 }
 
@@ -174,7 +167,7 @@ sub length {
 
 sub map {
     my ($array, $code, @arguments) = @_;
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     return [map { $code->($_, @arguments) } @$array];
 }
 
@@ -210,7 +203,7 @@ sub min {
 
 sub none {
     my ($array, $code, @arguments) = @_;
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     my $found = CORE::grep { $code->($_, @arguments) } @$array;
     return $found ? 0 : 1;
 }
@@ -222,7 +215,7 @@ sub nsort {
 
 sub one {
     my ($array, $code, @arguments) = @_;
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     my $found = CORE::grep { $code->($_, @arguments) } @$array;
     return $found == 1 ? 1 : 0;
 }
@@ -243,7 +236,7 @@ sub pairs_hash {
 
 sub part {
     my ($array, $code, @arguments) = @_;
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
 
     my $result = [[],[]];
     foreach my $value (@$array) {
