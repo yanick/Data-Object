@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.11 2015-01-02T04:57:07
+0.11 2015-01-02T05:01:50
+ - Updated documentation.
  - Reworked codification.
  - Removed method requirements in lib/Data/Object/Role/Array.pm.
 
