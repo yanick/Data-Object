@@ -1,6 +1,11 @@
 Changelog for Data-Object
 
-0.10 2015-01-01T06:24:37
+0.11 2015-01-02T04:57:07
+ - Reworked codification.
+ - Removed method requirements in lib/Data/Object/Role/Array.pm.
+
+0.10 2015-01-01T06:25:26
+ - v0.10
  - Removed assertions and validations and added instantiation function
    aliases.
 
