@@ -14,6 +14,7 @@ use Exporter qw(import);
 use Scalar::Util qw(blessed looks_like_number reftype);
 
 our @EXPORT_OK = qw(
+    codify
     data_array
     data_code
     data_float
@@ -43,6 +44,13 @@ our @EXPORT_OK = qw(
 );
 
 # VERSION
+
+sub codify {
+    my $code = shift // 'return(@_)';
+    my $vars = sprintf 'my ($%s) = @_;', join ',$', 'a'..'z';
+    my $body = sprintf 'sub { %s do { %s } }', $vars, $code;
+    return (eval $body or die $@);
+};
 
 sub load ($) {
     my $class = shift;

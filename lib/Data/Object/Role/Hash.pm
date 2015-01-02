@@ -5,17 +5,10 @@ use 5.010;
 use Moo::Role;
 
 use Clone 'clone';
+use Data::Object 'codify';
 use Scalar::Util 'blessed';
 
 # VERSION
-
-my $codify = sub {
-    return(eval(
-    CORE::sprintf('sub{%sdo{%s}}',
-    CORE::sprintf('my($%s)=@_;',
-    CORE::join   (',$', 'a'..'z')),
-    CORE::shift // 'return(@_)')) or die $@);
-};
 
 sub aslice {
     goto &array_slice;
@@ -42,7 +35,7 @@ sub delete {
 
 sub each {
     my ($hash, $code, @arguments) = @_;
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
 
     for my $key (CORE::keys %$hash) {
       $code->($key, $hash->{$key}, @arguments);
@@ -54,7 +47,7 @@ sub each {
 sub each_key {
     my ($hash, $code, @arguments) = @_;
 
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     $code->($_, @arguments) for CORE::keys %$hash;
 
     return $hash;
@@ -63,7 +56,7 @@ sub each_key {
 sub each_n_values {
     my ($hash, $number, $code, @arguments) = @_;
 
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     my @values = CORE::values %$hash;
     $code->(CORE::splice(@values, 0, $number), @arguments) while @values;
 
@@ -73,7 +66,7 @@ sub each_n_values {
 sub each_value {
     my ($hash, $code, @arguments) = @_;
 
-    $code = $code->$codify if !ref $code;
+    $code = codify $code if !ref $code;
     $code->($_, @arguments) for CORE::values %$hash;
 
     return $hash;
