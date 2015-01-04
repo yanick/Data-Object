@@ -1,7 +1,8 @@
 Changelog for Data-Object
 
-0.12 2015-01-04T03:28:25
- - No changes found
+0.12 2015-01-04T03:32:48
+ - The hashify method of Array supports codification. Miscellaneous roles
+   cleanup.
 
 0.11 2015-01-02T05:02:50
  - v0.11
