@@ -7,8 +7,6 @@ use Data::Dumper ();
 
 use Data::Object 'detract_deep';
 
-with 'Data::Object::Role::Defined';
-
 # VERSION
 
 sub dump {

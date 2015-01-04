@@ -6,6 +6,4 @@ use Moo::Role;
 
 # VERSION
 
-requires 'defined';
-
 1;

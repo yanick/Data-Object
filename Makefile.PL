@@ -25,7 +25,7 @@ my %WriteMakefileArgs = (
     "Moo" => "1.006001",
     "Type::Tiny" => "1.000005"
   },
-  "VERSION" => "0.11",
+  "VERSION" => "0.12",
   "test" => {
     "TESTS" => "t/data/*.t t/data/object/*.t t/data/object/array/*.t t/data/object/code/*.t t/data/object/float/*.t t/data/object/hash/*.t t/data/object/integer/*.t t/data/object/number/*.t t/data/object/scalar/*.t t/data/object/string/*.t t/data/object/undef/*.t t/data/object/universal/*.t"
   }

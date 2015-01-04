@@ -4,8 +4,6 @@ package Data::Object::Role::Indexed;
 use 5.010;
 use Moo::Role;
 
-with 'Data::Object::Role::Collection';
-
 # VERSION
 
 requires 'slice';

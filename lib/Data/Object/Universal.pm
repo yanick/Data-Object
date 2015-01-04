@@ -8,8 +8,10 @@ use Data::Object 'detract_deep';
 
 with 'Data::Object::Role::Constructor';
 with 'Data::Object::Role::Universal';
+with 'Data::Object::Role::Defined';
 with 'Data::Object::Role::Detract';
 with 'Data::Object::Role::Output';
+with 'Data::Object::Role::Ref';
 
 # VERSION
 

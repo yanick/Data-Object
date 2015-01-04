@@ -113,11 +113,12 @@ sub grep {
 }
 
 sub hashify {
-    my ($array) = @_;
+    my ($array, $code, @arguments) = @_;
 
     my $data = {};
+    $code = codify $code // 1 if !ref $code;
     for (CORE::grep { CORE::defined $_ } @$array) {
-        $data->{$_} = 1;
+        $data->{$_} = $code->($_, @arguments);
     }
 
     return $data;

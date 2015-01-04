@@ -11,8 +11,10 @@ use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Constructor';
 with 'Data::Object::Role::Scalar';
+with 'Data::Object::Role::Defined';
 with 'Data::Object::Role::Detract';
 with 'Data::Object::Role::Output';
+with 'Data::Object::Role::Ref';
 
 # VERSION
 

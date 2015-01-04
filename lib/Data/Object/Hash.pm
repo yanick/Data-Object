@@ -10,8 +10,12 @@ use Types::Standard 'HashRef';
 use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Hash';
+with 'Data::Object::Role::Defined';
+with 'Data::Object::Role::Collection';
 with 'Data::Object::Role::Detract';
+with 'Data::Object::Role::Keyed';
 with 'Data::Object::Role::Output';
+with 'Data::Object::Role::Ref';
 with 'Data::Object::Role::Values';
 
 # VERSION

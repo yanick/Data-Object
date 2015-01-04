@@ -45,10 +45,10 @@ our @EXPORT_OK = qw(
 
 # VERSION
 
-sub codify {
-    my $code = shift // 'return(@_)';
+sub codify ($) {
+    my $code = shift;
     my $vars = sprintf 'my ($%s) = @_;', join ',$', 'a'..'z';
-    my $body = sprintf 'sub { %s do { %s } }', $vars, $code;
+    my $body = sprintf 'sub { %s do { %s } }', $vars, $code // 'return(@_)';
     return (eval $body or die $@);
 };
 

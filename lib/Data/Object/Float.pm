@@ -10,6 +10,7 @@ use Types::Standard 'Num';
 use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Float';
+with 'Data::Object::Role::Defined';
 with 'Data::Object::Role::Detract';
 with 'Data::Object::Role::Numeric';
 with 'Data::Object::Role::Output';

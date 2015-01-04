@@ -4,8 +4,6 @@ package Data::Object::Role::Collection;
 use 5.010;
 use Moo::Role;
 
-with 'Data::Object::Role::Item';
-
 # VERSION
 
 requires 'defined';

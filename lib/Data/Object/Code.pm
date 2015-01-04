@@ -10,8 +10,10 @@ use Types::Standard 'CodeRef';
 use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Code';
+with 'Data::Object::Role::Defined';
 with 'Data::Object::Role::Detract';
 with 'Data::Object::Role::Output';
+with 'Data::Object::Role::Ref';
 
 # VERSION
 

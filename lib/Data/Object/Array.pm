@@ -10,8 +10,13 @@ use Types::Standard 'ArrayRef';
 use Data::Object 'deduce_deep', 'detract_deep';
 
 with 'Data::Object::Role::Array';
+with 'Data::Object::Role::Defined';
+with 'Data::Object::Role::Collection';
 with 'Data::Object::Role::Detract';
+with 'Data::Object::Role::Indexed';
+with 'Data::Object::Role::List';
 with 'Data::Object::Role::Output';
+with 'Data::Object::Role::Ref';
 with 'Data::Object::Role::Values';
 
 # VERSION
@@ -595,11 +600,13 @@ L<Data::Object::Array> object.
     # given [1..5]
 
     $array->hashify; # {1=>1,2=>1,3=>1,4=>1,5=>1}
+    $array->hashify(sub { shift % 2 }); # {1=>1,2=>0,3=>1,4=>0,5=>1}
 
 The hashify method returns a hash reference where the elements of array become
-the hash keys and the corresponding values are assigned a value of 1. Note,
-undefined elements will be dropped. This method returns a L<Data::Object::Hash>
-object.
+the hash keys and the corresponding values are assigned a value of 1. This
+method supports codification, i.e, takes an argument which can be a codifiable
+string, a code reference, or a code data type object. Note, undefined elements
+will be dropped. This method returns a L<Data::Object::Hash> object.
 
 =cut
 
