@@ -368,7 +368,7 @@ their function.
 
 Certain methods provided by the this module support codification, a process
 which converts a string argument into code reference which can be used to supply
-a callback to the routine. Codified strings can access its arguments by using
+a callback to the routine. A codified string can access its arguments by using
 variable names which correspond to letters in the alphabet which represent the
 position in the argument list. For example:
 
