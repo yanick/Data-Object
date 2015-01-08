@@ -112,6 +112,9 @@ position in the argument list. For example:
     # given that $a and $b are method-supplied arguments
     # ... whereas $c is assigned the user-supplied argument, 100
 
+Any place a codified string is accepted, a coderef or L<Data::Object::Code>
+is also valid.  Arguments are passed through the usual C<@_> list.
+
 =cut
 
 =method call
