@@ -375,7 +375,7 @@ position in the argument list. For example:
     $array->method('$a + $b * $c', 100);
 
     # given that $a and $b are method-supplied arguments
-    # ... whereas $c is assigned the user-supplied argument, 25
+    # ... whereas $c is assigned the user-supplied argument, 100
 
 =cut
 
