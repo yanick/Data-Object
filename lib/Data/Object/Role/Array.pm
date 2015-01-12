@@ -109,7 +109,7 @@ sub get {
 sub grep {
     my ($array, $code, @arguments) = @_;
     $code = codify $code if !ref $code;
-    return $array->new([CORE::grep { $code->($_, @arguments) } @$array]);
+    return [CORE::grep { $code->($_, @arguments) } @$array];
 }
 
 sub hashify {
@@ -153,7 +153,7 @@ sub keyed {
 
 sub keys {
     my ($array) = @_;
-    return $array->new([0 .. $#{$array}]);
+    return [0 .. $#{$array}];
 }
 
 sub last {
