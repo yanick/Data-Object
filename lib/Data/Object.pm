@@ -49,12 +49,14 @@ sub codify ($) {
     my $code = shift;
     my $vars = sprintf 'my ($%s) = @_;', join ',$', 'a'..'z';
     my $body = sprintf 'sub { %s do { %s } }', $vars, $code // 'return(@_)';
+    local $@;
     return (eval $body or die $@);
 };
 
 sub load ($) {
     my $class = shift;
     my $failed = ! $class || $class !~ /^\w(?:[\w:']*\w)?$/;
+    local $@;
     my $loaded = $class->can('new') || eval "require $class; 1";
 
     croak join ": ", "Error attempting to load $class", $@
