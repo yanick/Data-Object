@@ -49,9 +49,9 @@ subtest 'test the deduce/detract functions' => sub {
     isa_ok $number, 'Data::Object::Integer';
     is detract($number), 12345;
 
-    my $scalar = deduce qr/\w+/;
-    isa_ok $scalar, 'Data::Object::Scalar';
-    is detract($scalar), qr/\w+/;
+    my $regexp = deduce qr/\w+/;
+    isa_ok $regexp, 'Data::Object::Regexp';
+    is detract($regexp), qr/\w+/;
 
     my $string = deduce 'Hello World';
     isa_ok $string, 'Data::Object::String';

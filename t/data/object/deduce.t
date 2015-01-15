@@ -42,8 +42,8 @@ subtest 'test the deduce function' => sub {
     my $number = deduce '+12345';
     isa_ok $number, 'Data::Object::Integer';
 
-    my $scalar = deduce qr/\w+/;
-    isa_ok $scalar, 'Data::Object::Scalar';
+    my $regexp = deduce qr/\w+/;
+    isa_ok $regexp, 'Data::Object::Regexp';
 
     my $string = deduce 'Hello World';
     isa_ok $string, 'Data::Object::String';

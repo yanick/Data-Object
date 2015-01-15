@@ -125,6 +125,11 @@ sub data_universal ($) {
     goto $class->can('new');
 }
 
+sub data_regexp ($) {
+    unshift @_, my $class = load 'Data::Object::Regexp';
+    goto $class->can('new');
+}
+
 sub deduce ($) {
     my $scalar = shift;
 
@@ -135,7 +140,7 @@ sub deduce ($) {
 
     # handle blessed objects
     elsif (blessed $scalar) {
-        return data_scalar $scalar if $scalar->isa('Regexp');
+        return data_regexp $scalar if $scalar->isa('Regexp');
         return $scalar;
     }
 
@@ -204,6 +209,7 @@ sub deduce_type ($) {
     return 'ARRAY'     if $object->isa('Data::Object::Array');
     return 'HASH'      if $object->isa('Data::Object::Hash');
     return 'CODE'      if $object->isa('Data::Object::Code');
+    return 'REGEXP'    if $object->isa('Data::Object::Regexp');
 
     return 'FLOAT'     if $object->isa('Data::Object::Float');
     return 'NUMBER'    if $object->isa('Data::Object::Number');
@@ -223,12 +229,13 @@ sub detract ($) {
     my $type   = deduce_type $object;
 
     INSPECT:
-    if (blessed($object) and ($object->isa('Regexp') or not $type)) {
+    if (not $type) {
         return $object;
     }
 
     return [@$object] if $type eq 'ARRAY';
     return {%$object} if $type eq 'HASH';
+    return $$object   if $type eq 'REGEXP';
     return $$object   if $type eq 'FLOAT';
     return $$object   if $type eq 'NUMBER';
     return $$object   if $type eq 'INTEGER';
