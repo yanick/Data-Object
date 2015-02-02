@@ -1,7 +1,8 @@
 Changelog for Data-Object
 
-0.13 2015-02-02T03:04:57
- - add to .mailmap as a contributor
+0.13 2015-02-02T03:19:52
+ - Added contributor and updated the build process.
+ - Added Anthony Brummett to .mailmap as a contributor.
  - Fixed illegal use of constructor in the Array role.
 
 0.12 2015-01-04T03:33:44
