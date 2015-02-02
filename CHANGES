@@ -1,6 +1,6 @@
 Changelog for Data-Object
 
-0.13 2015-02-02T05:05:40
+0.13 2015-02-02T05:06:59
  - Updated dist.ini.
  - Modified testing strategy and added strict and warnings declarations.
  - Miscellaneous cleanup before release.
