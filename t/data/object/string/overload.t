@@ -1,3 +1,5 @@
+use strict;
+use warnings;
 use Test::More;
 
 use_ok 'Data::Object::String';
@@ -8,7 +10,7 @@ subtest 'test object overloading' => sub {
 
     $string = Data::Object::String->new('longgggg');
     ok $string;
-    ok $string == 'longgggg';
+    ok $string eq 'longgggg';
     ok $string =~ qr/long+/;
     is "$string", 'longgggg';
 };
