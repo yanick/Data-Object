@@ -6,9 +6,9 @@ subtest 'test object overloading' => sub {
     my $string = Data::Object::Undef->new(undef);
     ok !$string;
     is "$string", '';
-    ok $string == undef;
-    ok $string =~ qr/^$/;
     is "$string", '';
+    is((0+$string), 0);
+    like $string, qr/^$/;
 };
 
 ok 1 and done_testing;

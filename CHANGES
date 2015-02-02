@@ -1,12 +1,16 @@
 Changelog for Data-Object
 
-0.13 2015-02-02T03:32:11
+0.13 2015-02-02T04:16:02
+ - Miscellaneous cleanup after PR merge.
  - Reverted to the old .travis.yml config.
  - Added contributor and updated the build process.
  - Added Anthony Brummett to .mailmap as a contributor.
  - Proper incantation for capturing the exception and re-throwing it.
  - Localize $@ before eval.
  - Fixed illegal use of constructor in the Array role.
+ - Updated documentation to correct incorrect grammar.
+ - Explain that coderefs are also acceptable where codified strings are.
+ - Fixed typo about codification arguments.
 
 0.12 2015-01-04T03:33:44
  - v0.12
