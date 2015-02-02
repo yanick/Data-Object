@@ -1,3 +1,5 @@
+use strict;
+use warnings;
 use Test::More;
 
 plan skip_all => 'Missing implicit dependencies. Tests skipped.' unless eval q(

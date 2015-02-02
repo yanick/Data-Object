@@ -1,6 +1,8 @@
 Changelog for Data-Object
 
-0.13 2015-02-02T04:16:02
+0.13 2015-02-02T04:44:35
+ - Modified testing strategy and added strict and warnings declarations.
+ - Miscellaneous cleanup before release.
  - Miscellaneous cleanup after PR merge.
  - Reverted to the old .travis.yml config.
  - Added contributor and updated the build process.
