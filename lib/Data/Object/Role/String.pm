@@ -84,6 +84,7 @@ sub replace {
     my ($self, $find, $replace, $flags) = @_;
     $flags = defined $flags ? $flags : '';
     $find  = quotemeta $find if $find and 'Regexp' ne ref $find;
+
     local $@;
     eval("sub { \$_[0] =~ s/$find/$replace/$flags }")->($self);
 

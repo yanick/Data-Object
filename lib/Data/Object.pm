@@ -56,6 +56,7 @@ sub codify ($) {
         $sub = eval $body;
         $@;
     };
+
     croak $error unless $sub;
     return $sub;
 };
