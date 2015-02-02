@@ -1,6 +1,11 @@
 Changelog for Data-Object
 
-0.12 2015-01-04T03:32:48
+0.13 2015-02-02T03:04:57
+ - add to .mailmap as a contributor
+ - Fixed illegal use of constructor in the Array role.
+
+0.12 2015-01-04T03:33:44
+ - v0.12
  - The hashify method of Array supports codification. Miscellaneous roles
    cleanup.
 

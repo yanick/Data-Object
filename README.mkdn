@@ -2,13 +2,11 @@
 
 Data::Object - Data Type Objects for Perl 5
 
+[![Build Status](https://travis-ci.org/alnewkirk/Data-Object.png?branch=master)](https://travis-ci.org/alnewkirk/Data-Object)
+
 # VERSION
 
-version 0.12
-
-# STATUS
-
-<a href="https://travis-ci.org/alnewkirk/Data-Object"><img src="https://travis-ci.org/alnewkirk/Data-Object.svg?branch=master"></a>
+version 0.13
 
 # SYNOPSIS
 
@@ -230,6 +228,10 @@ Blessed objects are not traversed.
 # AUTHOR
 
 Al Newkirk <anewkirk@ana.io>
+
+# CONTRIBUTOR
+
+Anthony Brummett <brummett@gmail.com>
 
 # COPYRIGHT AND LICENSE
 
