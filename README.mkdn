@@ -231,7 +231,7 @@ Al Newkirk <anewkirk@ana.io>
 
 # CONTRIBUTOR
 
-Anthony Brummett <brummett@gmail.com>
+Anthony Brummett <abrummet@genome.wustl.edu>
 
 # COPYRIGHT AND LICENSE
 
