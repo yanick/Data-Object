@@ -4,9 +4,9 @@ package Data::Object::Role::Hash;
 use 5.010;
 use Moo::Role;
 
-use Clone 'clone';
 use Data::Object 'codify';
 use Scalar::Util 'blessed';
+use Storable     'dclone';
 
 # VERSION
 
@@ -182,8 +182,8 @@ sub pairs_array {
 sub merge {
     my ($hash, @arguments) = @_;
 
-    return clone $hash unless @arguments;
-    return clone merge($hash, merge(@arguments)) if @arguments > 1;
+    return dclone $hash unless @arguments;
+    return dclone merge($hash, merge(@arguments)) if @arguments > 1;
 
     my ($right) = @arguments;
 
@@ -194,7 +194,7 @@ sub merge {
         else { $merge{$key} = $right->{$key} }
     }
 
-    return clone \%merge;
+    return dclone \%merge;
 }
 
 sub reset {
