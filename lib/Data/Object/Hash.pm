@@ -523,7 +523,7 @@ execution.
 
     $hash->merge({7,7,9,9}); # {1=>2,3=>4,5=>6,7=>7,9=>9}
 
-The list method returns a hash reference where the elements in the hash and
+The merge method returns a hash reference where the elements in the hash and
 the elements in the argument(s) are merged. This operation performs a deep merge
 and clones the datasets to ensure no side-effects. This method returns a
 L<Data::Object::Hash> object.
