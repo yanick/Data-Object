@@ -7,9 +7,6 @@ use warnings;
 
 use Carp;
 
-use Data::Dumper ();
-use Types::Standard ();
-
 use Exporter qw(import);
 use Scalar::Util qw(blessed looks_like_number reftype);
 

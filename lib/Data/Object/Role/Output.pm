@@ -3,13 +3,14 @@ package Data::Object::Role::Output;
 
 use 5.010;
 use Moo::Role;
-use Data::Dumper ();
 
 use Data::Object 'detract_deep';
 
 # VERSION
 
 sub dump {
+    require Data::Dumper;
+
     local $Data::Dumper::Indent    = 0;
     local $Data::Dumper::Purity    = 0;
     local $Data::Dumper::Quotekeys = 0;

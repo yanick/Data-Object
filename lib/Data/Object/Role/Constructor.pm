@@ -5,7 +5,6 @@ use 5.010;
 use Moo::Role;
 
 use Scalar::Util 'blessed';
-use Types::Standard 'Any';
 
 # VERSION
 
@@ -14,10 +13,6 @@ sub new {
     my $data  = shift;
 
     $class = ref($class) || $class;
-    unless (blessed($data) && $data->isa($class)) {
-        $data = Any->($data);
-    }
-
     if (blessed($data) && $data->isa('Regexp') && $^V <= v5.12.0) {
         $data = do {\(my $q = qr/$data/)};
     }
