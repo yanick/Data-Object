@@ -3,17 +3,18 @@ package Data::Object::Code;
 
 use 5.010;
 
-use Moo 'with';
-use Scalar::Util 'blessed';
-use Types::Standard 'CodeRef';
-
+use Carp         'confess';
 use Data::Object 'deduce_deep', 'detract_deep';
+use Moo          'with';
+use Scalar::Util 'blessed';
 
-with 'Data::Object::Role::Code';
-with 'Data::Object::Role::Defined';
-with 'Data::Object::Role::Detract';
-with 'Data::Object::Role::Output';
-with 'Data::Object::Role::Ref';
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Code
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+);
 
 # VERSION
 
@@ -23,7 +24,8 @@ sub new {
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
-        $data = CodeRef->($data);
+        confess 'Type Instantiation Error: Not a CodeRef'
+            unless 'CODE' eq ref $data;
     }
 
     return bless $data, $class;

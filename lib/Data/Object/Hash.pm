@@ -3,20 +3,21 @@ package Data::Object::Hash;
 
 use 5.010;
 
-use Moo 'with';
-use Scalar::Util 'blessed';
-use Types::Standard 'HashRef';
-
+use Carp         'confess';
 use Data::Object 'deduce_deep', 'detract_deep';
+use Moo          'with';
+use Scalar::Util 'blessed';
 
-with 'Data::Object::Role::Hash';
-with 'Data::Object::Role::Defined';
-with 'Data::Object::Role::Collection';
-with 'Data::Object::Role::Detract';
-with 'Data::Object::Role::Keyed';
-with 'Data::Object::Role::Output';
-with 'Data::Object::Role::Ref';
-with 'Data::Object::Role::Values';
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Hash
+    Data::Object::Role::Defined
+    Data::Object::Role::Collection
+    Data::Object::Role::Detract
+    Data::Object::Role::Keyed
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+    Data::Object::Role::Values
+);
 
 # VERSION
 
@@ -26,7 +27,8 @@ sub new {
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
-        $data = HashRef->($data);
+        confess 'Type Instantiation Error: Not a HashRef'
+            unless 'HASH' eq ref $data;
     }
 
     return bless $data, $class;

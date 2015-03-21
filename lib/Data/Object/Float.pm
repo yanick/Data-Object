@@ -3,17 +3,18 @@ package Data::Object::Float;
 
 use 5.010;
 
-use Moo 'with';
-use Scalar::Util 'blessed';
-use Types::Standard 'Num';
-
+use Carp         'confess';
 use Data::Object 'deduce_deep', 'detract_deep';
+use Moo          'with';
+use Scalar::Util 'blessed', 'looks_like_number';
 
-with 'Data::Object::Role::Float';
-with 'Data::Object::Role::Defined';
-with 'Data::Object::Role::Detract';
-with 'Data::Object::Role::Numeric';
-with 'Data::Object::Role::Output';
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Float
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Numeric
+    Data::Object::Role::Output
+);
 
 use overload
     'bool'   => \&data,
@@ -32,7 +33,9 @@ sub new {
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
-        $data = Num->($data);
+        confess 'Type Instantiation Error: Not a Float or Number'
+            unless defined($data) && !ref($data)
+            && looks_like_number($data);
     }
 
     return bless \$data, $class;
