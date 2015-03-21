@@ -3,18 +3,19 @@ package Data::Object::Scalar;
 
 use 5.010;
 
-use Moo 'with';
-use Scalar::Util 'blessed';
-use Types::Standard 'Defined';
-
+use Carp         'confess';
 use Data::Object 'deduce_deep', 'detract_deep';
+use Moo          'with';
+use Scalar::Util 'blessed';
 
-with 'Data::Object::Role::Constructor';
-with 'Data::Object::Role::Scalar';
-with 'Data::Object::Role::Defined';
-with 'Data::Object::Role::Detract';
-with 'Data::Object::Role::Output';
-with 'Data::Object::Role::Ref';
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Constructor
+    Data::Object::Role::Scalar
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+);
 
 # VERSION
 
