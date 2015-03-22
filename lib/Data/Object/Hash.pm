@@ -8,16 +8,7 @@ use Data::Object 'deduce_deep', 'detract_deep';
 use Moo          'with';
 use Scalar::Util 'blessed';
 
-map with($_), our @ROLES = qw(
-    Data::Object::Role::Hash
-    Data::Object::Role::Defined
-    Data::Object::Role::Collection
-    Data::Object::Role::Detract
-    Data::Object::Role::Keyed
-    Data::Object::Role::Output
-    Data::Object::Role::Ref
-    Data::Object::Role::Values
-);
+with 'Data::Object::Role::Hash';
 
 # VERSION
 

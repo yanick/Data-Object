@@ -8,13 +8,7 @@ use Data::Object 'deduce_deep', 'detract_deep';
 use Moo          'with';
 use Scalar::Util 'blessed', 'looks_like_number';
 
-map with($_), our @ROLES = qw(
-    Data::Object::Role::Integer
-    Data::Object::Role::Defined
-    Data::Object::Role::Detract
-    Data::Object::Role::Numeric
-    Data::Object::Role::Output
-);
+with 'Data::Object::Role::Integer';
 
 use overload
     'bool'   => \&data,

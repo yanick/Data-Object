@@ -4,6 +4,11 @@ package Data::Object::Role::Undef;
 use 5.010;
 use Moo::Role;
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+);
+
 # VERSION
 
 sub defined {

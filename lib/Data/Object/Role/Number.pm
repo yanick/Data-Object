@@ -4,6 +4,13 @@ package Data::Object::Role::Number;
 use 5.010;
 use Moo::Role;
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Numeric
+    Data::Object::Role::Output
+);
+
 # VERSION
 
 sub abs {

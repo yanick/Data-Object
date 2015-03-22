@@ -4,6 +4,12 @@ package Data::Object::Role::String;
 use 5.010;
 use Moo::Role;
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+);
+
 # VERSION
 
 sub append {

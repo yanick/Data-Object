@@ -6,6 +6,13 @@ use Moo::Role;
 
 use Data::Object 'codify';
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+);
+
 # VERSION
 
 sub call {

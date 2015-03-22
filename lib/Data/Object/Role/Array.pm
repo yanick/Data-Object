@@ -7,6 +7,17 @@ use Moo::Role;
 use Data::Object 'codify';
 use Scalar::Util 'looks_like_number';
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Collection
+    Data::Object::Role::Detract
+    Data::Object::Role::Indexed
+    Data::Object::Role::List
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+    Data::Object::Role::Values
+);
+
 # VERSION
 
 sub all {
