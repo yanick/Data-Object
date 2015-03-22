@@ -30,6 +30,22 @@ data.
 
 =cut
 
+=head1 ROLES
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=back
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4

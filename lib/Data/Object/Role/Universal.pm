@@ -29,6 +29,34 @@ types.
 
 =cut
 
+=head1 ROLES
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Constructor>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Ref>
+
+=back
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4

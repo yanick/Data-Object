@@ -372,6 +372,46 @@ references.
 
 =cut
 
+=head1 ROLES
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Collection>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Indexed>
+
+=item *
+
+L<Data::Object::Role::List>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Ref>
+
+=item *
+
+L<Data::Object::Role::Values>
+
+=back
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4
