@@ -1,4 +1,4 @@
-requires "Moo" => "1.006001";
+requires "Moo" => "2.000001";
 requires "perl" => "v5.10.0";
 
 on 'test' => sub {
