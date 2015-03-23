@@ -100,6 +100,8 @@ data.
 
 =head1 ROLES
 
+This role is composed of the following roles.
+
 =over 4
 
 =item *

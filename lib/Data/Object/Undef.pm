@@ -61,6 +61,11 @@ sub detract {
 Data::Object::Undef provides common methods for operating on Perl 5 undefined
 data. Undef methods work on undefined values.
 
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Undef>
+role and implements proxy methods as documented herewith.
+
 =cut
 
 =method defined

@@ -59,6 +59,11 @@ around 'xor' => sub {
 Data::Object::Scalar provides common methods for operating on Perl 5 scalar
 objects. Scalar methods work on data that meets the criteria for being a scalar.
 
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Scalar>
+role and implements proxy methods as documented herewith.
+
 =cut
 
 =method and

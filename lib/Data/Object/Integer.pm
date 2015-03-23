@@ -117,6 +117,11 @@ methods that modify the integer itself as opposed to returning a new integer.
 Unless stated, it may be safe to assume that the following methods copy, modify
 and return new integers based on their function.
 
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Integer>
+role and implements proxy methods as documented herewith.
+
 =cut
 
 =head1 SEE ALSO

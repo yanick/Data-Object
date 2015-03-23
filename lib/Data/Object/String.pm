@@ -210,6 +210,11 @@ modify the string itself as opposed to returning a new string. Unless stated, it
 may be safe to assume that the following methods copy, modify and return new
 strings based on their function.
 
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::String>
+role and implements proxy methods as documented herewith.
+
 =cut
 
 =method append

@@ -33,6 +33,11 @@ sub detract {
 Data::Object::Universal provides common methods for operating on any Perl 5 data
 types.
 
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Universal>
+role and implements proxy methods as documented herewith.
+
 =cut
 
 =head1 SEE ALSO

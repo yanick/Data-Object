@@ -201,6 +201,11 @@ methods that modify the number itself as opposed to returning a new number.
 Unless stated, it may be safe to assume that the following methods copy, modify
 and return new numbers based on their function.
 
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Number>
+role and implements proxy methods as documented herewith.
+
 =cut
 
 =method abs
