@@ -3,8 +3,10 @@ package Data::Object::Universal;
 
 use 5.010;
 
-use Moo 'with';
-use Data::Object 'detract_deep';
+use Carp         'confess';
+use Data::Object 'deduce_deep', 'detract_deep';
+use Moo          'with';
+use Scalar::Util 'blessed';
 
 with 'Data::Object::Role::Universal';
 

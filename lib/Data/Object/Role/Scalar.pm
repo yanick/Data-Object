@@ -14,22 +14,6 @@ map with($_), our @ROLES = qw(
 
 # VERSION
 
-sub and {
-    return $_[0] && $_[1];
-}
-
-sub not {
-    return ! shift;
-}
-
-sub or {
-    return $_[0] || $_[1];
-}
-
-sub xor {
-    return ($_[0] xor $_[1]) ? 1 : 0;
-}
-
 1;
 
 =encoding utf8
