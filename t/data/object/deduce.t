@@ -8,7 +8,7 @@ plan skip_all => 'Missing implicit dependencies. Tests skipped.' unless eval q(
     require Data::Object::Float;
     require Data::Object::Hash;
     require Data::Object::Number;
-    require Data::Object::Number;
+    require Data::Object::Regexp;
     require Data::Object::Scalar;
     require Data::Object::String;
     require Data::Object::Undef;

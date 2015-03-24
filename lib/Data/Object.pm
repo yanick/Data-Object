@@ -105,6 +105,11 @@ sub data_number ($) {
     goto $class->can('new');
 }
 
+sub data_regexp ($) {
+    unshift @_, my $class = load 'Data::Object::Regexp';
+    goto $class->can('new');
+}
+
 sub data_scalar ($) {
     unshift @_, my $class = load 'Data::Object::Scalar';
     goto $class->can('new');
@@ -122,11 +127,6 @@ sub data_undef ($) {
 
 sub data_universal ($) {
     unshift @_, my $class = load 'Data::Object::Universal';
-    goto $class->can('new');
-}
-
-sub data_regexp ($) {
-    unshift @_, my $class = load 'Data::Object::Regexp';
     goto $class->can('new');
 }
 
@@ -209,7 +209,6 @@ sub deduce_type ($) {
     return 'ARRAY'     if $object->isa('Data::Object::Array');
     return 'HASH'      if $object->isa('Data::Object::Hash');
     return 'CODE'      if $object->isa('Data::Object::Code');
-    return 'REGEXP'    if $object->isa('Data::Object::Regexp');
 
     return 'FLOAT'     if $object->isa('Data::Object::Float');
     return 'NUMBER'    if $object->isa('Data::Object::Number');
@@ -217,6 +216,7 @@ sub deduce_type ($) {
 
     return 'STRING'    if $object->isa('Data::Object::String');
     return 'SCALAR'    if $object->isa('Data::Object::Scalar');
+    return 'REGEXP'    if $object->isa('Data::Object::Regexp');
 
     return 'UNDEF'     if $object->isa('Data::Object::Undef');
     return 'UNIVERSAL' if $object->isa('Data::Object::Universal');
@@ -229,9 +229,7 @@ sub detract ($) {
     my $type   = deduce_type $object;
 
     INSPECT:
-    if (not $type) {
-        return $object;
-    }
+    return $object unless $type;
 
     return [@$object] if $type eq 'ARRAY';
     return {%$object} if $type eq 'HASH';
