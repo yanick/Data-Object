@@ -79,6 +79,36 @@ L<Data::Object::Number> object.
 
 =cut
 
+=head1 OPERATORS
+
+This class overloads the following operators for your convenience.
+
+=operator bool
+
+    !!$undef
+
+    # equivilent to
+
+    $undef->data
+
+=operation string
+
+    "$undef"
+
+    # equivilent to
+
+    $undef->data
+
+=operator smartmatch
+
+    $value ~~ $undef
+
+    # equivilent to
+
+    $undef->data
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4

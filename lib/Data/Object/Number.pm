@@ -379,6 +379,36 @@ returns a data type object to be determined after execution.
 
 =cut
 
+=head1 OPERATORS
+
+This class overloads the following operators for your convenience.
+
+=operator bool
+
+    !!$number
+
+    # equivilent to
+
+    $number->data
+
+=operation string
+
+    "$number"
+
+    # equivilent to
+
+    $number->data
+
+=operator smartmatch
+
+    $value ~~ $number
+
+    # equivilent to
+
+    $number->data
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4

@@ -124,6 +124,36 @@ role and implements proxy methods as documented herewith.
 
 =cut
 
+=head1 OPERATORS
+
+This class overloads the following operators for your convenience.
+
+=operator bool
+
+    !!$integer
+
+    # equivilent to
+
+    $integer->data
+
+=operation string
+
+    "$integer"
+
+    # equivilent to
+
+    $integer->data
+
+=operator smartmatch
+
+    $value ~~ $integer
+
+    # equivilent to
+
+    $integer->data
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4

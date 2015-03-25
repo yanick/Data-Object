@@ -553,6 +553,36 @@ array reference. This method returns a L<Data::Object::Array> object.
 
 =cut
 
+=head1 OPERATORS
+
+This class overloads the following operators for your convenience.
+
+=operator bool
+
+    !!$string
+
+    # equivilent to
+
+    $string->data
+
+=operation string
+
+    "$string"
+
+    # equivilent to
+
+    $string->data
+
+=operator smartmatch
+
+    $value ~~ $string
+
+    # equivilent to
+
+    $string->data
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4
