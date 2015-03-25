@@ -31,3 +31,4 @@ nytprof.out
 pm_to_blib
 tags
 vagrantfile
+*.pl
