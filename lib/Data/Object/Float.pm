@@ -10,12 +10,12 @@ use Scalar::Util 'blessed', 'looks_like_number';
 
 with 'Data::Object::Role::Float';
 
-use overload
-    'bool'   => \&data,
-    '""'     => \&data,
-    '~~'     => \&data,
+use overload (
+    'bool'   => 'data',
+    '""'     => 'data',
+    '~~'     => 'data',
     fallback => 1,
-;
+);
 
 # VERSION
 

@@ -10,12 +10,12 @@ use Scalar::Util 'blessed';
 
 with 'Data::Object::Role::String';
 
-use overload
-    'bool'   => \&data,
-    '""'     => \&data,
-    '~~'     => \&data,
+use overload (
+    'bool'   => 'data',
+    '""'     => 'data',
+    '~~'     => 'data',
     fallback => 1,
-;
+);
 
 # VERSION
 
