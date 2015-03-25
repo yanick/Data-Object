@@ -154,6 +154,10 @@ L<Data::Object::Role::Number>
 
 =item *
 
+L<Data::Object::Role::Regexp>
+
+=item *
+
 L<Data::Object::Role::Scalar>
 
 =item *

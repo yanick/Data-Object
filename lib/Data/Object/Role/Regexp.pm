@@ -66,6 +66,32 @@ expressions.
 
 =cut
 
+=head1 ROLES
+
+This role is composed of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Ref>
+
+=back
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4
