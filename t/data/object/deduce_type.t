@@ -8,7 +8,7 @@ plan skip_all => 'Missing implicit dependencies. Tests skipped.' unless eval q(
     require Data::Object::Float;
     require Data::Object::Hash;
     require Data::Object::Number;
-    require Data::Object::Number;
+    require Data::Object::Regexp;
     require Data::Object::Scalar;
     require Data::Object::String;
     require Data::Object::Undef;
@@ -45,8 +45,8 @@ subtest 'test the deduce_type function' => sub {
     my $neg_number = deduce_type '-12345';
     is $neg_number, 'INTEGER';
 
-    my $scalar = deduce_type qr/\w+/;
-    is $scalar, 'SCALAR';
+    my $regexp = deduce_type qr/\w+/;
+    is $regexp, 'REGEXP';
 
     my $string = deduce_type 'Hello World';
     is $string, 'STRING';

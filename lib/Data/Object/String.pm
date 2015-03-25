@@ -583,6 +583,10 @@ L<Data::Object::Number>
 
 =item *
 
+L<Data::Object::Regexp>
+
+=item *
+
 L<Data::Object::Scalar>
 
 =item *
