@@ -121,7 +121,7 @@ sub data_string ($) {
     goto $class->can('new');
 }
 
-sub data_undef ($) {
+sub data_undef (;$) {
     unshift @_, my $class = load 'Data::Object::Undef';
     goto $class->can('new');
 }
