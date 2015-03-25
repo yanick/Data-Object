@@ -8,6 +8,16 @@ use Data::Object 'codify';
 use Scalar::Util 'blessed';
 use Storable     'dclone';
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Collection
+    Data::Object::Role::Detract
+    Data::Object::Role::Keyed
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+    Data::Object::Role::Values
+);
+
 # VERSION
 
 sub aslice {
@@ -236,6 +246,44 @@ sub values {
 
 Data::Object::Role::Hash provides functions for operating on Perl 5 hash
 references.
+
+=cut
+
+=head1 ROLES
+
+This role is composed of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Collection>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Keyed>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Ref>
+
+=item *
+
+L<Data::Object::Role::Values>
+
+=back
 
 =cut
 

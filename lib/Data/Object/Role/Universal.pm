@@ -4,6 +4,14 @@ package Data::Object::Role::Universal;
 use 5.010;
 use Moo::Role;
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Constructor
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+);
+
 # VERSION
 
 1;
@@ -18,6 +26,36 @@ use Moo::Role;
 
 Data::Object::Role::Universal provides functions for operating on any Perl 5 data
 types.
+
+=cut
+
+=head1 ROLES
+
+This role is composed of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Constructor>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Ref>
+
+=back
 
 =cut
 

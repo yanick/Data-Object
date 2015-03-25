@@ -3,15 +3,12 @@ package Data::Object::Universal;
 
 use 5.010;
 
-use Moo 'with';
-use Data::Object 'detract_deep';
+use Carp         'confess';
+use Data::Object 'deduce_deep', 'detract_deep';
+use Moo          'with';
+use Scalar::Util 'blessed';
 
-with 'Data::Object::Role::Constructor';
 with 'Data::Object::Role::Universal';
-with 'Data::Object::Role::Defined';
-with 'Data::Object::Role::Detract';
-with 'Data::Object::Role::Output';
-with 'Data::Object::Role::Ref';
 
 # VERSION
 
@@ -37,6 +34,11 @@ sub detract {
 
 Data::Object::Universal provides common methods for operating on any Perl 5 data
 types.
+
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Universal>
+role and implements proxy methods as documented herewith.
 
 =cut
 

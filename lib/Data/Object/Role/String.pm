@@ -4,6 +4,12 @@ package Data::Object::Role::String;
 use 5.010;
 use Moo::Role;
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+);
+
 # VERSION
 
 sub append {
@@ -163,6 +169,28 @@ sub words {
 
 Data::Object::Role::String provides functions for operating on Perl 5 string
 data.
+
+=cut
+
+=head1 ROLES
+
+This role is composed of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=back
 
 =cut
 

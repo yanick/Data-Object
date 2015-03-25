@@ -4,6 +4,11 @@ package Data::Object::Role::Undef;
 use 5.010;
 use Moo::Role;
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+);
+
 # VERSION
 
 sub defined {
@@ -22,6 +27,24 @@ sub defined {
 
 Data::Object::Role::Undef provides functions  for operating on Perl 5 undefined
 data.
+
+=cut
+
+=head1 ROLES
+
+This role is composed of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=back
 
 =cut
 

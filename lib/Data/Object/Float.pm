@@ -8,13 +8,7 @@ use Data::Object 'deduce_deep', 'detract_deep';
 use Moo          'with';
 use Scalar::Util 'blessed', 'looks_like_number';
 
-map with($_), our @ROLES = qw(
-    Data::Object::Role::Float
-    Data::Object::Role::Defined
-    Data::Object::Role::Detract
-    Data::Object::Role::Numeric
-    Data::Object::Role::Output
-);
+with 'Data::Object::Role::Float';
 
 use overload
     'bool'   => \&data,
@@ -123,6 +117,11 @@ Users of floats should be aware of the methods that modify the float itself as
 opposed to returning a new float. Unless stated, it may be safe to assume that
 the following methods copy, modify and return new floats based on their
 function.
+
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Float>
+role and implements proxy methods as documented herewith.
 
 =cut
 

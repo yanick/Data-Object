@@ -4,6 +4,13 @@ package Data::Object::Role::Integer;
 use 5.010;
 use Moo::Role;
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Numeric
+    Data::Object::Role::Output
+);
+
 # VERSION
 
 1;
@@ -18,6 +25,32 @@ use Moo::Role;
 
 Data::Object::Role::Integer provides functions for operating on Perl 5 integer
 data.
+
+=cut
+
+=head1 ROLES
+
+This role is composed of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Numeric>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=back
 
 =cut
 

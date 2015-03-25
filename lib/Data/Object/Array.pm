@@ -8,17 +8,7 @@ use Data::Object 'deduce_deep', 'detract_deep';
 use Moo          'with';
 use Scalar::Util 'blessed';
 
-map with($_), our @ROLES = qw(
-    Data::Object::Role::Array
-    Data::Object::Role::Defined
-    Data::Object::Role::Collection
-    Data::Object::Role::Detract
-    Data::Object::Role::Indexed
-    Data::Object::Role::List
-    Data::Object::Role::Output
-    Data::Object::Role::Ref
-    Data::Object::Role::Values
-);
+with 'Data::Object::Role::Array';
 
 # VERSION
 
@@ -366,21 +356,29 @@ to returning a new array reference. Unless stated, it may be safe to assume that
 the following methods copy, modify and return new array references based on
 their function.
 
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Array>
+role and implements proxy methods as documented herewith.
+
 =head1 CODIFICATION
 
 Certain methods provided by the this module support codification, a process
-which converts a string argument into code reference which can be used to supply
-a callback to the routine. A codified string can access its arguments by using
-variable names which correspond to letters in the alphabet which represent the
-position in the argument list. For example:
+which converts a string argument into a code reference which can be used to
+supply a callback to the method called. A codified string can access its
+arguments by using variable names which correspond to letters in the alphabet
+which represent the position in the argument list. For example:
 
-    $array->method('$a + $b * $c', 100);
+    $array->example('$a + $b * $c', 100);
 
-    # given that $a and $b are method-supplied arguments
-    # ... whereas $c is assigned the user-supplied argument, 100
+    # if the example method does not supply any arguments automatically then
+    # the variable $a would be assigned the user-supplied value of 100,
+    # however, if the example method supplies two arguments automatically then
+    # those arugments would be assigned to the variables $a and $b whereas $c
+    # would be assigned the user-supplied value of 100
 
 Any place a codified string is accepted, a coderef or L<Data::Object::Code>
-is also valid.  Arguments are passed through the usual C<@_> list.
+object is also valid. Arguments are passed through the usual C<@_> list.
 
 =cut
 

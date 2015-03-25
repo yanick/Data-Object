@@ -6,6 +6,13 @@ use Moo::Role;
 
 use Data::Object 'codify';
 
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+);
+
 # VERSION
 
 sub call {
@@ -57,6 +64,32 @@ sub next {
 
 Data::Object::Role::Code provides functions for operating on Perl 5 code
 references.
+
+=cut
+
+=head1 ROLES
+
+This role is composed of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Ref>
+
+=back
 
 =cut
 

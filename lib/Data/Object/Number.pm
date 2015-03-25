@@ -8,13 +8,7 @@ use Data::Object 'deduce_deep', 'detract_deep';
 use Moo          'with';
 use Scalar::Util 'blessed', 'looks_like_number';
 
-map with($_), our @ROLES = qw(
-    Data::Object::Role::Number
-    Data::Object::Role::Defined
-    Data::Object::Role::Detract
-    Data::Object::Role::Numeric
-    Data::Object::Role::Output
-);
+with 'Data::Object::Role::Number';
 
 use overload
     'bool'   => \&data,
@@ -207,6 +201,11 @@ methods that modify the number itself as opposed to returning a new number.
 Unless stated, it may be safe to assume that the following methods copy, modify
 and return new numbers based on their function.
 
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Number>
+role and implements proxy methods as documented herewith.
+
 =cut
 
 =method abs
@@ -215,7 +214,8 @@ and return new numbers based on their function.
 
     $number->abs; # 12
 
-    $number = -12;
+    # given -12
+
     $number->abs; # 12
 
 The abs method returns the absolute value of the number. This method returns a
@@ -262,10 +262,12 @@ a data type object to be determined after execution.
 
     $number->exp; # 1
 
-    $number = 1;
+    # given 1
+
     $number->exp; # 2.71828182845905
 
-    $number = 1.5;
+    # given 1.5
+
     $number->exp; # 4.48168907033806
 
 The exp method returns e (the natural logarithm base) to the power of the

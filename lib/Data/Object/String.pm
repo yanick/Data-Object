@@ -8,12 +8,7 @@ use Data::Object 'deduce_deep', 'detract_deep';
 use Moo          'with';
 use Scalar::Util 'blessed';
 
-map with($_), our @ROLES = qw(
-    Data::Object::Role::String
-    Data::Object::Role::Defined
-    Data::Object::Role::Detract
-    Data::Object::Role::Output
-);
+with 'Data::Object::Role::String';
 
 use overload
     'bool'   => \&data,
@@ -214,6 +209,11 @@ representing characters. Users of strings should be aware of the methods that
 modify the string itself as opposed to returning a new string. Unless stated, it
 may be safe to assume that the following methods copy, modify and return new
 strings based on their function.
+
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::String>
+role and implements proxy methods as documented herewith.
 
 =cut
 

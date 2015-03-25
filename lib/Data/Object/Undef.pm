@@ -8,11 +8,7 @@ use Data::Object 'deduce_deep', 'detract_deep';
 use Moo          'with';
 use Scalar::Util 'blessed';
 
-map with($_), our @ROLES = qw(
-    Data::Object::Role::Undef
-    Data::Object::Role::Detract
-    Data::Object::Role::Output
-);
+with 'Data::Object::Role::Undef';
 
 use overload
     'bool'   => \&data,
@@ -64,6 +60,11 @@ sub detract {
 
 Data::Object::Undef provides common methods for operating on Perl 5 undefined
 data. Undef methods work on undefined values.
+
+=head1 COMPOSITION
+
+This class inherits all functionality from the L<Data::Object::Role::Undef>
+role and implements proxy methods as documented herewith.
 
 =cut
 
