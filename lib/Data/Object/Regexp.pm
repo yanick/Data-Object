@@ -3,17 +3,14 @@ package Data::Object::Regexp;
 
 use 5.010;
 
-use Moo 'with';
+use Carp         'confess';
+use Data::Object 'deduce_deep', 'detract_deep';
+use Moo          'with';
 use Scalar::Util 'blessed';
-use Types::Standard 'RegexpRef';
 
-use Data::Object 'detract';
+use Data::Object::Regexp::Result;
 
 with 'Data::Object::Role::Regexp';
-with 'Data::Object::Role::Defined';
-with 'Data::Object::Role::Detract';
-with 'Data::Object::Role::Output';
-with 'Data::Object::Role::Ref';
 
 # VERSION
 
@@ -22,13 +19,9 @@ sub new {
     my $data  = shift;
 
     $class = ref($class) || $class;
-
-    unless (ref $data) {
-        return $class->new(qr($data));
-    }
-
     unless (blessed($data) && $data->isa($class)) {
-        $data = RegexpRef->($data);
+        confess 'Type Instantiation Error: Not a RegexpRef'
+            unless defined($data) && !! re::is_regexp($data);
     }
 
     return bless \$data, $class;
@@ -38,13 +31,27 @@ sub data {
     goto &detract;
 }
 
+sub detract {
+    return detract_deep shift;
+}
+
+around 'search' => sub {
+    my ($orig, $self, @args) = @_;
+    return Data::Object::Regexp::Result->new(
+        $self->$orig(@args)
+    );
+};
+
+around 'replace' => sub {
+    my ($orig, $self, @args) = @_;
+    return Data::Object::Regexp::Result->new(
+        $self->$orig(@args)
+    );
+};
+
 1;
 
 =encoding utf8
-
-=head1 NAME
-
-Data::Object::Regexp - An object representing a Perl5 regular expression
 
 =head1 SYNOPSIS
 
@@ -55,45 +62,42 @@ Data::Object::Regexp - An object representing a Perl5 regular expression
 =head1 DESCRIPTION
 
 Data::Object::Regexp provides common methods for operating on Perl 5 regular
-expressions. Regexp methods work on data that meets the criteria for being a regular
-expression.
+expressions. Data::Object::Regexp methods work on data that meets the criteria
+for being a regular expression.
 
-=head1 CONSTRUCTOR
+=head1 COMPOSITION
 
-The constructor accepts a single argument which can either be a string
-representing a regular expression or a precompiled regex created from C<qr()>.
+This class inherits all functionality from the L<Data::Object::Role::Regexp>
+role and implements proxy methods as documented herewith.
 
 =cut
 
-=method match
+=method search
 
     # given qr((test))
 
-    $re->match('this is a test'); # a Data::Object::MatchResult instance
-    $re->match('this does not match'); # undef
+    $re->search('this is a test');
+    $re->search('this does not match', 'gi');
 
-The match method performs a regular expression match against the given string.
-If the match is successful, it returns an instance of
-L<Data::Object::MatchResult>.  On an unsuccessful match, it returns a false
-value.
+The search method performs a regular expression match against the given string
+This method will always return a L<Data::Object::Regexp::Result> object which
+can be used to introspect the result of the operation.
 
 =cut
 
-=method substitute
+=method replace
 
     # given qr(test)
 
-    $re->substitute('this is a test', 'drill'); # 'this is a test'
-    $re->substitute('test 1 test 2 test 3', 'drill', 'g'); # 'drill 1 drill 2 drill 3'
+    $re->replace('this is a test', 'drill');
+    $re->replace('test 1 test 2 test 3', 'drill', 'gi');
 
-Perform a regular expression substitution on the given string or
-L<Data::Object::String>.  The first argument is the string to match against.
-The second argument is the replacement string.
-
-The optional third argument are flags to append to the s///x operator, such
-as 'g' or 'e'.
-
-Returns a L<Data::Object::String> instance with the result of the substution.
+The replace method performs a regular expression substitution on the given
+string. The first argument is the string to match against.  The second argument
+is the replacement string.  The optional third argument might be a string
+representing flags to append to the s///x operator, such as 'g' or 'e'.  This
+method will always return a L<Data::Object::Regexp::Result> object which can be
+used to introspect the result of the operation.
 
 =cut
 
@@ -103,14 +107,52 @@ Returns a L<Data::Object::String> instance with the result of the substution.
 
 =item *
 
-L<Data::Object>
+L<Data::Object::Array>
 
 =item *
 
-L<Data::Object::MatchResult>
+L<Data::Object::Code>
+
+=item *
+
+L<Data::Object::Float>
+
+=item *
+
+L<Data::Object::Hash>
+
+=item *
+
+L<Data::Object::Integer>
+
+=item *
+
+L<Data::Object::Number>
+
+=item *
+
+L<Data::Object::Regexp>
+
+=item *
+
+L<Data::Object::Scalar>
 
 =item *
 
 L<Data::Object::String>
 
+=item *
+
+L<Data::Object::Undef>
+
+=item *
+
+L<Data::Object::Universal>
+
+=item *
+
+L<Data::Object::Autobox>
+
 =back
+
+=cut

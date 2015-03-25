@@ -4,40 +4,51 @@ package Data::Object::Role::Regexp;
 use 5.010;
 use Moo::Role;
 
-use Data::Object::MatchResult;
-use Data::Object::String;
-use Carp 'croak';
+use Carp 'confess';
+
+map with($_), our @ROLES = qw(
+    Data::Object::Role::Defined
+    Data::Object::Role::Detract
+    Data::Object::Role::Output
+    Data::Object::Role::Ref
+);
 
 # VERSION
 
-sub match {
-    my $self = shift;
-    my $string = shift;
+sub search {
+    my($self, $string, $flags) = @_;
 
-    my $matched = $string =~ $$self;
-    return '' unless $matched;
+    my $captures;
+    my @matches;
 
-    return Data::Object::MatchResult->new(string => $string,
-                                          regexp => $self,
-                                          _at_minus => [ @- ],
-                                          _at_plus => [ @+ ],
-                                          _captures_hashref => { %+ });
+    my $op   = '$string =~ m/$$self/';
+    my $capt = '$captures = (' . $op . ($flags // '') . ')';
+    my $mtch = '@matches  = ([@-], [@+], {%-})';
+    my $expr = join ';', $capt, $mtch;
+
+    my $error = do { local $@; eval $expr; $@ };
+    confess $error if $error;
+
+    return [$$self, $string, $captures, @matches, $string];
 }
 
-sub substitute {
-    my($self, $string, $subst, $flags) = @_;
+sub replace {
+    my($self, $string, $replacement, $flags) = @_;
 
-    if (defined $flags) {
-        my $error = do {
-            local $@;
-            eval qq(\$string =~ s/\$\$self/\$subst/$flags);
-            $@;
-        };
-        croak $error if $error;
-    } else {
-        $string =~ s/$$self/$subst/;
-    }
-    return Data::Object::String->new($string);
+    my $captures;
+    my @matches;
+
+    my $op   = '$string =~ s/$$self/$replacement/';
+    my $capt = '$captures = (' . $op . ($flags // '') . ')';
+    my $mtch = '@matches  = ([@-], [@+], {%-})';
+    my $expr = join ';', $capt, $mtch;
+
+    my $initial = $string;
+
+    my $error = do { local $@; eval $expr; $@ };
+    confess $error if $error;
+
+    return [$$self, $string, $captures, @matches, $initial];
 }
 
 1;
@@ -61,15 +72,51 @@ expressions.
 
 =item *
 
-L<Object::Data>
+L<Data::Object::Role::Array>
 
 =item *
 
-L<Object::Data::Regexp>
+L<Data::Object::Role::Code>
 
 =item *
 
-L<Object::Data::String>
+L<Data::Object::Role::Float>
+
+=item *
+
+L<Data::Object::Role::Hash>
+
+=item *
+
+L<Data::Object::Role::Integer>
+
+=item *
+
+L<Data::Object::Role::Number>
+
+=item *
+
+L<Data::Object::Role::Regexp>
+
+=item *
+
+L<Data::Object::Role::Scalar>
+
+=item *
+
+L<Data::Object::Role::String>
+
+=item *
+
+L<Data::Object::Role::Undef>
+
+=item *
+
+L<Data::Object::Role::Universal>
+
+=item *
+
+L<Data::Object::Autobox>
 
 =back
 

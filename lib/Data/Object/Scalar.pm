@@ -59,7 +59,7 @@ around 'xor' => sub {
 
     use Data::Object::Scalar;
 
-    my $scalar = Data::Object::Scalar->new(qr/\w/);
+    my $scalar = Data::Object::Scalar->new(\12345);
 
 =head1 DESCRIPTION
 

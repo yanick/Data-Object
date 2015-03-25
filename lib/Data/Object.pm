@@ -18,6 +18,7 @@ our @EXPORT_OK = qw(
     data_hash
     data_integer
     data_number
+    data_regexp
     data_scalar
     data_string
     data_undef
