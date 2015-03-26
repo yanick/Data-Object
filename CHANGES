@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.16 2015-03-26T05:54:47
+0.17 2015-03-26T14:14:08
+ - Updated .travis.yml config.
+
+0.16 2015-03-26T05:55:27
+ - v0.16
  - Excluding development files.
 
 0.15 2015-03-26T05:42:23
