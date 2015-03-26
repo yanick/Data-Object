@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.15 2015-03-26T05:41:04
+0.15 2015-03-26T05:41:43
+ - Updated build.
  - Fixed POD errors.
 
 0.14 2015-03-26T04:40:52
