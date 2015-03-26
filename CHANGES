@@ -1,6 +1,37 @@
 Changelog for Data-Object
 
-0.13 2015-02-02T05:06:59
+0.14 2015-03-26T04:24:23
+ - Miscellaneous style update.
+ - Added documentation for Float, Integer, and Number classes.
+ - Added documentation about overloading.
+ - Modified the overload definitions.
+ - Fixed signature bug in the data_undef function definition.
+ - Removed accidental MatchResult class.
+ - Added Regexp class and role links to documentation.
+ - Updated the .gitignore file.
+ - Re-implemented support for Regexp objects.
+ - Added Regexp link to SEE ALSO section.
+ - Miscellaneous cleanup of typos and layouts.
+ - Upgraded to Moo v2.
+ - Removed scalar routines for "or", "and", "not", and "xor" operations.
+ - Update documentation for class Scalar.
+ - Document roles usages.
+ - Rework roles and composition.
+ - Miscellaneous cleanup.
+ - Removed Clone dependency.
+ - Removed Coercive role.
+ - Removed Type::Tiny dependency, add ROLES package variables.
+ - v0.13
+ - Updated dist.ini.
+ - Modified testing strategy and added strict and warnings declarations.
+ - Miscellaneous cleanup before release.
+ - Added support for Regexp objects.
+ - Updated documentation to correct incorrect grammar.
+ - Explain that coderefs are also acceptable where codified strings are.
+ - Fixed typo about codification arguments.
+
+0.13 2015-02-02T05:07:38
+ - v0.13
  - Updated dist.ini.
  - Modified testing strategy and added strict and warnings declarations.
  - Miscellaneous cleanup before release.
