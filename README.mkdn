@@ -219,6 +219,7 @@ Blessed objects are not traversed.
 - [Data::Object::Hash](https://metacpan.org/pod/Data::Object::Hash)
 - [Data::Object::Integer](https://metacpan.org/pod/Data::Object::Integer)
 - [Data::Object::Number](https://metacpan.org/pod/Data::Object::Number)
+- [Data::Object::Regexp](https://metacpan.org/pod/Data::Object::Regexp)
 - [Data::Object::Scalar](https://metacpan.org/pod/Data::Object::Scalar)
 - [Data::Object::String](https://metacpan.org/pod/Data::Object::String)
 - [Data::Object::Undef](https://metacpan.org/pod/Data::Object::Undef)

@@ -182,6 +182,8 @@ SEE ALSO
 
       * Data::Object::Number
 
+      * Data::Object::Regexp
+
       * Data::Object::Scalar
 
       * Data::Object::String
