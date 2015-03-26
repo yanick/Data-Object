@@ -49,11 +49,7 @@ sub codify ($) {
     my $body = sprintf 'sub { %s do { %s } }', $vars, $code // 'return(@_)';
 
     my $sub;
-    my $error = do {
-        local $@;
-        $sub = eval $body;
-        $@;
-    };
+    my $error = do { local $@; $sub = eval $body; $@ };
 
     croak $error unless $sub;
     return $sub;
