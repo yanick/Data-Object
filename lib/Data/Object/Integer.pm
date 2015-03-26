@@ -124,6 +124,110 @@ role and implements proxy methods as documented herewith.
 
 =cut
 
+=method downto
+
+    # given 1
+
+    $integer->downto(0); # [1,0]
+
+The downto method returns an array reference containing integer decreasing
+values down to and including the limit. This method returns a
+L<Data::Object::Array> object.
+
+=cut
+
+=method eq
+
+    # given 1
+
+    $integer->eq(1); # 1
+
+The eq method performs a numeric equality operation. This method returns a
+L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method gt
+
+    # given 1
+
+    $integer->gt(1); # 0
+
+The gt method performs a numeric greater-than comparison. This method returns a
+L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method gte
+
+    # given 1
+
+    $integer->gte(1); # 1
+
+The gte method performs a numeric greater-than-or-equal-to comparison. This
+method returns a L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method lt
+
+    # given 1
+
+    $integer->lt(1); # 0
+
+The lt method performs a numeric less-than comparison. This method returns a
+L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method lte
+
+    # given 1
+
+    $integer->lte(1); # 1
+
+The lte method performs a numeric less-than-or-equal-to comparison. This
+method returns a L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method ne
+
+    # given 1
+
+    $integer->ne(0); # 1
+
+The ne method performs a numeric equality operation. This method returns a
+L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method to
+
+    # given 1
+
+    $integer->to(2); # [1,2]
+    $integer->to(0); # [1,0]
+
+The to method returns an array reference containing integer increasing or
+decreasing values to and including the limit in ascending or descending order
+based on the value of the floating-point object. This method returns a
+L<Data::Object::Array> object.
+
+=cut
+
+=method upto
+
+    # given 1
+
+    $integer->upto(2); # [1,2]
+
+The upto method returns an array reference containing integer increasing
+values up to and including the limit. This method returns a
+L<Data::Object::Array> object.
+
+=cut
+
 =head1 OPERATORS
 
 This class overloads the following operators for your convenience.

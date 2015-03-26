@@ -256,6 +256,29 @@ a data type object to be determined after execution.
 
 =cut
 
+=method downto
+
+    # given 10
+
+    $number->downto(5); # [10,9,8,7,6,5]
+
+The downto method returns an array reference containing integer decreasing
+values down to and including the limit. This method returns a
+L<Data::Object::Array> object.
+
+=cut
+
+=method eq
+
+    # given 12345
+
+    $number->eq(12346); # 0
+
+The eq method performs a numeric equality operation. This method returns a
+L<Data::Object::Number> object representing a boolean.
+
+=cut
+
 =method exp
 
     # given 0
@@ -272,6 +295,28 @@ a data type object to be determined after execution.
 
 The exp method returns e (the natural logarithm base) to the power of the
 number. This method returns a L<Data::Object::Float> object.
+
+=cut
+
+=method gt
+
+    # given 99
+
+    $number->gt(50); # 1
+
+The gt method performs a numeric greater-than comparison. This method returns a
+L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method gte
+
+    # given 100
+
+    $number->gte(100); # 1
+
+The gte method performs a numeric greater-than-or-equal-to comparison. This
+method returns a L<Data::Object::Number> object representing a boolean.
 
 =cut
 
@@ -319,6 +364,28 @@ returns a L<Data::Object::Float> object.
 
 =cut
 
+=method lt
+
+    # given 86
+
+    $number->lt(88); # 1
+
+The lt method performs a numeric less-than comparison. This method returns a
+L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method lte
+
+    # given 50
+
+    $number->lte(50); # 1
+
+The lte method performs a numeric less-than-or-equal-to comparison. This
+method returns a L<Data::Object::Number> object representing a boolean.
+
+=cut
+
 =method mod
 
     # given 12
@@ -331,6 +398,17 @@ returns a L<Data::Object::Float> object.
 
 The mod method returns the division remainder of the number divided by the
 argment. This method returns a L<Data::Object::Number> object.
+
+=cut
+
+=method ne
+
+    # given -100
+
+    $number->ne(100); # 1
+
+The ne method performs a numeric equality operation. This method returns a
+L<Data::Object::Number> object representing a boolean.
 
 =cut
 
@@ -376,6 +454,32 @@ method returns a data type object to be determined after execution.
 
 The sqrt method returns the positive square root of the number. This method
 returns a data type object to be determined after execution.
+
+=cut
+
+=method to
+
+    # given 5
+
+    $number->to(9); # [5,6,7,8,9]
+    $number->to(1); # [5,4,3,2,1]
+
+The to method returns an array reference containing integer increasing or
+decreasing values to and including the limit in ascending or descending order
+based on the value of the floating-point object. This method returns a
+L<Data::Object::Array> object.
+
+=cut
+
+=method upto
+
+    # given 23
+
+    $number->upto(25); # [23,24,25]
+
+The upto method returns an array reference containing integer increasing
+values up to and including the limit. This method returns a
+L<Data::Object::Array> object.
 
 =cut
 
