@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.14 2015-03-26T04:31:18
+0.14 2015-03-26T04:37:31
+ - Updated build.
  - Updated documentation.
  - Miscellaneous style update.
  - Added documentation for Float, Integer, and Number classes.
