@@ -92,6 +92,17 @@ The data\_number function returns a [Data::Object::Number](https://metacpan.org/
 the provided data type and can be used to perform operations on the data. The
 `type_number` function is an alias to this function.
 
+## data\_regexp
+
+    # given qr/test/;
+
+    $object = data_regexp qr/test/;
+    $object->isa('Data::Object::Regexp');
+
+The data\_regexp function returns a [Data::Object::Regexp](https://metacpan.org/pod/Data::Object::Regexp) instance which wraps
+the provided data type and can be used to perform operations on the data. The
+`type_regexp` function is an alias to this function.
+
 ## data\_scalar
 
     # given qr/\w+/;
