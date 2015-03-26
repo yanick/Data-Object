@@ -91,7 +91,7 @@ This class overloads the following operators for your convenience.
 
     $undef->data
 
-=operation string
+=operator string
 
     "$undef"
 

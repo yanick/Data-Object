@@ -35,6 +35,7 @@ our @EXPORT_OK = qw(
     type_hash
     type_integer
     type_number
+    type_regexp
     type_scalar
     type_string
     type_undef
@@ -400,6 +401,19 @@ C<type_integer> function is an alias to this function.
 The data_number function returns a L<Data::Object::Number> instance which wraps
 the provided data type and can be used to perform operations on the data. The
 C<type_number> function is an alias to this function.
+
+=cut
+
+=function data_regexp
+
+    # given qr/test/;
+
+    $object = data_regexp qr/test/;
+    $object->isa('Data::Object::Regexp');
+
+The data_regexp function returns a L<Data::Object::Regexp> instance which wraps
+the provided data type and can be used to perform operations on the data. The
+C<type_regexp> function is an alias to this function.
 
 =cut
 

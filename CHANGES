@@ -1,6 +1,11 @@
 Changelog for Data-Object
 
-0.14 2015-03-26T04:37:31
+0.15 2015-03-26T05:36:52
+ - Updated build.
+ - Fixed POD errors.
+
+0.14 2015-03-26T04:40:52
+ - v0.14
  - Updated build.
  - Updated documentation.
  - Miscellaneous style update.
@@ -15,8 +20,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Update documentation for class Scalar.
+ - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.

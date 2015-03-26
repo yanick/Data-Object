@@ -125,7 +125,7 @@ sub string {
 
 Data::Object::Regexp::Result provides common methods for introspecting the
 results of an operation involving a regular expressions. These methods work on
-data whose shape conforms to the tuple defined in the synopis.
+data whose shape conforms to the tuple defined in the synopsis.
 
 =cut
 

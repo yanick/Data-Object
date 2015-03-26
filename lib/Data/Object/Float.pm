@@ -241,7 +241,7 @@ This class overloads the following operators for your convenience.
 
     $float->data
 
-=operation string
+=operator string
 
     "$float"
 
