@@ -1,8 +1,8 @@
 Changelog for Data-Object
 
-0.17 2015-03-31T21:10:34
- - Added partially implemented base Class and Role modules.
+0.17 2015-03-31T21:11:15
  - Updated build.
+ - Added partially implemented base Class and Role modules.
  - Updated .travis.yml config.
 
 0.16 2015-03-26T05:55:27
