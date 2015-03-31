@@ -1,6 +1,8 @@
 Changelog for Data-Object
 
-0.17 2015-03-26T14:14:08
+0.17 2015-03-31T21:10:34
+ - Added partially implemented base Class and Role modules.
+ - Updated build.
  - Updated .travis.yml config.
 
 0.16 2015-03-26T05:55:27
@@ -28,8 +30,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Update documentation for class Scalar.
+ - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.
