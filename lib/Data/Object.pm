@@ -298,6 +298,7 @@ sub detract_deep {
     *type_hash      = \&data_hash;
     *type_integer   = \&data_integer;
     *type_number    = \&data_number;
+    *type_regexp    = \&data_regexp;
     *type_scalar    = \&data_scalar;
     *type_string    = \&data_string;
     *type_undef     = \&data_undef;
