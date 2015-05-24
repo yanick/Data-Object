@@ -1,3 +1,11 @@
+NAME
+
+    Data::Object - Data Type Objects for Perl 5
+
+VERSION
+
+    version 0.18
+
 SYNOPSIS
 
         use Data::Object 'deduce';
@@ -14,6 +22,10 @@ DESCRIPTION
     Note: This is an early release available for testing and feedback and
     as such is subject to change.
 
+FUNCTIONS
+
+ data_array
+
         # given [2..5];
     
         $object = data_array [2..5];
@@ -22,6 +34,8 @@ DESCRIPTION
     The data_array function returns a Data::Object::Array instance which
     wraps the provided data type and can be used to perform operations on
     the data. The type_array function is an alias to this function.
+
+ data_code
 
         # given sub { 1 };
     
@@ -32,6 +46,8 @@ DESCRIPTION
     wraps the provided data type and can be used to perform operations on
     the data. The type_code function is an alias to this function.
 
+ data_float
+
         # given 5.25;
     
         $object = data_float 5.25;
@@ -40,6 +56,8 @@ DESCRIPTION
     The data_float function returns a Data::Object::Float instance which
     wraps the provided data type and can be used to perform operations on
     the data. The type_float function is an alias to this function.
+
+ data_hash
 
         # given {1..4};
     
@@ -50,6 +68,8 @@ DESCRIPTION
     wraps the provided data type and can be used to perform operations on
     the data. The type_hash function is an alias to this function.
 
+ data_integer
+
         # given -100;
     
         $object = data_integer -100;
@@ -58,6 +78,8 @@ DESCRIPTION
     The data_integer function returns a Data::Object::Object instance which
     wraps the provided data type and can be used to perform operations on
     the data. The type_integer function is an alias to this function.
+
+ data_number
 
         # given 100;
     
@@ -68,6 +90,8 @@ DESCRIPTION
     wraps the provided data type and can be used to perform operations on
     the data. The type_number function is an alias to this function.
 
+ data_regexp
+
         # given qr/test/;
     
         $object = data_regexp qr/test/;
@@ -76,6 +100,8 @@ DESCRIPTION
     The data_regexp function returns a Data::Object::Regexp instance which
     wraps the provided data type and can be used to perform operations on
     the data. The type_regexp function is an alias to this function.
+
+ data_scalar
 
         # given qr/\w+/;
     
@@ -86,6 +112,8 @@ DESCRIPTION
     wraps the provided data type and can be used to perform operations on
     the data. The type_scalar function is an alias to this function.
 
+ data_string
+
         # given 'abcdefghi';
     
         $object = data_string 'abcdefghi';
@@ -95,6 +123,8 @@ DESCRIPTION
     wraps the provided data type and can be used to perform operations on
     the data. The type_string function is an alias to this function.
 
+ data_undef
+
         # given undef;
     
         $object = data_undef undef;
@@ -103,6 +133,8 @@ DESCRIPTION
     The data_undef function returns a Data::Object::Undef instance which
     wraps the provided data type and can be used to perform operations on
     the data. The type_undef function is an alias to this function.
+
+ data_universal
 
         # given 0;
     
@@ -114,12 +146,16 @@ DESCRIPTION
     operations on the data. The type_universal function is an alias to this
     function.
 
+ load
+
         # given 'List::Util';
     
         $package = load 'List::Util'; # List::Util if loaded
 
     The load function attempts to dynamically load a module and either dies
     or returns the package name of the loaded module.
+
+ deduce
 
         # given qr/\w+/;
     
@@ -128,6 +164,8 @@ DESCRIPTION
 
     The deduce function returns a data type object instance based upon the
     deduced type of data provided.
+
+ deduce_deep
 
         # given {1,2,3,{4,5,6,[-1]}}
     
@@ -145,6 +183,8 @@ DESCRIPTION
     provided is complex, this function traverses the data converting all
     nested data to objects. Note: Blessed objects are not traversed.
 
+ deduce_type
+
         # given qr/\w+/;
     
         $type = deduce_type qr/\w+/; # SCALAR
@@ -152,12 +192,16 @@ DESCRIPTION
     The deduce_type function returns a data type description for the type
     of data provided, represented as a string in capital letters.
 
+ detract
+
         # given bless({1..4}, 'Data::Object::Hash');
     
         $object = detract $object; # {1..4}
 
     The detract function returns a value of native type, based upon the
     underlying reference of the data type object provided.
+
+ detract_deep
 
         # given {1,2,3,{4,5,6,[-1, 99, bless({}), sub { 123 }]}};
     
@@ -203,76 +247,18 @@ SEE ALSO
 
       * Data::Object::Autobox
 
-POD ERRORS
+AUTHOR
 
-    Hey! The above document had some coding errors, which are explained
-    below:
+    Al Newkirk <anewkirk@ana.io>
 
-    Around line 19:
+CONTRIBUTOR
 
-      Unknown directive: =function
+    Anthony Brummett <abrummet@genome.wustl.edu>
 
-    Around line 30:
+COPYRIGHT AND LICENSE
 
-      Unknown directive: =function
+    This software is copyright (c) 2014 by Al Newkirk.
 
-    Around line 41:
-
-      Unknown directive: =function
-
-    Around line 52:
-
-      Unknown directive: =function
-
-    Around line 63:
-
-      Unknown directive: =function
-
-    Around line 74:
-
-      Unknown directive: =function
-
-    Around line 85:
-
-      Unknown directive: =function
-
-    Around line 96:
-
-      Unknown directive: =function
-
-    Around line 107:
-
-      Unknown directive: =function
-
-    Around line 118:
-
-      Unknown directive: =function
-
-    Around line 129:
-
-      Unknown directive: =function
-
-    Around line 140:
-
-      Unknown directive: =function
-
-    Around line 149:
-
-      Unknown directive: =function
-
-    Around line 159:
-
-      Unknown directive: =function
-
-    Around line 177:
-
-      Unknown directive: =function
-
-    Around line 186:
-
-      Unknown directive: =function
-
-    Around line 195:
-
-      Unknown directive: =function
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
 
