@@ -1,7 +1,6 @@
 Changelog for Data-Object
 
-0.18 2015-05-27T19:19:25
- - Updated documentation.
+0.18 2015-05-27T19:28:36
  - Added Data::Object::Role::Type role.
  - Fixed POD rendering errors.
  - Added missing type_regexp alias.
