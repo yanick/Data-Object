@@ -2,7 +2,7 @@
 package Data::Object::Role::Indexed;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 # VERSION
 

@@ -2,12 +2,13 @@
 package Data::Object::Role::String;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 map with($_), our @ROLES = qw(
     Data::Object::Role::Defined
     Data::Object::Role::Detract
     Data::Object::Role::Output
+    Data::Object::Role::Type
 );
 
 # VERSION

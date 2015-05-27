@@ -2,7 +2,7 @@
 package Data::Object::Role::Array;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 use Data::Object 'codify';
 use Scalar::Util 'looks_like_number';
@@ -16,6 +16,7 @@ map with($_), our @ROLES = qw(
     Data::Object::Role::Output
     Data::Object::Role::Ref
     Data::Object::Role::Values
+    Data::Object::Role::Type
 );
 
 # VERSION

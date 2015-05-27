@@ -2,7 +2,7 @@
 package Data::Object::Role::Output;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 use Data::Object 'detract_deep';
 

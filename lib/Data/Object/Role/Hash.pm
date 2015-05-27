@@ -2,7 +2,7 @@
 package Data::Object::Role::Hash;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 use Data::Object 'codify';
 use Scalar::Util 'blessed';
@@ -16,6 +16,7 @@ map with($_), our @ROLES = qw(
     Data::Object::Role::Output
     Data::Object::Role::Ref
     Data::Object::Role::Values
+    Data::Object::Role::Type
 );
 
 # VERSION

@@ -2,7 +2,7 @@
 package Data::Object::Role::Numeric;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 # VERSION
 

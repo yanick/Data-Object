@@ -2,7 +2,7 @@
 package Data::Object::Role::Code;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 use Data::Object 'codify';
 
@@ -11,6 +11,7 @@ map with($_), our @ROLES = qw(
     Data::Object::Role::Detract
     Data::Object::Role::Output
     Data::Object::Role::Ref
+    Data::Object::Role::Type
 );
 
 # VERSION

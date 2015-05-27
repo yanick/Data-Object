@@ -3,10 +3,10 @@ package Data::Object::Integer;
 
 use 5.010;
 
-use Carp         'confess';
-use Data::Object 'deduce_deep', 'detract_deep';
-use Moo          'with';
+use Carp 'confess';
 use Scalar::Util 'blessed', 'looks_like_number';
+use Data::Object 'deduce_deep', 'detract_deep';
+use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Integer';
 

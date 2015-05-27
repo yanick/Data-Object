@@ -2,7 +2,7 @@
 package Data::Object::Regexp::Result;
 
 use 5.010;
-use Moo;
+use Data::Object::Class;
 
 use Data::Object 'deduce_deep';
 

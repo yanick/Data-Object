@@ -2,7 +2,7 @@
 package Data::Object::Role::Detract;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 with 'Data::Object::Role::Defined';
 

@@ -2,7 +2,7 @@
 package Data::Object::Role::Constructor;
 
 use 5.010;
-use Moo::Role;
+use Data::Object::Role;
 
 use Scalar::Util 'blessed';
 
