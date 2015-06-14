@@ -6,13 +6,13 @@ Data::Object - Data Type Objects for Perl 5
 
 # VERSION
 
-version 0.18
+version 0.19
 
 # SYNOPSIS
 
-    use Data::Object 'deduce';
+    use Data::Object;
 
-    my $object = deduce [1..9];
+    my $object = Data::Object->new([1..9]);
 
     $object->isa('Data::Object::Array'); # 1
     $object->count; # 9
@@ -23,6 +23,26 @@ Data::Object provides functions for promoting Perl 5 native data types to
 objects which provide common methods for operating on the data. **Note: This is
 an early release available for testing and feedback and as such is subject to
 change.**
+
+# EXPORTS
+
+## data
+
+    use Data::Object qw(:data);
+
+    data_undef;
+
+The data export tag will export all exportable functions whose names are
+prefixed with the word "data".
+
+## type
+
+    use Data::Object qw(:type);
+
+    type_undef;
+
+The type export tag will export all exportable functions whose names are
+prefixed with the word "type".
 
 # FUNCTIONS
 

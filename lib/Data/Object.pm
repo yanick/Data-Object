@@ -42,7 +42,16 @@ our @EXPORT_OK = qw(
     type_universal
 );
 
+our %EXPORT_TAGS = (
+    data => [grep m/data_/, @EXPORT_OK],
+    type => [grep m/type_/, @EXPORT_OK],
+);
+
 # VERSION
+
+sub new {
+    shift and goto &deduce_deep;
+}
 
 sub codify ($) {
     my $code = shift;
@@ -311,9 +320,9 @@ sub detract_deep {
 
 =head1 SYNOPSIS
 
-    use Data::Object 'deduce';
+    use Data::Object;
 
-    my $object = deduce [1..9];
+    my $object = Data::Object->new([1..9]);
 
     $object->isa('Data::Object::Array'); # 1
     $object->count; # 9
@@ -324,6 +333,28 @@ Data::Object provides functions for promoting Perl 5 native data types to
 objects which provide common methods for operating on the data. B<Note: This is
 an early release available for testing and feedback and as such is subject to
 change.>
+
+=cut
+
+=export data
+
+    use Data::Object qw(:data);
+
+    data_undef;
+
+The data export tag will export all exportable functions whose names are
+prefixed with the word "data".
+
+=cut
+
+=export type
+
+    use Data::Object qw(:type);
+
+    type_undef;
+
+The type export tag will export all exportable functions whose names are
+prefixed with the word "type".
 
 =cut
 
