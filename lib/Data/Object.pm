@@ -330,9 +330,7 @@ sub detract_deep {
 =head1 DESCRIPTION
 
 Data::Object provides functions for promoting Perl 5 native data types to
-objects which provide common methods for operating on the data. B<Note: This is
-an early release available for testing and feedback and as such is subject to
-change.>
+objects which provide common methods for operating on the data.
 
 =cut
 
