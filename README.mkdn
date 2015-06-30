@@ -6,7 +6,7 @@ Data::Object - Data Type Objects for Perl 5
 
 # VERSION
 
-version 0.19
+version 0.20
 
 # SYNOPSIS
 
@@ -20,9 +20,7 @@ version 0.19
 # DESCRIPTION
 
 Data::Object provides functions for promoting Perl 5 native data types to
-objects which provide common methods for operating on the data. **Note: This is
-an early release available for testing and feedback and as such is subject to
-change.**
+objects which provide common methods for operating on the data.
 
 # EXPORTS
 
