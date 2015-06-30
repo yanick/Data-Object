@@ -1,7 +1,8 @@
 Changelog for Data-Object
 
-0.20 2015-06-30T01:30:28
- - No changes found
+0.20 2015-06-30T01:56:42
+ - v0.20
+ - Added singleton pattern class.
 
 0.19 2015-06-14T05:20:10
  - v0.19
