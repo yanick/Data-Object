@@ -1,9 +1,9 @@
 Changelog for Data-Object
 
-0.21 2015-07-15T06:58:51
+0.21 2015-07-15T07:08:15
  - Updated build.
  - Added throw function, "core" and "all" exports, and tests.
- - Updated POD.
+ - Modified exception and singleton classes.
  - Added additional merge method tests.
  - Updated project files.
  - Added generic exception class.
@@ -55,8 +55,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Update documentation for class Scalar.
  - Removed scalar routines for "or", "and", "not", and "xor" operations.
+ - Update documentation for class Scalar.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.
