@@ -20,7 +20,7 @@ around BUILDARGS => sub {
     my $orig = shift;
     my $self = shift;
 
-    unshift @_, 'message' if @_ == 1 and not ref $_[0];
+    unshift @_, (ref $_[0] ? 'object' : 'message') if @_ == 1;
 
     return $self->$orig(@_);
 };
@@ -28,6 +28,7 @@ around BUILDARGS => sub {
 has file       => ( is => 'ro' );
 has line       => ( is => 'ro' );
 has message    => ( is => 'ro' );
+has object     => ( is => 'ro' );
 has package    => ( is => 'ro' );
 has subroutine => ( is => 'ro' );
 
@@ -47,28 +48,27 @@ sub dump {
 sub throw {
     my $invocant = shift;
     my $package  = ref $invocant || $invocant;
-    unshift @_, 'message' if @_ == 1 and not ref $_[0];
+    unshift @_, (ref $_[0] ? 'object' : 'message') if @_ == 1;
     die $package->new(ref $invocant ? (%$invocant) : (), @_,
-        file       => (caller(0))[1],
-        line       => (caller(0))[2],
-        package    => (caller(0))[0],
-        subroutine => (caller(0))[3],
+        file       => (caller(1))[1] // (caller(0))[1],
+        line       => (caller(1))[2] // (caller(0))[2],
+        package    => (caller(1))[0] // (caller(0))[0],
+        subroutine => (caller(1))[3] // (caller(0))[3],
     );
 }
 
 sub to_string {
-    my $self       = shift;
-    my $class      = ref $self;
-    my $caller     = (caller(2))[3];
+    my $self    = shift;
+    my $class   = ref $self;
+    my $file    = $self->file;
+    my $line    = $self->line;
+    my $default = $self->message;
+    my $object  = $self->object;
 
-    my $file       = $self->file;
-    my $line       = $self->line;
-    my $default    = $self->message;
+    my $message = $default || "An exception ($class) was thrown";
+    my @with    = do { no overloading; "with $object" } if $object;
 
-    my $message    = $default || "An exception ($class) was thrown";
-    my $where      = $caller ? "from $caller at $file" : "at $file";
-
-    return "$message $where line $line\n";
+    return join(" ", $message, @with, "in $file at line $line") . "\n";
 }
 
 1;

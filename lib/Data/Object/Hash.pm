@@ -656,6 +656,14 @@ L<Data::Object::Universal>
 
 L<Data::Object::Autobox>
 
+=item *
+
+L<Data::Object::Library>
+
+=item *
+
+L<Data::Object::Signatures>
+
 =back
 
 =cut

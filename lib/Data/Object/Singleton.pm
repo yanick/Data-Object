@@ -16,17 +16,11 @@ sub import {
     my $hold;
 
     if (my $orig = $class->can('new')) {
-        no strict 'refs';
-        *{"${target}::new"} = sub {
-            $hold //= $orig->(@_)
-        };
+        no strict 'refs'; *{"${target}::new"} = sub { $hold //= $orig->(@_) };
     }
 
     if (my $orig = $class->can('new') and !$class->can('renew')) {
-        no strict 'refs';
-        *{"${target}::renew"} = sub {
-            $hold = $orig->(@_)
-        };
+        no strict 'refs'; *{"${target}::renew"} = sub { $hold = $orig->(@_) };
     }
 
     return;
