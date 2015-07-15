@@ -1,5 +1,15 @@
 Changelog for Data-Object
 
+0.21 2015-07-15T06:58:51
+ - Updated build.
+ - Added throw function, "core" and "all" exports, and tests.
+ - Updated POD.
+ - Added additional merge method tests.
+ - Updated project files.
+ - Added generic exception class.
+ - v0.20
+ - Added singleton pattern class.
+
 0.20 2015-06-30T01:56:42
  - v0.20
  - Added singleton pattern class.
@@ -7,6 +17,9 @@ Changelog for Data-Object
 0.19 2015-06-14T05:20:10
  - v0.19
  - Added export tags and constructor.
+
+0.18 2015-05-27T19:30:01
+ - v0.18
  - Added Data::Object::Role::Type role.
  - Fixed POD rendering errors.
  - Added missing type_regexp alias.
@@ -42,8 +55,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Update documentation for class Scalar.
+ - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.

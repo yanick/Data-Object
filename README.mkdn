@@ -24,6 +24,19 @@ objects which provide common methods for operating on the data.
 
 # EXPORTS
 
+## all
+
+    use Data::Object qw(:all);
+
+The all export tag will export all exportable functions.
+
+## core
+
+    use Data::Object qw(:core);
+
+The core export tag will export the exportable functions `deduce`,
+`deduce_deep`, `detract`, `detract_deep`, `load`, and `throw` exclusively.
+
 ## data
 
     use Data::Object qw(:data);
@@ -165,15 +178,6 @@ The data\_universal function returns a [Data::Object::Universal](https://metacpa
 wraps the provided data type and can be used to perform operations on the data.
 The `type_universal` function is an alias to this function.
 
-## load
-
-    # given 'List::Util';
-
-    $package = load 'List::Util'; # List::Util if loaded
-
-The load function attempts to dynamically load a module and either dies or
-returns the package name of the loaded module.
-
 ## deduce
 
     # given qr/\w+/;
@@ -240,6 +244,24 @@ is complex, this function traverses the data converting all nested data type
 objects into native values using the objects underlying reference. Note:
 Blessed objects are not traversed.
 
+## load
+
+    # given 'List::Util';
+
+    $package = load 'List::Util'; # List::Util if loaded
+
+The load function attempts to dynamically load a module and either dies or
+returns the package name of the loaded module.
+
+## throw
+
+    # given $message;
+
+    throw $message; # An exception (...) was thrown in -e at line 1
+
+The throw function will dynamically load and throw an exception object. This
+function takes all arguments accepted by the [Data::Object::Exception](https://metacpan.org/pod/Data::Object::Exception) class.
+
 # SEE ALSO
 
 - [Data::Object::Array](https://metacpan.org/pod/Data::Object::Array)
@@ -254,6 +276,8 @@ Blessed objects are not traversed.
 - [Data::Object::Undef](https://metacpan.org/pod/Data::Object::Undef)
 - [Data::Object::Universal](https://metacpan.org/pod/Data::Object::Universal)
 - [Data::Object::Autobox](https://metacpan.org/pod/Data::Object::Autobox)
+- [Data::Object::Library](https://metacpan.org/pod/Data::Object::Library)
+- [Data::Object::Signatures](https://metacpan.org/pod/Data::Object::Signatures)
 
 # AUTHOR
 
