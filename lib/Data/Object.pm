@@ -29,6 +29,7 @@ our @EXPORT_OK = qw(
     detract
     detract_deep
     load
+    throw
     type_array
     type_code
     type_float
@@ -43,6 +44,8 @@ our @EXPORT_OK = qw(
 );
 
 our %EXPORT_TAGS = (
+    all  => [@EXPORT_OK],
+    core => [qw(deduce deduce_deep detract detract_deep load throw)],
     data => [grep m/data_/, @EXPORT_OK],
     type => [grep m/type_/, @EXPORT_OK],
 );
@@ -80,6 +83,11 @@ sub load ($) {
         if $error or $failed or not $loaded;
 
     return $class;
+}
+
+sub throw (@) {
+    unshift @_, my $class = load 'Data::Object::Exception';
+    goto $class->can('throw');
 }
 
 sub data_array ($) {
@@ -334,6 +342,23 @@ objects which provide common methods for operating on the data.
 
 =cut
 
+=export all
+
+    use Data::Object qw(:all);
+
+The all export tag will export all exportable functions.
+
+=cut
+
+=export core
+
+    use Data::Object qw(:core);
+
+The core export tag will export the exportable functions C<deduce>,
+C<deduce_deep>, C<detract>, C<detract_deep>, C<load>, and C<throw> exclusively.
+
+=cut
+
 =export data
 
     use Data::Object qw(:data);
@@ -499,17 +524,6 @@ The C<type_universal> function is an alias to this function.
 
 =cut
 
-=function load
-
-    # given 'List::Util';
-
-    $package = load 'List::Util'; # List::Util if loaded
-
-The load function attempts to dynamically load a module and either dies or
-returns the package name of the loaded module.
-
-=cut
-
 =function deduce
 
     # given qr/\w+/;
@@ -586,6 +600,28 @@ Blessed objects are not traversed.
 
 =cut
 
+=function load
+
+    # given 'List::Util';
+
+    $package = load 'List::Util'; # List::Util if loaded
+
+The load function attempts to dynamically load a module and either dies or
+returns the package name of the loaded module.
+
+=cut
+
+=function throw
+
+    # given $message;
+
+    throw $message; # An exception (...) was thrown in -e at line 1
+
+The throw function will dynamically load and throw an exception object. This
+function takes all arguments accepted by the L<Data::Object::Exception> class.
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4
@@ -637,6 +673,14 @@ L<Data::Object::Universal>
 =item *
 
 L<Data::Object::Autobox>
+
+=item *
+
+L<Data::Object::Library>
+
+=item *
+
+L<Data::Object::Signatures>
 
 =back
 
