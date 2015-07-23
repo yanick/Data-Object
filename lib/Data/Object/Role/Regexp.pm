@@ -4,7 +4,7 @@ package Data::Object::Role::Regexp;
 use 5.010;
 use Data::Object::Role;
 
-use Carp 'confess';
+use Data::Object 'throw';
 
 map with($_), our @ROLES = qw(
     Data::Object::Role::Defined
@@ -28,7 +28,7 @@ sub search {
     my $expr = join ';', $capt, $mtch;
 
     my $error = do { local $@; eval $expr; $@ };
-    confess $error if $error;
+    throw $error if $error;
 
     return [$$self, $string, $captures, @matches, $string];
 }
@@ -47,7 +47,7 @@ sub replace {
     my $initial = $string;
 
     my $error = do { local $@; eval $expr; $@ };
-    confess $error if $error;
+    throw $error if $error;
 
     return [$$self, $string, $captures, @matches, $initial];
 }

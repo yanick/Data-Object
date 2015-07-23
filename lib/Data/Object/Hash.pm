@@ -3,9 +3,8 @@ package Data::Object::Hash;
 
 use 5.010;
 
-use Carp 'confess';
 use Scalar::Util 'blessed';
-use Data::Object 'deduce_deep', 'detract_deep';
+use Data::Object 'deduce_deep', 'detract_deep', 'throw';
 use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Hash';
@@ -18,7 +17,7 @@ sub new {
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
-        confess 'Type Instantiation Error: Not a HashRef'
+        throw 'Type Instantiation Error: Not a HashRef'
             unless 'HASH' eq ref $data;
     }
 
@@ -111,6 +110,12 @@ around 'filter_include' => sub {
     return scalar deduce_deep $result;
 };
 
+around 'fold' => sub {
+    my ($orig, $self, @args) = @_;
+    my $result = $self->$orig(@args);
+    return scalar deduce_deep $result;
+};
+
 around 'get' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
@@ -188,6 +193,12 @@ around 'reverse' => sub {
 };
 
 around 'set' => sub {
+    my ($orig, $self, @args) = @_;
+    my $result = $self->$orig(@args);
+    return scalar deduce_deep $result;
+};
+
+around 'unfold' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
     return scalar deduce_deep $result;
@@ -422,6 +433,19 @@ L<Data::Object::Hash> object.
 
 =cut
 
+=method fold
+
+    # given {3,[4,5,6],7,{8,8,9,9}}
+
+    $hash->fold; # {'3:0'=>4,'3:1'=>5,'3:2'=>6,'7.8'=>8,'7.9'=>9}
+
+The fold method returns a single-level hash reference consisting of key/value
+pairs whose keys are paths (using dot-notation where the segments correspond to
+nested hash keys and array indices) mapped to the nested values. This method
+returns a L<Data::Object::Hash> object.
+
+=cut
+
 =method get
 
     # given {1..8}
@@ -523,9 +547,11 @@ execution.
     $hash->merge({7,7,9,9}); # {1=>2,3=>4,5=>6,7=>7,9=>9}
 
 The merge method returns a hash reference where the elements in the hash and
-the elements in the argument(s) are merged. This operation performs a deep merge
-and clones the datasets to ensure no side-effects. This method returns a
-L<Data::Object::Hash> object.
+the elements in the argument(s) are merged. This operation performs a deep
+merge and clones the datasets to ensure no side-effects. The merge behavior
+merges hash references only, all other data types are assigned with precendence
+given to the value being merged. This method returns a L<Data::Object::Hash>
+object.
 
 =cut
 
@@ -590,6 +616,20 @@ The set method returns the value of the element in the hash corresponding to
 the key specified by the argument after updating it to the value of the second
 argument. This method returns a data type object to be determined after
 execution.
+
+=cut
+
+=method unfold
+
+    # given {'3:0'=>4,'3:1'=>5,'3:2'=>6,'7.8'=>8,'7.9'=>9}
+
+    $hash->unfold; # {3=>[4,5,6],7,{8,8,9,9}}
+
+The unfold method processes previously folded hash references and returns an
+unfolded hash reference where the keys, which are paths (using dot-notation
+where the segments correspond to nested hash keys and array indices), are used
+to created nested hash and/or array references. This method returns a
+L<Data::Object::Hash> object.
 
 =cut
 

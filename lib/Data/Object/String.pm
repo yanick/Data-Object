@@ -3,9 +3,8 @@ package Data::Object::String;
 
 use 5.010;
 
-use Carp 'confess';
 use Scalar::Util 'blessed';
-use Data::Object 'deduce_deep', 'detract_deep';
+use Data::Object 'deduce_deep', 'detract_deep', 'throw';
 use Data::Object::Class 'with';
 
 with 'Data::Object::Role::String';
@@ -25,7 +24,7 @@ sub new {
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
-        confess 'Type Instantiation Error: Not a String'
+        throw 'Type Instantiation Error: Not a String'
             unless defined($data) && not ref($data);
     }
 

@@ -113,6 +113,47 @@ sub filter_include {
     };
 }
 
+sub fold {
+    my ($hash) = @_;
+
+    my $store = $_[2] || {};
+    my $cache = $_[3] || {};
+    my $temp  = { %$cache };
+
+    my $ref     = CORE::ref($hash);
+    my $refaddr = Scalar::Util::refaddr($hash);
+
+    if ($refaddr && $temp->{$refaddr}) {
+        $store->{$_[1]} = $hash;
+    } elsif ($ref eq 'HASH' || $ref eq 'Data::Object::Hash') {
+        $temp->{$refaddr} = 1;
+        if (%$hash) {
+            for my $key (CORE::sort(CORE::keys %$hash)) {
+                my $place = $_[1] ? CORE::join('.',$_[1],$key) : $key;
+                my $value = $hash->{$key};
+                fold($value, $place, $store, $temp);
+            }
+        } else {
+            $store->{$_[1]} = {};
+        }
+    } elsif ($ref eq 'ARRAY' || $ref eq 'Data::Object::Array') {
+        $temp->{$refaddr} = 1;
+        if (@$hash) {
+            for my $idx (0 .. $#$hash) {
+                my $place = $_[1] ? CORE::join(':',$_[1],$idx) : $idx;
+                my $value = $hash->[$idx];
+                fold($value, $place, $store, $temp);
+            }
+        } else {
+            $store->{$_[1]} = [];
+        }
+    } else {
+        $store->{$_[1]} = $hash;
+    }
+
+    return $store;
+}
+
 sub get {
     my ($hash, $argument) = @_;
     return $hash->{$argument};
@@ -191,18 +232,20 @@ sub pairs_array {
 }
 
 sub merge {
-    my ($hash, @arguments) = @_;
+    my ($left, @arguments) = @_;
 
-    return dclone $hash unless @arguments;
-    return dclone merge($hash, merge(@arguments)) if @arguments > 1;
+    return dclone $left if ! @arguments;
+    return dclone merge($left, merge(@arguments)) if @arguments > 1;
 
     my ($right) = @arguments;
+    my (%merge) = %$left;
 
-    my %merge = %$hash;
     for my $key (CORE::keys %$right) {
-        my ($rv, $lv) = CORE::map { ref $$_{$key} eq 'HASH' } $right, $hash;
-        if ($rv and $lv){ $merge{$key} = merge($hash->{$key}, $right->{$key}) }
-        else { $merge{$key} = $right->{$key} }
+        my $lprop = $$left{$key};
+        my $rprop = $$right{$key};
+
+        $merge{$key} = ((ref($rprop) eq 'HASH') and (ref($lprop) eq 'HASH'))
+            ? merge($$left{$key}, $$right{$key}) : $$right{$key};
     }
 
     return dclone \%merge;
@@ -228,6 +271,35 @@ sub reverse {
 sub set {
     my ($hash, $key, $argument) = @_;
     return $hash->{$key} = $argument;
+}
+
+sub unfold {
+    my ($hash) = @_;
+
+    my $store = {};
+    for my $key (CORE::sort(CORE::keys(%$hash))) {
+        my $node = $store;
+        my @steps = CORE::split(/\./, $key);
+        for (my $i=0; $i < @steps; $i++) {
+            my $last = $i == $#steps;
+            my $step = $steps[$i];
+            if (my @parts = $step =~ /^(\w*):(0|[1-9]\d*)$/) {
+                $node = $node->{$parts[0]}[$parts[1]] = $last
+                    ? $hash->{$key}
+                    : exists $node->{$parts[0]}[$parts[1]]
+                    ?        $node->{$parts[0]}[$parts[1]]
+                    : {};
+            } else {
+                $node = $node->{$step} = $last
+                    ? $hash->{$key}
+                    : exists $node->{$step}
+                    ?        $node->{$step}
+                    : {};
+            }
+        }
+    }
+
+    return $store;
 }
 
 sub values {

@@ -3,9 +3,8 @@ package Data::Object::Float;
 
 use 5.010;
 
-use Carp 'confess';
 use Scalar::Util 'blessed', 'looks_like_number';
-use Data::Object 'deduce_deep', 'detract_deep';
+use Data::Object 'deduce_deep', 'detract_deep', 'throw';
 use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Float';
@@ -27,7 +26,7 @@ sub new {
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
-        confess 'Type Instantiation Error: Not a Float or Number'
+        throw 'Type Instantiation Error: Not a Float or Number'
             unless defined($data) && !ref($data)
             && looks_like_number($data);
     }

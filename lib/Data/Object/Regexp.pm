@@ -3,9 +3,8 @@ package Data::Object::Regexp;
 
 use 5.010;
 
-use Carp 'confess';
 use Scalar::Util 'blessed';
-use Data::Object 'deduce_deep', 'detract_deep';
+use Data::Object 'deduce_deep', 'detract_deep', 'throw';
 use Data::Object::Class 'with';
 
 use Data::Object::Regexp::Result;
@@ -20,7 +19,7 @@ sub new {
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
-        confess 'Type Instantiation Error: Not a RegexpRef'
+        throw 'Type Instantiation Error: Not a RegexpRef'
             unless defined($data) && !! re::is_regexp($data);
     }
 

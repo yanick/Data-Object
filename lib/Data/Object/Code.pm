@@ -3,9 +3,8 @@ package Data::Object::Code;
 
 use 5.010;
 
-use Carp 'confess';
 use Scalar::Util 'blessed';
-use Data::Object 'deduce_deep', 'detract_deep';
+use Data::Object 'deduce_deep', 'detract_deep', 'throw';
 use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Code';
@@ -18,7 +17,7 @@ sub new {
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
-        confess 'Type Instantiation Error: Not a CodeRef'
+        throw 'Type Instantiation Error: Not a CodeRef'
             unless 'CODE' eq ref $data;
     }
 
