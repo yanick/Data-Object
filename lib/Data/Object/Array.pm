@@ -13,7 +13,7 @@ with 'Data::Object::Role::Array';
 
 sub new {
     my $class = shift;
-    my $data  = shift;
+    my $data  = @_ > 1 ? [@_] : shift;
 
     $class = ref($class) || $class;
     unless (blessed($data) && $data->isa($class)) {
