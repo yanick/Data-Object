@@ -1,6 +1,11 @@
 Changelog for Data-Object
 
-0.22 2015-07-23T15:53:23
+0.23 2015-07-28T23:13:45
+ - Allow lists to the Hash and Array constructor.
+ - Refactor the Hash fold method.
+
+0.22 2015-07-23T15:54:15
+ - v0.22
  - Updated build.
  - Added fold/unfold functionality, Replaced Carp::confess with throw,
    Updated POD.

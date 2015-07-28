@@ -20,7 +20,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Moo" => "2.000001"
   },
-  "VERSION" => "0.22",
+  "VERSION" => "0.23",
   "test" => {
     "TESTS" => "t/data/*.t t/data/object/*.t t/data/object/array/*.t t/data/object/code/*.t t/data/object/float/*.t t/data/object/hash/*.t t/data/object/integer/*.t t/data/object/number/*.t t/data/object/regexp/*.t t/data/object/scalar/*.t t/data/object/string/*.t t/data/object/undef/*.t t/data/object/universal/*.t"
   }
