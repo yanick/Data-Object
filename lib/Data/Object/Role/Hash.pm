@@ -114,41 +114,42 @@ sub filter_include {
 }
 
 sub fold {
-    my ($hash) = @_;
+    my ($data, $path, $store, $cache) = @_;
 
-    my $store = $_[2] || {};
-    my $cache = $_[3] || {};
-    my $temp  = { %$cache };
+    $store ||= {};
+    $cache ||= {};
 
-    my $ref     = CORE::ref($hash);
-    my $refaddr = Scalar::Util::refaddr($hash);
+    my $ref = CORE::ref($data);
+    my $obj = Scalar::Util::blessed($data);
+    my $adr = Scalar::Util::refaddr($data);
+    my $tmp = { %$cache };
 
-    if ($refaddr && $temp->{$refaddr}) {
-        $store->{$_[1]} = $hash;
-    } elsif ($ref eq 'HASH' || $ref eq 'Data::Object::Hash') {
-        $temp->{$refaddr} = 1;
-        if (%$hash) {
-            for my $key (CORE::sort(CORE::keys %$hash)) {
-                my $place = $_[1] ? CORE::join('.',$_[1],$key) : $key;
-                my $value = $hash->{$key};
-                fold($value, $place, $store, $temp);
+    if ($adr && $tmp->{$adr}) {
+        $store->{$path} = $data;
+    } elsif ($ref eq 'HASH'  || ($obj and $obj->isa('Data::Object::Hash'))) {
+        $tmp->{$adr} = 1;
+        if (%$data) {
+            for my $key (CORE::sort(CORE::keys %$data)) {
+                my $place = $path ? CORE::join('.', $path, $key) : $key;
+                my $value = $data->{$key};
+                fold($value, $place, $store, $tmp);
             }
         } else {
-            $store->{$_[1]} = {};
+            $store->{$path} = {};
         }
-    } elsif ($ref eq 'ARRAY' || $ref eq 'Data::Object::Array') {
-        $temp->{$refaddr} = 1;
-        if (@$hash) {
-            for my $idx (0 .. $#$hash) {
-                my $place = $_[1] ? CORE::join(':',$_[1],$idx) : $idx;
-                my $value = $hash->[$idx];
-                fold($value, $place, $store, $temp);
+    } elsif ($ref eq 'ARRAY' || ($obj and $obj->isa('Data::Object::Array'))) {
+        $tmp->{$adr} = 1;
+        if (@$data) {
+            for my $idx (0 .. $#$data) {
+                my $place = $path ? CORE::join(':', $path, $idx) : $idx;
+                my $value = $data->[$idx];
+                fold($value, $place, $store, $tmp);
             }
         } else {
-            $store->{$_[1]} = [];
+            $store->{$path} = [];
         }
     } else {
-        $store->{$_[1]} = $hash;
+        $store->{$path} = $data;
     }
 
     return $store;
