@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.23 2015-07-30T18:56:29
+0.23 2015-07-30T19:00:56
+ - Updated CHANGES.
  - Modified singleton configuration.
  - Updated build.
  - Allow lists to the Hash and Array constructor.
