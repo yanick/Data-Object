@@ -1,6 +1,8 @@
 Changelog for Data-Object
 
-0.23 2015-07-28T23:13:45
+0.23 2015-07-30T18:56:29
+ - Modified singleton configuration.
+ - Updated build.
  - Allow lists to the Hash and Array constructor.
  - Refactor the Hash fold method.
 
