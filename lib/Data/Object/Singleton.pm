@@ -2,28 +2,24 @@
 package Data::Object::Singleton;
 
 use 5.010;
-use Data::Object::Class ();
+use parent 'Moo';
 
 # VERSION
 
 sub import {
-    my $target = caller;
-    my $class  = shift;
-    my @export = @_;
+    my $state = undef;
+    my $class = caller;
 
-    Data::Object::Class->import($target, @export);
+    eval "package $class; use Moo; 1;";
 
-    my $hold;
+    my $new   = $class->can('new');
+    my $renew = $class->can('renew');
 
-    if (my $orig = $class->can('new')) {
-        no strict 'refs'; *{"${target}::new"} = sub { $hold //= $orig->(@_) };
-    }
+    no strict 'refs';
+    *{"${class}::new"}   = sub { $state = $new->(@_) if !$state; $state };
+    *{"${class}::renew"} = sub { $state = $new->(@_) };
 
-    if (my $orig = $class->can('new') and !$class->can('renew')) {
-        no strict 'refs'; *{"${target}::renew"} = sub { $hold = $orig->(@_) };
-    }
-
-    return;
+    return ;
 }
 
 1;
