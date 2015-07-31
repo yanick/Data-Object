@@ -1,6 +1,12 @@
 use strict;
 use warnings;
 
+package lame;
+
+use overload '""' => sub { "abcdefg" };
+
+package main;
+
 use Test::More;
 use Data::Object;
 

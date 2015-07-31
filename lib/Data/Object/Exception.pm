@@ -16,6 +16,13 @@ use overload (
     fallback => 1,
 );
 
+has file       => ( is => 'ro' );
+has line       => ( is => 'ro' );
+has message    => ( is => 'ro' );
+has object     => ( is => 'ro' );
+has package    => ( is => 'ro' );
+has subroutine => ( is => 'ro' );
+
 around BUILDARGS => sub {
     my $orig = shift;
     my $self = shift;
@@ -24,13 +31,6 @@ around BUILDARGS => sub {
 
     return $self->$orig(@_);
 };
-
-has file       => ( is => 'ro' );
-has line       => ( is => 'ro' );
-has message    => ( is => 'ro' );
-has object     => ( is => 'ro' );
-has package    => ( is => 'ro' );
-has subroutine => ( is => 'ro' );
 
 sub catch {
     my $invocant = shift;
@@ -50,10 +50,10 @@ sub throw {
     my $package  = ref $invocant || $invocant;
     unshift @_, (ref $_[0] ? 'object' : 'message') if @_ == 1;
     die $package->new(ref $invocant ? (%$invocant) : (), @_,
-        file       => (caller(1))[1] // (caller(0))[1],
-        line       => (caller(1))[2] // (caller(0))[2],
-        package    => (caller(1))[0] // (caller(0))[0],
-        subroutine => (caller(1))[3] // (caller(0))[3],
+        file       => (caller(0))[1],
+        line       => (caller(0))[2],
+        package    => (caller(0))[0],
+        subroutine => (caller(0))[3],
     );
 }
 
@@ -65,8 +65,9 @@ sub to_string {
     my $default = $self->message;
     my $object  = $self->object;
 
+    my $objref  = overload::StrVal $object if $object;
     my $message = $default || "An exception ($class) was thrown";
-    my @with    = do { no overloading; "with $object" } if $object;
+    my @with    = join " ", "with", $objref if $objref and not $default;
 
     return join(" ", $message, @with, "in $file at line $line") . "\n";
 }
