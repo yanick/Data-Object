@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.26 2015-08-02T15:30:01
+0.26 2015-08-02T15:31:23
+ - Updated build.
  - Fixed DSLs for Class and Role definitions.
 
 0.25 2015-08-02T15:23:32
