@@ -44,7 +44,6 @@ sub import {
             my %codes = (
                 builder   => 'build',
                 clearer   => 'clear',
-                default   => 'default',
                 predicate => 'has',
                 reader    => 'get',
                 trigger   => 'trigger',
