@@ -1,4 +1,4 @@
-# DSL for Declaring Data::Object Classes for Perl 5
+# ABSTRACT: DSL for Declaring Data::Object Classes for Perl 5
 package Data::Object::Class::Syntax;
 
 use 5.010;
