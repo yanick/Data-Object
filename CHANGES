@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.26 2015-08-02T15:31:23
+0.27 2015-08-03T20:41:08
+ - Added documentation for the Syntax DSL packages.
+
+0.26 2015-08-02T15:32:19
+ - v0.26
  - Updated build.
  - Fixed DSLs for Class and Role definitions.
 
