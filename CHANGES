@@ -1,7 +1,8 @@
 Changelog for Data-Object
 
-0.28 2015-08-03T20:49:31
- - No changes found
+0.28 2015-08-03T20:52:37
+ - Updated build.
+ - Generating documentation for the Syntax DSL packages.
 
 0.27 2015-08-03T20:43:08
  - v0.27
