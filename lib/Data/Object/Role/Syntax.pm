@@ -1,4 +1,4 @@
-# ABSTRACT: DSL for Declaring Data::Object Roles for Perl 5
+# ABSTRACT: DSL for Declaring Roles for Perl 5
 package Data::Object::Role::Syntax;
 
 use 5.010;
