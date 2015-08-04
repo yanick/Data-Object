@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.29 2015-08-04T03:43:59
+0.30 2015-08-04T04:03:05
+ - Fixed documentation for Class, Role, and Exception packages.
+
+0.29 2015-08-04T03:44:24
+ - v0.29
  - Added documentation for Class, Role, and Exception packages.
  - Updated build.
  - Added tests for the Syntax DSL packages.
