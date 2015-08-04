@@ -3,18 +3,18 @@ package Data::Object::Exception;
 
 use 5.010;
 
+use overload (
+    '""'     => 'to_string',
+    '~~'     => 'to_string',
+    fallback => 1,
+);
+
 use Data::Dumper ();
 use Scalar::Util ();
 
 use Data::Object::Class;
 
 # VERSION
-
-use overload (
-    '""'     => 'to_string',
-    '~~'     => 'to_string',
-    fallback => 1,
-);
 
 has file       => ( is => 'ro' );
 has line       => ( is => 'ro' );
@@ -73,3 +73,106 @@ sub to_string {
 }
 
 1;
+
+=encoding utf8
+
+=head1 SYNOPSIS
+
+    use Data::Object::Exception;
+
+    my $exception = Data::Object::Exception->new;
+
+    $exception->throw('Something went wrong.');
+
+=head1 DESCRIPTION
+
+Data::Object::Exception provides a functionality for creating, throwing,
+catching, and introspecting generic exception objects.
+
+=cut
+
+=method catch
+
+    $exception->catch;
+
+The catch method returns true if the argument is the same type of object as the
+invocant.
+
+=cut
+
+=method dump
+
+    $exception->dump;
+
+The dump method returns a stringified version of the exception object.
+
+=cut
+
+=method file
+
+    $exception->file;
+
+The file method returns the path to the file where the exception was thrown.
+
+=cut
+
+=method line
+
+    $exception->line;
+
+The line method returns the line number in the file where the exception was
+thrown.
+
+=cut
+
+=method message
+
+    $exception->message;
+
+The message method returns the message associated with the exception.
+
+=cut
+
+=method object
+
+    $exception->object;
+
+The object method returns the object (or data) associated with the exception if
+available.
+
+=cut
+
+=method package
+
+    $exception->package;
+
+The package method returns the package name where the exception was thrown.
+
+=cut
+
+=method subroutine
+
+    $exception->subroutine;
+
+The subroutine method returns the fully-qualified subroutine name where the
+exception was thrown.
+
+=cut
+
+=method throw
+
+    $exception->throw;
+
+The throw method terminates the program using the core die keyword passing the
+exception object as the only argument.
+
+=cut
+
+=method to_string
+
+    $exception->to_string;
+
+The to_string method returns an informatve description of the exception thrown.
+
+=cut
+
