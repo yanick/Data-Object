@@ -1,4 +1,4 @@
-# ABSTRACT: A Generic OO Class Famework for Perl 5
+# ABSTRACT: A Generic Class Famework for Perl 5
 package Data::Object::Class;
 
 use 5.010;
@@ -27,7 +27,10 @@ use parent 'Moo';
 =head1 DESCRIPTION
 
 Data::Object::Class inherits all methods and behaviour from L<Moo>. Please see
-that documentation for more usage information.
+that documentation for more usage information. Additionally, see
+L<Data::Object::Class::Syntax> which provides a DSL that makes declaring
+classes easier and more fun.
+
 
 =cut
 

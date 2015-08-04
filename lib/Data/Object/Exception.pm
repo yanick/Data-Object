@@ -1,4 +1,4 @@
-# A Generic Exception Object for Perl 5
+# ABSTRACT: A Generic Exception Object for Perl 5
 package Data::Object::Exception;
 
 use 5.010;

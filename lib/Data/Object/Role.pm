@@ -1,4 +1,4 @@
-# A Generic Role for Perl 5
+# ABSTRACT: A Generic Role Framework for Perl 5
 package Data::Object::Role;
 
 use 5.010;
@@ -27,7 +27,9 @@ use parent 'Moo::Role';
 =head1 DESCRIPTION
 
 Data::Object::Role inherits all methods and behaviour from L<Moo::Role>. Please
-see that documentation for more usage information.
+see that documentation for more usage information. Additionally, see
+L<Data::Object::Role::Syntax> which provides a DSL that makes declaring roles
+easier and more fun.
 
 =cut
 
