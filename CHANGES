@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.31 2015-08-05T04:19:34
+0.31 2015-08-05T04:25:22
+ - Updated build.
  - Fixed and simplified all class/object constructors.
 
 0.30 2015-08-04T04:04:12
