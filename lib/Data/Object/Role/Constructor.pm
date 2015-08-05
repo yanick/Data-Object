@@ -12,7 +12,9 @@ sub new {
     my $class = shift;
     my $data  = shift;
 
-    $class = ref($class) || $class;
+    $data = $data->data if blessed($data)
+        and $data->can('does') and $data->does('Data::Object::Role::Type');
+
     if (blessed($data) && $data->isa('Regexp') && $^V <= v5.12.0) {
         $data = do {\(my $q = qr/$data/)};
     }

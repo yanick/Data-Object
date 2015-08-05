@@ -22,14 +22,14 @@ sub new {
     my $class = shift;
     my $data  = shift;
 
+    $data = $data->data if blessed($data)
+        and $data->can('does') and $data->does('Data::Object::Role::Type');
+
     $data =~ s/^\+//; # not keen on this but ...
 
-    $class = ref($class) || $class;
-    unless (blessed($data) && $data->isa($class)) {
-        throw 'Type Instantiation Error: Not a Number'
-            unless defined($data) && !ref($data)
+    throw 'Type Instantiation Error: Not a Number'
+        unless defined($data) && !ref($data)
             && looks_like_number($data);
-    }
 
     return bless \$data, $class;
 }

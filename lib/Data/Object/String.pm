@@ -22,11 +22,11 @@ sub new {
     my $class = shift;
     my $data  = shift;
 
-    $class = ref($class) || $class;
-    unless (blessed($data) && $data->isa($class)) {
-        throw 'Type Instantiation Error: Not a String'
-            unless defined($data) && not ref($data);
-    }
+    $data = $data->data if blessed($data)
+        and $data->can('does') and $data->does('Data::Object::Role::Type');
+
+    throw 'Type Instantiation Error: Not a String'
+        unless defined($data) && not ref($data);
 
     return bless \$data, $class;
 }

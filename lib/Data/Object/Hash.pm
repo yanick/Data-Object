@@ -15,11 +15,11 @@ sub new {
     my $class = shift;
     my $data  = @_ > 1 && !(@_ % 2) ? {@_} : shift;
 
-    $class = ref($class) || $class;
-    unless (blessed($data) && $data->isa($class)) {
-        throw 'Type Instantiation Error: Not a HashRef'
-            unless 'HASH' eq ref $data;
-    }
+    $data = $data->data if blessed($data)
+        and $data->can('does') and $data->does('Data::Object::Role::Type');
+
+    throw 'Type Instantiation Error: Not a HashRef'
+        unless 'HASH' eq ref $data;
 
     return bless $data, $class;
 }
