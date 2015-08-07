@@ -7,19 +7,21 @@ use parent 'Moo';
 # VERSION
 
 sub import {
-    my $state = undef;
-    my $class = caller;
+    my $class  = shift;
+    my $target = caller;
+    my $state  = undef;
 
-    eval "package $class; use Moo; 1;";
+    eval "package $target; use Moo; 1;";
 
-    my $new   = $class->can('new');
-    my $renew = $class->can('renew');
+    my $new   = $target->can('new');
+    my $renew = $target->can('renew');
 
     no strict 'refs';
-    *{"${class}::new"}   = sub { $state = $new->(@_) if !$state; $state };
-    *{"${class}::renew"} = sub { $state = $new->(@_) };
 
-    return ;
+    *{"${target}::new"}   = sub { $state = $new->(@_) if !$state; $state };
+    *{"${target}::renew"} = sub { $state = $new->(@_) };
+
+    return;
 }
 
 1;

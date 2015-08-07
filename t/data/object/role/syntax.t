@@ -5,10 +5,13 @@ use Test::More;
 use Data::Object::Role::Syntax ();
 
 my @exports = qw(
+    alt
     builder
     clearer
     coerce
+    def
     default
+    defaulter
     handles
     init_arg
     is
@@ -25,8 +28,19 @@ my @exports = qw(
     writer
 );
 
+sub has { @_ }
+
 can_ok 'Data::Object::Role::Syntax', @exports;
 is_deeply [@exports], [@Data::Object::Role::Syntax::EXPORT];
+
+subtest 'test the alt function' => sub {
+    is_deeply [Data::Object::Role::Syntax::alt('attr')], [
+        '+attr',
+    ];
+    is_deeply [Data::Object::Role::Syntax::alt('attr', 'is', 'ro')], [
+        '+attr' => (is => 'ro'),
+    ];
+};
 
 subtest 'test the builder function' => sub {
     is_deeply [Data::Object::Role::Syntax::builder()], [
@@ -52,12 +66,27 @@ subtest 'test the coerce function' => sub {
     ];
 };
 
+subtest 'test the def function' => sub {
+    is_deeply [Data::Object::Role::Syntax::def('attr', 1)], [
+        '+attr' => (default => 1),
+    ];
+    is_deeply [Data::Object::Role::Syntax::def('attr', 1, 'is', 'ro')], [
+        '+attr' => (default => 1, is => 'ro'),
+    ];
+};
+
 subtest 'test the default function' => sub {
     is_deeply [Data::Object::Role::Syntax::default(undef)], [
         default => undef,
     ];
     is_deeply [Data::Object::Role::Syntax::default('foobarbaz')], [
         default => 'foobarbaz',
+    ];
+};
+
+subtest 'test the defaulter function' => sub {
+    is_deeply [Data::Object::Role::Syntax::defaulter], [
+        defaulter => 1,
     ];
 };
 

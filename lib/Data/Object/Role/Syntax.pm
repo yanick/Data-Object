@@ -6,13 +6,18 @@ use strict;
 use warnings;
 use parent 'Exporter';
 
+use Sub::Quote;
+
 # VERSION
 
 our @EXPORT = qw(
+    alt
     builder
     clearer
     coerce
+    def
     default
+    defaulter
     handles
     init_arg
     is
@@ -34,9 +39,11 @@ sub import {
     my $target = caller;
 
     if (my $orig = $target->can('has')) {
+
         no strict 'refs';
         no warnings 'redefine';
-        *{"${target}::has"} = sub {
+
+        my $has = *{"${target}::has"} = sub {
             my ($name, @props) = @_;
             return $orig->($name, @props) if @props % 2 != 0;
 
@@ -58,11 +65,30 @@ sub import {
                 }
             }
 
+            if (delete $props{defaulter}) {
+                my $method = "_default_${name}";
+                $method =~ s/_default__/_default_/;
+                my $routine = q{ $target->$method(@_) };
+                $props{default} = Sub::Quote::quote_sub($routine, {
+                    '$target' => \$target,
+                    '$method' => \$method,
+                });
+            }
+
             return $orig->($name, %props);
         };
+
     }
 
     return $class->export_to_level(1, @_);
+}
+
+sub alt ($@) {
+    my ($name, @props) = @_;
+    if (my $has = caller->can('has')) {
+        my @name = ref $name ? @$name : $name;
+        @_ = ((map "+$_", @name), @props) and goto $has;
+    }
 }
 
 sub builder (;$) {
@@ -77,8 +103,17 @@ sub coerce () {
     return coerce => 1;
 }
 
+sub def ($$@) {
+    my ($name, $code, @props) = @_;
+    @_ = ($name, 'default', $code, @props) and goto &alt;
+}
+
 sub default ($) {
     return default => $_[0];
+}
+
+sub defaulter () {
+    return defaulter => 1;
 }
 
 sub handles ($) {
@@ -156,8 +191,10 @@ sub writer (;$) {
 
     has ['city', 'state', 'zip'] => is required, rw;
 
-    has telephone => is optional, rw;
+    def city  => 'San Franscisco';
+    def state => 'CA';
 
+    has telephone  => is optional, rw;
     has occupation => is optional, rw, default 'Unassigned';
 
     1;
@@ -167,6 +204,19 @@ sub writer (;$) {
 Data::Object::Role::Syntax provides a library of functions/keywords that
 provide a DSL (syntactic sugar) for declaring and describing
 Data::Object::Role roles.
+
+=cut
+
+=function alt
+
+    alt attr => (is => 'ro');
+
+    # equivalent to
+
+    has '+attr' => (..., is => 'ro');
+
+The alt function alters the preexisting attribute definition for the attribute
+specified.
 
 =cut
 
@@ -208,6 +258,19 @@ portion of the attribute declaration.
 
 The coerce function return a list suitable for configuring the coerce portion
 of the attribute declaration.
+
+=cut
+
+=function def
+
+    def attr => sub { 1 };
+
+    # equivalent to
+
+    has '+attr' => (..., default => sub { 1 });
+
+The def function alters the preexisting attribute definition setting and/or
+overriding the default value property.
 
 =cut
 
