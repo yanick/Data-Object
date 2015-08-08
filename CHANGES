@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.35 2015-08-08T21:20:36
+0.36 2015-08-08T21:26:22
+ - Added SEE ALSO sections to the class and role packages.
+
+0.35 2015-08-08T21:22:17
+ - v0.35
  - Updated build.
  - Fixed and documented the defaulter behavior.
 
@@ -135,8 +139,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Update documentation for class Scalar.
  - Removed scalar routines for "or", "and", "not", and "xor" operations.
+ - Update documentation for class Scalar.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.
