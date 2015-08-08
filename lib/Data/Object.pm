@@ -11,6 +11,7 @@ use Exporter qw(import);
 use Scalar::Util qw(blessed looks_like_number reftype);
 
 our @EXPORT_OK = qw(
+    alias
     codify
     data_array
     data_code
@@ -45,7 +46,7 @@ our @EXPORT_OK = qw(
 
 our %EXPORT_TAGS = (
     all  => [@EXPORT_OK],
-    core => [qw(deduce deduce_deep detract detract_deep load throw)],
+    core => [qw(alias deduce deduce_deep detract detract_deep load throw)],
     data => [grep m/data_/, @EXPORT_OK],
     type => [grep m/type_/, @EXPORT_OK],
 );
@@ -54,6 +55,27 @@ our %EXPORT_TAGS = (
 
 sub new {
     shift and goto &deduce_deep;
+}
+
+sub alias ($;$) {
+    my $name  = pop;
+    my $alias = shift;
+    my $delim = undef;
+
+    ($alias) = $name  =~ /(\w+)$/ if !$alias;
+    ($delim) = $alias =~ /(::|')/ if  $alias;
+
+    return unless $name and $alias;
+
+    my $caller  = caller;
+    my $subname = $delim ? $alias : join '::', $caller, $alias;
+
+    no strict 'refs';
+    no warnings 'redefine';
+
+    *{ $subname } = sub () { $name };
+
+    return $alias;
 }
 
 sub codify ($) {
@@ -69,14 +91,15 @@ sub codify ($) {
 };
 
 sub load ($) {
-    my $class = shift;
+    my $class  = shift;
     my $failed = ! $class || $class !~ /^\w(?:[\w:']*\w)?$/;
 
     my $loaded;
+
     my $error = do {
         local $@;
         $loaded = $class->can('new') || eval "require $class; 1";
-        $@;
+        $@
     };
 
     croak join ": ", "Error attempting to load $class", $error
@@ -354,7 +377,7 @@ The all export tag will export all exportable functions.
 
     use Data::Object qw(:core);
 
-The core export tag will export the exportable functions C<deduce>,
+The core export tag will export the exportable functions C<alias>, C<deduce>,
 C<deduce_deep>, C<detract>, C<detract_deep>, C<load>, and C<throw> exclusively.
 
 =cut
@@ -378,6 +401,20 @@ prefixed with the word "data".
 
 The type export tag will export all exportable functions whose names are
 prefixed with the word "type".
+
+=cut
+
+=function alias
+
+    # given 'A::B::C::D::Example';
+
+    alias 'A::B::C::D::Example'; # Example
+    alias ABCDE => 'A::B::C::D::Example'; # ABCDE
+    alias Eg::ABCD => 'A::B::C::D::Example'; # Eg::ABCD
+
+The alias function returns an alias to the package specified. An alias is a
+string representing the name of a fully-qualified constant function which
+returns the specified package name.
 
 =cut
 
