@@ -1,9 +1,8 @@
 Changelog for Data-Object
 
-0.34 2015-08-08T19:39:17
- - Fixed typo.
+0.34 2015-08-08T19:42:40
  - Updated build.
- - Update the  Data::Object description.
+ - Update the Data::Object description.
  - Updated the alias function POD.
 
 0.33 2015-08-08T17:18:07
