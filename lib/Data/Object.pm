@@ -406,11 +406,9 @@ prefixed with the word "type".
 
 =function alias
 
-    # given 'A::B::C::D::Example';
+    # given 'Exception::Type::Unknown';
 
-    alias 'A::B::C::D::Example'; # Example
-    alias ABCDE => 'A::B::C::D::Example'; # ABCDE
-    alias Eg::ABCD => 'A::B::C::D::Example'; # Eg::ABCD
+    alias 'TypeUnknown' => 'Exception::Type::Unknown'; # TypeUnknown
 
 The alias function returns an alias to the package specified. An alias is a
 string representing the name of a fully-qualified constant function which
