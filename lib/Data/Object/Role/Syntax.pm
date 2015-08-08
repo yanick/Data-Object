@@ -45,7 +45,11 @@ sub import {
 
         my $has = *{"${target}::has"} = sub {
             my ($name, @props) = @_;
-            return $orig->($name, @props) if @props % 2 != 0;
+
+            return $orig->($name, @props)
+                if @props % 2 != 0;
+
+            my $alt = $name =~ s/^\+//;
 
             my %codes = (
                 builder   => 'build',
@@ -65,9 +69,11 @@ sub import {
                 }
             }
 
-            if (delete $props{defaulter}) {
-                my $method = "_default_${name}";
-                $method =~ s/_default__/_default_/;
+            if (my $method = delete $props{defaulter}) {
+                if ($method eq "1") {
+                    $method = "_default_${name}";
+                    $method =~ s/_default__/_default_/;
+                }
                 my $routine = q{ $target->$method(@_) };
                 $props{default} = Sub::Quote::quote_sub($routine, {
                     '$target' => \$target,
@@ -75,7 +81,7 @@ sub import {
                 });
             }
 
-            return $orig->($name, %props);
+            return $orig->($alt ? "+$name" : $name, %props);
         };
 
     }
