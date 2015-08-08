@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.36 2015-08-08T21:26:22
+0.36 2015-08-08T21:27:22
+ - Updated build.
  - Added SEE ALSO sections to the class and role packages.
 
 0.35 2015-08-08T21:22:17
