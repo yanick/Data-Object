@@ -267,6 +267,14 @@ L<Data::Object::Array>
 
 =item *
 
+L<Data::Object::Class>
+
+=item *
+
+L<Data::Object::Class::Syntax>
+
+=item *
+
 L<Data::Object::Code>
 
 =item *
@@ -284,6 +292,14 @@ L<Data::Object::Integer>
 =item *
 
 L<Data::Object::Number>
+
+=item *
+
+L<Data::Object::Role>
+
+=item *
+
+L<Data::Object::Role::Syntax>
 
 =item *
 

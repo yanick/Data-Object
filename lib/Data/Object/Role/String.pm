@@ -201,43 +201,63 @@ L<Data::Object::Role::Output>
 
 =item *
 
-L<Data::Object::Role::Array>
+L<Data::Object::Array>
 
 =item *
 
-L<Data::Object::Role::Code>
+L<Data::Object::Class>
 
 =item *
 
-L<Data::Object::Role::Float>
+L<Data::Object::Class::Syntax>
 
 =item *
 
-L<Data::Object::Role::Hash>
+L<Data::Object::Code>
 
 =item *
 
-L<Data::Object::Role::Integer>
+L<Data::Object::Float>
 
 =item *
 
-L<Data::Object::Role::Number>
+L<Data::Object::Hash>
 
 =item *
 
-L<Data::Object::Role::Scalar>
+L<Data::Object::Integer>
 
 =item *
 
-L<Data::Object::Role::String>
+L<Data::Object::Number>
 
 =item *
 
-L<Data::Object::Role::Undef>
+L<Data::Object::Role>
 
 =item *
 
-L<Data::Object::Role::Universal>
+L<Data::Object::Role::Syntax>
+
+=item *
+
+L<Data::Object::Regexp>
+
+=item *
+
+L<Data::Object::Scalar>
+
+=item *
+
+L<Data::Object::String>
+
+=item *
+
+L<Data::Object::Undef>
+
+=item *
+
+L<Data::Object::Universal>
 
 =item *
 
