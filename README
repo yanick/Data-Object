@@ -4,7 +4,7 @@ NAME
 
 VERSION
 
-    version 0.32
+    version 0.33
 
 SYNOPSIS
 
@@ -32,7 +32,7 @@ EXPORTS
 
         use Data::Object qw(:core);
 
-    The core export tag will export the exportable functions deduce,
+    The core export tag will export the exportable functions alias, deduce,
     deduce_deep, detract, detract_deep, load, and throw exclusively.
 
  data
@@ -54,6 +54,18 @@ EXPORTS
     are prefixed with the word "type".
 
 FUNCTIONS
+
+ alias
+
+        # given 'A::B::C::D::Example';
+    
+        alias 'A::B::C::D::Example'; # Example
+        alias ABCDE => 'A::B::C::D::Example'; # ABCDE
+        alias Eg::ABCD => 'A::B::C::D::Example'; # Eg::ABCD
+
+    The alias function returns an alias to the package specified. An alias
+    is a string representing the name of a fully-qualified constant
+    function which returns the specified package name.
 
  data_array
 
@@ -266,6 +278,10 @@ SEE ALSO
 
       * Data::Object::Array
 
+      * Data::Object::Class
+
+      * Data::Object::Class::Syntax
+
       * Data::Object::Code
 
       * Data::Object::Float
@@ -275,6 +291,10 @@ SEE ALSO
       * Data::Object::Integer
 
       * Data::Object::Number
+
+      * Data::Object::Role
+
+      * Data::Object::Role::Syntax
 
       * Data::Object::Regexp
 

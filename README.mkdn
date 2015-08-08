@@ -6,7 +6,7 @@ Data::Object - Data Type Objects for Perl 5
 
 # VERSION
 
-version 0.32
+version 0.33
 
 # SYNOPSIS
 
@@ -34,7 +34,7 @@ The all export tag will export all exportable functions.
 
     use Data::Object qw(:core);
 
-The core export tag will export the exportable functions `deduce`,
+The core export tag will export the exportable functions `alias`, `deduce`,
 `deduce_deep`, `detract`, `detract_deep`, `load`, and `throw` exclusively.
 
 ## data
@@ -56,6 +56,18 @@ The type export tag will export all exportable functions whose names are
 prefixed with the word "type".
 
 # FUNCTIONS
+
+## alias
+
+    # given 'A::B::C::D::Example';
+
+    alias 'A::B::C::D::Example'; # Example
+    alias ABCDE => 'A::B::C::D::Example'; # ABCDE
+    alias Eg::ABCD => 'A::B::C::D::Example'; # Eg::ABCD
+
+The alias function returns an alias to the package specified. An alias is a
+string representing the name of a fully-qualified constant function which
+returns the specified package name.
 
 ## data\_array
 
@@ -265,11 +277,15 @@ function takes all arguments accepted by the [Data::Object::Exception](https://m
 # SEE ALSO
 
 - [Data::Object::Array](https://metacpan.org/pod/Data::Object::Array)
+- [Data::Object::Class](https://metacpan.org/pod/Data::Object::Class)
+- [Data::Object::Class::Syntax](https://metacpan.org/pod/Data::Object::Class::Syntax)
 - [Data::Object::Code](https://metacpan.org/pod/Data::Object::Code)
 - [Data::Object::Float](https://metacpan.org/pod/Data::Object::Float)
 - [Data::Object::Hash](https://metacpan.org/pod/Data::Object::Hash)
 - [Data::Object::Integer](https://metacpan.org/pod/Data::Object::Integer)
 - [Data::Object::Number](https://metacpan.org/pod/Data::Object::Number)
+- [Data::Object::Role](https://metacpan.org/pod/Data::Object::Role)
+- [Data::Object::Role::Syntax](https://metacpan.org/pod/Data::Object::Role::Syntax)
 - [Data::Object::Regexp](https://metacpan.org/pod/Data::Object::Regexp)
 - [Data::Object::Scalar](https://metacpan.org/pod/Data::Object::Scalar)
 - [Data::Object::String](https://metacpan.org/pod/Data::Object::String)

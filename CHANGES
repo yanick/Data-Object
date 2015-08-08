@@ -1,6 +1,13 @@
 Changelog for Data-Object
 
-0.32 2015-08-07T12:10:42
+0.33 2015-08-08T17:14:51
+ - Fixed attribute altering and defaulter behavior.
+ - Updated the SEE ALSO documentation.
+ - Updated POD for syntax packages.
+ - Added alias function.
+
+0.32 2015-08-07T12:11:12
+ - v0.32
  - Updated build.
  - Added "alt", "def", and "defaulter" functions to the syntax packages.
 
