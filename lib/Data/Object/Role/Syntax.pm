@@ -201,9 +201,8 @@ sub writer (;$) {
 
 =head1 DESCRIPTION
 
-Data::Object::Role::Syntax provides a library of functions/keywords that
-provide a DSL (syntactic sugar) for declaring and describing
-Data::Object::Role roles.
+Data::Object::Role::Syntax exports a collection of functions that provide a DSL
+(syntactic sugar) for declaring and describing Data::Object::Role roles.
 
 =cut
 

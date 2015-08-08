@@ -201,9 +201,8 @@ sub writer (;$) {
 
 =head1 DESCRIPTION
 
-Data::Object::Class::Syntax provides a library of functions/keywords that
-provide a DSL (syntactic sugar) for declaring and describing
-Data::Object::Class classes.
+Data::Object::Class::Syntax exports a collection of functions that provide a
+DSL (syntactic sugar) for declaring and describing Data::Object::Class classes.
 
 =cut
 
