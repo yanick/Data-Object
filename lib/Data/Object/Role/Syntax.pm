@@ -118,8 +118,8 @@ sub default ($) {
     return default => $_[0];
 }
 
-sub defaulter () {
-    return defaulter => 1;
+sub defaulter (;$) {
+    return defaulter => $_[0] // 1;
 }
 
 sub handles ($) {
@@ -289,6 +289,21 @@ overriding the default value property.
 
 The default function returns a list suitable for configuring the default
 portion of the attribute declaration.
+
+=cut
+
+=function defaulter
+
+    defaulter;
+    defaulter '_default_attr';
+
+    # equivalent to
+
+    has attr => ..., default => sub { $class->_default_attr(...) };
+
+The defaulter function returns a list suitable for configuring the default
+portion of the attribute declaration. The argument must be the name of an
+existing routine available to the class.
 
 =cut
 
