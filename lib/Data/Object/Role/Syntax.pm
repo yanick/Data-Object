@@ -184,7 +184,7 @@ sub writer (;$) {
 
 =head1 SYNOPSIS
 
-    package Person;
+    package Persona;
 
     use Data::Object::Role;
     use Data::Object::Role::Syntax;

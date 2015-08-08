@@ -1,4 +1,4 @@
-# ABSTRACT: Data Type Objects for Perl 5
+# ABSTRACT: Data Type Object Orientation for Perl 5
 package Data::Object;
 
 use 5.010;
@@ -351,17 +351,36 @@ sub detract_deep {
 
 =head1 SYNOPSIS
 
-    use Data::Object;
+    package Person;
 
-    my $object = Data::Object->new([1..9]);
+    use Data::Object ':core';
 
-    $object->isa('Data::Object::Array'); # 1
-    $object->count; # 9
+    use Data::Object::Class;
+    use Data::Object::Class::Syntax;
+
+    extends 'Entity';
+    with    'Identity';
+
+    has firstname => is required, ro;
+    has lastname  => is required, ro;
+
+    has address1  => is required, rw;
+    has address2  => is optional, rw;
+
+    has ['city', 'state', 'zip'] => is required, rw;
+
+    def city  => 'San Franscisco';
+    def state => 'CA';
+
+    has country => is required, rw, default 'US';
+
+    1;
 
 =head1 DESCRIPTION
 
-Data::Object provides functions for promoting Perl 5 native data types to
-objects which provide common methods for operating on the data.
+Data::Object is a framework for writing structured and highly object-oriented
+Perl 5 software programs. This distribution contains classes which wrap Perl 5
+native data types and provides methods for operating on the data.
 
 =cut
 
