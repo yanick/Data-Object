@@ -1,24 +1,44 @@
 NAME
 
-    Data::Object - Data Type Objects for Perl 5
+    Data::Object - Data Type Object Orientation for Perl 5
 
 VERSION
 
-    version 0.33
+    version 0.34
 
 SYNOPSIS
 
-        use Data::Object;
+        package Person;
     
-        my $object = Data::Object->new([1..9]);
+        use Data::Object ':core';
     
-        $object->isa('Data::Object::Array'); # 1
-        $object->count; # 9
+        use Data::Object::Class;
+        use Data::Object::Class::Syntax;
+    
+        extends 'Entity';
+        with    'Identity';
+    
+        has firstname => is required, ro;
+        has lastname  => is required, ro;
+    
+        has address1  => is required, rw;
+        has address2  => is optional, rw;
+    
+        has ['city', 'state', 'zip'] => is required, rw;
+    
+        def city  => 'San Franscisco';
+        def state => 'CA';
+    
+        has country => is required, rw, default 'US';
+    
+        1;
 
 DESCRIPTION
 
-    Data::Object provides functions for promoting Perl 5 native data types
-    to objects which provide common methods for operating on the data.
+    Data::Object is a framework for writing structured and highly
+    object-oriented Perl 5 software programs. This distribution contains
+    classes which wrap Perl 5 native data types and provides methods for
+    operating on the data.
 
 EXPORTS
 
@@ -57,11 +77,9 @@ FUNCTIONS
 
  alias
 
-        # given 'A::B::C::D::Example';
+        # given 'Exception::Type::Unknown';
     
-        alias 'A::B::C::D::Example'; # Example
-        alias ABCDE => 'A::B::C::D::Example'; # ABCDE
-        alias Eg::ABCD => 'A::B::C::D::Example'; # Eg::ABCD
+        alias 'TypeUnknown' => 'Exception::Type::Unknown'; # TypeUnknown
 
     The alias function returns an alias to the package specified. An alias
     is a string representing the name of a fully-qualified constant
