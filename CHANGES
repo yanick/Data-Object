@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.34 2015-08-08T19:42:40
+0.35 2015-08-08T21:17:33
+ - Fixed and documented the defaulter behavior.
+
+0.34 2015-08-08T19:43:13
+ - v0.34
  - Updated build.
  - Update the Data::Object description.
  - Updated the alias function POD.
