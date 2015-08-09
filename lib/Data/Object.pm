@@ -13,6 +13,7 @@ use Scalar::Util qw(blessed looks_like_number reftype);
 our @EXPORT_OK = qw(
     alias
     codify
+    const
     data_array
     data_code
     data_float
@@ -60,22 +61,33 @@ sub new {
 sub alias ($;$) {
     my $name  = pop;
     my $alias = shift;
-    my $delim = undef;
 
     ($alias) = $name  =~ /(\w+)$/ if !$alias;
-    ($delim) = $alias =~ /(::|')/ if  $alias;
 
-    return unless $name and $alias;
+    return unless $name and defined $alias;
 
-    my $caller  = caller;
-    my $subname = $delim ? $alias : join '::', $caller, $alias;
+    const($alias, $name);
+
+    return $alias;
+}
+
+sub const ($$) {
+    my $name = shift;
+    my $expr = shift;
+
+    return unless $name and defined $expr;
+
+    my $class = caller(0);
+       $class = caller(1) if __PACKAGE__ eq $class;
+
+    my $fqsn = $name =~ /(::|')/ ? $name : "${class}::${name}";
 
     no strict 'refs';
     no warnings 'redefine';
 
-    *{ $subname } = sub () { $name };
+    *{ $fqsn } = sub () { $expr };
 
-    return $alias;
+    return $expr;
 }
 
 sub codify ($) {
@@ -92,8 +104,8 @@ sub codify ($) {
 
 sub load ($) {
     my $class  = shift;
-    my $failed = ! $class || $class !~ /^\w(?:[\w:']*\w)?$/;
 
+    my $failed = ! $class || $class !~ /^\w(?:[\w:']*\w)?$/;
     my $loaded;
 
     my $error = do {
@@ -401,8 +413,6 @@ C<deduce_deep>, C<detract>, C<detract_deep>, C<load>, and C<throw> exclusively.
 
     use Data::Object qw(:data);
 
-    data_undef;
-
 The data export tag will export all exportable functions whose names are
 prefixed with the word "data".
 
@@ -412,8 +422,6 @@ prefixed with the word "data".
 
     use Data::Object qw(:type);
 
-    type_undef;
-
 The type export tag will export all exportable functions whose names are
 prefixed with the word "type".
 
@@ -421,15 +429,29 @@ prefixed with the word "type".
 
 =function alias
 
-    # given 'Exception::Type::Unknown';
+    # given 'Exception::Unknown';
 
-    alias 'TypeUnknown' => 'Exception::Type::Unknown'; # TypeUnknown
+    alias 'Exception::Unknown'; # Unknown
 
-The alias function returns an alias to the package specified. An alias is a
-string representing the name of a fully-qualified constant function which
-returns the specified package name.
+The alias function creates and returns an alias to the package specified. An
+alias is a string representing the name of a fully-qualified constant function
+which returns the specified package name.
 
 =cut
+
+=function const
+
+    # given 'Exception::Unknown';
+
+    const 'ExceptionUnknown' => 'Exception::Unknown'; # Exception::Unknown
+
+The const function creates a constant function using the name and expression
+supplied to it. A constant function is a function that does not accept any
+arguments and whose result(s) should be deterministic.
+
+=cut
+
+
 
 =function data_array
 
@@ -524,9 +546,9 @@ C<type_regexp> function is an alias to this function.
 
 =function data_scalar
 
-    # given qr/\w+/;
+    # given \*main;
 
-    $object = data_scalar qr/\w+/;
+    $object = data_scalar \*main;
     $object->isa('Data::Object::Scalar');
 
 The data_scalar function returns a L<Data::Object::Scalar> instance which wraps
@@ -579,7 +601,7 @@ The C<type_universal> function is an alias to this function.
     # given qr/\w+/;
 
     $object = deduce qr/\w+/;
-    $object->isa('Data::Object::Scalar');
+    $object->isa('Data::Object::Regexp');
 
 The deduce function returns a data type object instance based upon the deduced
 type of data provided.
@@ -590,7 +612,7 @@ type of data provided.
 
     # given {1,2,3,{4,5,6,[-1]}}
 
-    $deep = deduce_deep {1,2,3,{4,5,6,[-1]}}; # produces ...
+    $deep = deduce_deep {1,2,3,{4,5,6,[-1]}};
 
     # Data::Object::Hash {
     #     1 => Data::Object::Number ( 2 ),
@@ -610,7 +632,7 @@ Note: Blessed objects are not traversed.
 
     # given qr/\w+/;
 
-    $type = deduce_type qr/\w+/; # SCALAR
+    $type = deduce_type qr/\w+/; # REGEXP
 
 The deduce_type function returns a data type description for the type of data
 provided, represented as a string in capital letters.
