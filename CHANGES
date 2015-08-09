@@ -1,6 +1,13 @@
 Changelog for Data-Object
 
-0.36 2015-08-08T21:27:22
+0.37 2015-08-09T20:38:17
+ - Added the const function, Updated the load and alias functions.
+ - Updated POD for teh Exception class.
+ - Updated the main SYNOPSIS.
+ - Modified constructor for all objects.
+
+0.36 2015-08-08T21:28:07
+ - v0.36
  - Updated build.
  - Added SEE ALSO sections to the class and role packages.
 
