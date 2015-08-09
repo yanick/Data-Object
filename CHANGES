@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.37 2015-08-09T20:38:17
+0.37 2015-08-09T20:39:10
+ - Updated build.
  - Added the const function, Updated the load and alias functions.
  - Updated POD for teh Exception class.
  - Updated the main SYNOPSIS.
@@ -147,8 +148,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Update documentation for class Scalar.
+ - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.
