@@ -17,8 +17,11 @@ sub new {
     my $class = shift;
     my $data  = shift;
 
+    my $role = 'Data::Object::Role::Type';
+
     $data = $data->data if blessed($data)
-        and $data->can('does') and $data->does('Data::Object::Role::Type');
+        and $data->can('does')
+        and $data->does($role);
 
     throw 'Type Instantiation Error: Not a RegexpRef'
         unless defined($data) && !! re::is_regexp($data);
