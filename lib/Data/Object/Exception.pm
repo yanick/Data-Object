@@ -82,7 +82,7 @@ sub to_string {
 
     my $exception = Data::Object::Exception->new;
 
-    $exception->throw('Something went wrong.');
+    $exception->throw('Something went wrong');
 
 =head1 DESCRIPTION
 
@@ -176,3 +176,104 @@ The to_string method returns an informatve description of the exception thrown.
 
 =cut
 
+=head1 OPERATORS
+
+This class overloads the following operators for your convenience.
+
+=operator string
+
+    "$exception"
+
+    # equivilent to
+
+    $exception->to_string
+
+=operator smartmatch
+
+    $value ~~ $exception
+
+    # equivilent to
+
+    $exception->data
+
+=cut
+
+=head1 SEE ALSO
+
+=over 4
+
+=item *
+
+L<Data::Object::Array>
+
+=item *
+
+L<Data::Object::Class>
+
+=item *
+
+L<Data::Object::Class::Syntax>
+
+=item *
+
+L<Data::Object::Code>
+
+=item *
+
+L<Data::Object::Float>
+
+=item *
+
+L<Data::Object::Hash>
+
+=item *
+
+L<Data::Object::Integer>
+
+=item *
+
+L<Data::Object::Number>
+
+=item *
+
+L<Data::Object::Role>
+
+=item *
+
+L<Data::Object::Role::Syntax>
+
+=item *
+
+L<Data::Object::Regexp>
+
+=item *
+
+L<Data::Object::Scalar>
+
+=item *
+
+L<Data::Object::String>
+
+=item *
+
+L<Data::Object::Undef>
+
+=item *
+
+L<Data::Object::Universal>
+
+=item *
+
+L<Data::Object::Autobox>
+
+=item *
+
+L<Data::Object::Library>
+
+=item *
+
+L<Data::Object::Signatures>
+
+=back
+
+=cut
