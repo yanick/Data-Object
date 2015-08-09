@@ -353,8 +353,6 @@ sub detract_deep {
 
     package Person;
 
-    use Data::Object ':core';
-
     use Data::Object::Class;
     use Data::Object::Class::Syntax;
 
@@ -371,8 +369,6 @@ sub detract_deep {
 
     def city  => 'San Franscisco';
     def state => 'CA';
-
-    has country => is required, rw, default 'US';
 
     1;
 
