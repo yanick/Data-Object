@@ -1,4 +1,4 @@
-# ABSTRACT: Data Type Object Orientation for Perl 5
+# ABSTRACT: Object Orientation for Perl 5
 package Data::Object;
 
 use 5.010;
@@ -10,7 +10,7 @@ use Carp;
 use Exporter qw(import);
 use Scalar::Util qw(blessed looks_like_number reftype);
 
-our @EXPORT_OK = qw(
+my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
     alias
     codify
     const
@@ -47,7 +47,7 @@ our @EXPORT_OK = qw(
 
 our %EXPORT_TAGS = (
     all  => [@EXPORT_OK],
-    core => [qw(alias const deduce deduce_deep detract detract_deep load throw)],
+    core => [@CORE],
     data => [grep m/data_/, @EXPORT_OK],
     type => [grep m/type_/, @EXPORT_OK],
 );
@@ -79,8 +79,7 @@ sub const ($$) {
 
     my $class = caller(0);
        $class = caller(1) if __PACKAGE__ eq $class;
-
-    my $fqsn = $name =~ /(::|')/ ? $name : "${class}::${name}";
+    my $fqsn  = $name =~ /(::|')/ ? $name : "${class}::${name}";
 
     no strict 'refs';
     no warnings 'redefine';
