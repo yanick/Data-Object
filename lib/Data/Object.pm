@@ -47,7 +47,7 @@ our @EXPORT_OK = qw(
 
 our %EXPORT_TAGS = (
     all  => [@EXPORT_OK],
-    core => [qw(alias deduce deduce_deep detract detract_deep load throw)],
+    core => [qw(alias const deduce deduce_deep detract detract_deep load throw)],
     data => [grep m/data_/, @EXPORT_OK],
     type => [grep m/type_/, @EXPORT_OK],
 );
@@ -404,8 +404,9 @@ The all export tag will export all exportable functions.
 
     use Data::Object qw(:core);
 
-The core export tag will export the exportable functions C<alias>, C<deduce>,
-C<deduce_deep>, C<detract>, C<detract_deep>, C<load>, and C<throw> exclusively.
+The core export tag will export the exportable functions C<alias>, C<const>,
+C<deduce>, C<deduce_deep>, C<detract>, C<detract_deep>, C<load>, and C<throw>
+exclusively.
 
 =cut
 
