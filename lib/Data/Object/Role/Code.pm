@@ -1,4 +1,4 @@
-# ABSTRACT: A Code Object Role for Perl 5
+# ABSTRACT: Code Object Role for Perl 5
 package Data::Object::Role::Code;
 
 use 5.010;

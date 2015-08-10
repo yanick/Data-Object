@@ -1,4 +1,4 @@
-# ABSTRACT: A Float Object for Perl 5
+# ABSTRACT: Float Object for Perl 5
 package Data::Object::Float;
 
 use 5.010;

@@ -1,4 +1,4 @@
-# ABSTRACT: An Integer Object for Perl 5
+# ABSTRACT: Integer Object for Perl 5
 package Data::Object::Integer;
 
 use 5.010;

@@ -1,4 +1,4 @@
-# ABSTRACT: A Float Object Role for Perl 5
+# ABSTRACT: Float Object Role for Perl 5
 package Data::Object::Role::Float;
 
 use 5.010;

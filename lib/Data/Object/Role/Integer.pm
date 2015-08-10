@@ -1,4 +1,4 @@
-# ABSTRACT: An Integer Object Role for Perl 5
+# ABSTRACT: Integer Object Role for Perl 5
 package Data::Object::Role::Integer;
 
 use 5.010;

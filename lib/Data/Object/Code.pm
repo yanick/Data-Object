@@ -1,4 +1,4 @@
-# ABSTRACT: A Code Object for Perl 5
+# ABSTRACT: Code Object for Perl 5
 package Data::Object::Code;
 
 use 5.010;

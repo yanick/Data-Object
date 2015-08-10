@@ -1,4 +1,4 @@
-# ABSTRACT: A Hash Object for Perl 5
+# ABSTRACT: Hash Object for Perl 5
 package Data::Object::Hash;
 
 use 5.010;

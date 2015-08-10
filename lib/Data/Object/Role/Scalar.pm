@@ -1,4 +1,4 @@
-# ABSTRACT: A Scalar Object Role for Perl 5
+# ABSTRACT: Scalar Object Role for Perl 5
 package Data::Object::Role::Scalar;
 
 use 5.010;

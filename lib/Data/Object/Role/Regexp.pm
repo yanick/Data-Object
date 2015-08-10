@@ -1,4 +1,4 @@
-# ABSTRACT: A Regexp Object Role for Perl 5
+# ABSTRACT: Regexp Object Role for Perl 5
 package Data::Object::Role::Regexp;
 
 use 5.010;

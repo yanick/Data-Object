@@ -1,4 +1,4 @@
-# ABSTRACT: A String Object for Perl 5
+# ABSTRACT: String Object for Perl 5
 package Data::Object::String;
 
 use 5.010;

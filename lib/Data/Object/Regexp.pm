@@ -1,4 +1,4 @@
-# ABSTRACT: A Regexp Object for Perl 5
+# ABSTRACT: Regexp Object for Perl 5
 package Data::Object::Regexp;
 
 use 5.010;

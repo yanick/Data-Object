@@ -1,4 +1,4 @@
-# ABSTRACT: An Undef Object for Perl 5
+# ABSTRACT: Undef Object for Perl 5
 package Data::Object::Undef;
 
 use 5.010;

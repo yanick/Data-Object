@@ -1,4 +1,4 @@
-# ABSTRACT: A String Object Role for Perl 5
+# ABSTRACT: String Object Role for Perl 5
 package Data::Object::Role::String;
 
 use 5.010;

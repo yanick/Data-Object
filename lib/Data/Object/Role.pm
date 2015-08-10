@@ -1,4 +1,4 @@
-# ABSTRACT: A Generic Role Framework for Perl 5
+# ABSTRACT: Role Declaration for Perl 5
 package Data::Object::Role;
 
 use 5.010;

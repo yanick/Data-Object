@@ -1,4 +1,4 @@
-# ABSTRACT: An Array Object Role for Perl 5
+# ABSTRACT: Array Object Role for Perl 5
 package Data::Object::Role::Array;
 
 use 5.010;

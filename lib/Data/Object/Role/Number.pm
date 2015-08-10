@@ -1,4 +1,4 @@
-# ABSTRACT: A Number Object Role for Perl 5
+# ABSTRACT: Number Object Role for Perl 5
 package Data::Object::Role::Number;
 
 use 5.010;

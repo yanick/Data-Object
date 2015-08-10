@@ -1,4 +1,4 @@
-# ABSTRACT: A Generic Class Famework for Perl 5
+# ABSTRACT: Class Declaration for Perl 5
 package Data::Object::Class;
 
 use 5.010;

@@ -1,4 +1,4 @@
-# ABSTRACT: A Hash Object Role for Perl 5
+# ABSTRACT: Hash Object Role for Perl 5
 package Data::Object::Role::Hash;
 
 use 5.010;

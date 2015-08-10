@@ -1,4 +1,4 @@
-# ABSTRACT: A Universal Object for Perl 5
+# ABSTRACT: Universal Object for Perl 5
 package Data::Object::Universal;
 
 use 5.010;

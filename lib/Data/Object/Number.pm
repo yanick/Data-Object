@@ -1,4 +1,4 @@
-# ABSTRACT: A Number Object for Perl 5
+# ABSTRACT: Number Object for Perl 5
 package Data::Object::Number;
 
 use 5.010;

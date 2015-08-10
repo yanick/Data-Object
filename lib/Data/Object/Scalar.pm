@@ -1,4 +1,4 @@
-# ABSTRACT: A Scalar Object for Perl 5
+# ABSTRACT: Scalar Object for Perl 5
 package Data::Object::Scalar;
 
 use 5.010;

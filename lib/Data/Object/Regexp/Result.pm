@@ -1,4 +1,4 @@
-# ABSTRACT: A Regexp Result Object for Perl 5
+# ABSTRACT: Result Object for Perl 5
 package Data::Object::Regexp::Result;
 
 use 5.010;

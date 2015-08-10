@@ -1,4 +1,4 @@
-# ABSTRACT: An Array Object for Perl 5
+# ABSTRACT: Array Object for Perl 5
 package Data::Object::Array;
 
 use 5.010;
