@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.38 2015-08-10T16:37:43
+0.38 2015-08-10T16:39:44
+ - Updated build.
  - Updated miscellaneous role descriptions.
  - Updated POD for Role.
  - Updated the POD for the Singleton class.
