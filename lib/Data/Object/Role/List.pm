@@ -1,4 +1,4 @@
-# A List Data Type Role for Perl 5
+# List Data Type Role for Perl 5
 package Data::Object::Role::List;
 
 use 5.010;

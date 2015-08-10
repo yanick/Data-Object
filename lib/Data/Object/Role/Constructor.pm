@@ -1,4 +1,4 @@
-# A Generic Constructor Role for Perl 5
+# Generic Constructor Role for Perl 5
 package Data::Object::Role::Constructor;
 
 use 5.010;

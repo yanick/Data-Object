@@ -1,4 +1,4 @@
-# An Item Data Type Role for Perl 5
+# Item Data Type Role for Perl 5
 package Data::Object::Role::Item;
 
 use 5.010;

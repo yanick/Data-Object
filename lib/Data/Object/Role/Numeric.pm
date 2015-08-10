@@ -1,4 +1,4 @@
-# A Numeric Data Type Role for Perl 5
+# Numeric Data Type Role for Perl 5
 package Data::Object::Role::Numeric;
 
 use 5.010;

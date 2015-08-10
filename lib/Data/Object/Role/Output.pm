@@ -1,4 +1,4 @@
-# An Output Data Type Role for Perl 5
+# Output Data Type Role for Perl 5
 package Data::Object::Role::Output;
 
 use 5.010;

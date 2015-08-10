@@ -1,4 +1,4 @@
-# A Collection Data Type Role for Perl 5
+# Collection Data Type Role for Perl 5
 package Data::Object::Role::Collection;
 
 use 5.010;

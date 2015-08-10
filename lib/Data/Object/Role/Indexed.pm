@@ -1,4 +1,4 @@
-# An Indexed Data Type Role for Perl 5
+# Indexed Data Type Role for Perl 5
 package Data::Object::Role::Indexed;
 
 use 5.010;

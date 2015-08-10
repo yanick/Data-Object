@@ -1,4 +1,4 @@
-# A Value Data Type Role for Perl 5
+# Value Data Type Role for Perl 5
 package Data::Object::Role::Values;
 
 use 5.010;

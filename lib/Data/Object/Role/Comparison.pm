@@ -1,4 +1,4 @@
-# A Comparison Data Type Role for Perl 5
+# Comparison Data Type Role for Perl 5
 package Data::Object::Role::Comparison;
 
 use 5.010;

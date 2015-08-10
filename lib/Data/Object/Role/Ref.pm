@@ -1,4 +1,4 @@
-# A Reference Data Type Role for Perl 5
+# Reference Data Type Role for Perl 5
 package Data::Object::Role::Ref;
 
 use 5.010;

@@ -1,4 +1,4 @@
-# The Default Data Type Role
+# Default Data Type Role
 package Data::Object::Role::Type;
 
 use 5.010;
