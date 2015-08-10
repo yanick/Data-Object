@@ -19,8 +19,7 @@ use parent 'Moo::Role';
     extends 'Entity';
     with    'Identity';
 
-    has firstname => ( is => 'ro' );
-    has lastname  => ( is => 'ro' );
+    has id => ( is => 'ro' );
 
     1;
 
