@@ -1,6 +1,15 @@
 Changelog for Data-Object
 
-0.37 2015-08-09T20:39:10
+0.38 2015-08-10T16:37:43
+ - Updated miscellaneous role descriptions.
+ - Updated POD for Role.
+ - Updated the POD for the Singleton class.
+ - Updated the ABSTRACT for all relevant classes.
+ - Update the Data::Object description.
+ - Added const function to the core export tag.
+
+0.37 2015-08-09T20:40:09
+ - v0.37
  - Updated build.
  - Added the const function, Updated the load and alias functions.
  - Updated POD for teh Exception class.
@@ -148,8 +157,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Update documentation for class Scalar.
  - Removed scalar routines for "or", "and", "not", and "xor" operations.
+ - Update documentation for class Scalar.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.

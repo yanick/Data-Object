@@ -1,10 +1,10 @@
 NAME
 
-    Data::Object - Data Type Object Orientation for Perl 5
+    Data::Object - Object Orientation for Perl 5
 
 VERSION
 
-    version 0.37
+    version 0.38
 
 SYNOPSIS
 
@@ -48,8 +48,9 @@ EXPORTS
 
         use Data::Object qw(:core);
 
-    The core export tag will export the exportable functions alias, deduce,
-    deduce_deep, detract, detract_deep, load, and throw exclusively.
+    The core export tag will export the exportable functions alias, const,
+    deduce, deduce_deep, detract, detract_deep, load, and throw
+    exclusively.
 
  data
 
