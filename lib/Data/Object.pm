@@ -84,7 +84,7 @@ sub const ($$) {
     no strict 'refs';
     no warnings 'redefine';
 
-    *{ $fqsn } = sub () { $expr };
+    *{ $fqsn } = sub () { (ref $expr eq "CODE") ? goto &$expr : $expr };
 
     return $expr;
 }

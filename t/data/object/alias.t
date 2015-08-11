@@ -13,14 +13,14 @@ subtest 'test the alias function' => sub {
     is do { no strict 'refs'; &$alias }, 'Scalar::Util';
 };
 
-subtest 'test the alias function with explicit alias ' => sub {
+subtest 'test the alias function with explicit alias' => sub {
     my $alias = Data::Object::alias(SclUtl => 'Scalar::Util');
     is $alias, 'SclUtl';
     is SclUtl(), 'Scalar::Util';
     is do { no strict 'refs'; &$alias }, 'Scalar::Util';
 };
 
-subtest 'test the alias function with explicit namespaced alias ' => sub {
+subtest 'test the alias function with explicit namespaced alias' => sub {
     my $alias = Data::Object::alias('Stash::SclUtl' => 'Scalar::Util');
     is $alias, 'Stash::SclUtl';
     is Stash::SclUtl(), 'Scalar::Util';
