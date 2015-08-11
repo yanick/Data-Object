@@ -20,15 +20,17 @@ use overload (
 
 sub new {
     my $class = shift;
-    my $data  = shift;
+    my $args  = shift;
+    my $role  = 'Data::Object::Role::Type';
 
-    $class = ref($class) || $class;
-    unless (blessed($data) && $data->isa($class)) {
-        throw 'Type Instantiation Error: Not an Undefined value'
-            if defined $data;
-    }
+    $args = $args->data if blessed($args)
+        and $args->can('does')
+        and $args->does($role);
 
-    return bless \$data, $class;
+    throw 'Type Instantiation Error: Not an Undefined value'
+        if defined $args;
+
+    return bless \$args, $class;
 }
 
 sub data {

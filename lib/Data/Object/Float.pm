@@ -20,21 +20,20 @@ use overload (
 
 sub new {
     my $class = shift;
-    my $data  = shift;
+    my $args  = shift;
+    my $role  = 'Data::Object::Role::Type';
 
-    my $role = 'Data::Object::Role::Type';
+    $args = $args->data if blessed($args)
+        and $args->can('does')
+        and $args->does($role);
 
-    $data = $data->data if blessed($data)
-        and $data->can('does')
-        and $data->does($role);
-
-    $data =~ s/^\+//; # not keen on this but ...
+    $args =~ s/^\+//; # not keen on this but ...
 
     throw 'Type Instantiation Error: Not a Float or Number'
-        unless defined($data) && !ref($data)
-            && looks_like_number($data);
+        unless defined($args) && !ref($args)
+            && looks_like_number($args);
 
-    return bless \$data, $class;
+    return bless \$args, $class;
 }
 
 sub data {

@@ -20,18 +20,17 @@ use overload (
 
 sub new {
     my $class = shift;
-    my $data  = shift;
+    my $args  = shift;
+    my $role  = 'Data::Object::Role::Type';
 
-    my $role = 'Data::Object::Role::Type';
-
-    $data = $data->data if blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $args = $args->data if blessed($args)
+        and $args->can('does')
+        and $args->does($role);
 
     throw 'Type Instantiation Error: Not a String'
-        unless defined($data) && not ref($data);
+        unless defined($args) && not ref($args);
 
-    return bless \$data, $class;
+    return bless \$args, $class;
 }
 
 around 'append' => sub {

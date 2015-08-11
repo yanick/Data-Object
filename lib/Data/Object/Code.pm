@@ -13,18 +13,17 @@ with 'Data::Object::Role::Code';
 
 sub new {
     my $class = shift;
-    my $data  = shift;
+    my $args  = shift;
+    my $role  = 'Data::Object::Role::Type';
 
-    my $role = 'Data::Object::Role::Type';
-
-    $data = $data->data if blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $args = $args->data if blessed($args)
+        and $args->can('does')
+        and $args->does($role);
 
     throw 'Type Instantiation Error: Not a CodeRef'
-        unless 'CODE' eq ref $data;
+        unless 'CODE' eq ref $args;
 
-    return bless $data, $class;
+    return bless $args, $class;
 }
 
 around 'call' => sub {

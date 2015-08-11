@@ -13,18 +13,17 @@ with 'Data::Object::Role::Hash';
 
 sub new {
     my $class = shift;
-    my $data  = @_ > 1 && !(@_ % 2) ? {@_} : shift;
+    my $args  = @_ > 1 && !(@_ % 2) ? {@_} : shift;
+    my $role  = 'Data::Object::Role::Type';
 
-    my $role = 'Data::Object::Role::Type';
-
-    $data = $data->data if blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $args = $args->data if blessed($args)
+        and $args->can('does')
+        and $args->does($role);
 
     throw 'Type Instantiation Error: Not a HashRef'
-        unless 'HASH' eq ref $data;
+        unless 'HASH' eq ref $args;
 
-    return bless $data, $class;
+    return bless $args, $class;
 }
 
 around 'array_slice' => sub {

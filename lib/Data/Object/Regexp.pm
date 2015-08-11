@@ -15,18 +15,17 @@ with 'Data::Object::Role::Regexp';
 
 sub new {
     my $class = shift;
-    my $data  = shift;
+    my $args  = shift;
+    my $role  = 'Data::Object::Role::Type';
 
-    my $role = 'Data::Object::Role::Type';
-
-    $data = $data->data if blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $args = $args->data if blessed($args)
+        and $args->can('does')
+        and $args->does($role);
 
     throw 'Type Instantiation Error: Not a RegexpRef'
-        unless defined($data) && !! re::is_regexp($data);
+        unless defined($args) && !! re::is_regexp($args);
 
-    return bless \$data, $class;
+    return bless \$args, $class;
 }
 
 sub data {
