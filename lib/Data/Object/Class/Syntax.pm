@@ -218,7 +218,7 @@ sub writer (;$) {
     has telephone  => rw;
     has occupation => rw;
 
-    # ATTRIBUTE CONSTRAINTS
+    # CONSTRAINTS
 
     req firstname  => Str;
     req lastname   => Str;
@@ -230,7 +230,7 @@ sub writer (;$) {
     opt telephone  => StrMatch[qr/^\d{10,30}$/];
     opt occupation => Str;
 
-    # ATTRIBUTE DEFAULTS
+    # DEFAULTS
 
     def occupation => 'Unassigned';
     def city       => 'San Franscisco';
@@ -238,7 +238,7 @@ sub writer (;$) {
 
     1;
 
-=head1 DESCRIPTION
+rhead1 DESCRIPTION
 
 Data::Object::Class::Syntax exports a collection of functions that provide a
 DSL (syntactic sugar) for declaring and describing Data::Object::Class classes.

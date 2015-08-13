@@ -218,7 +218,7 @@ sub writer (;$) {
     has telephone  => rw;
     has occupation => rw;
 
-    # ATTRIBUTE CONSTRAINTS
+    # CONSTRAINTS
 
     req firstname  => Str;
     req lastname   => Str;
@@ -230,7 +230,7 @@ sub writer (;$) {
     opt telephone  => StrMatch[qr/^\d{10,30}$/];
     opt occupation => Str;
 
-    # ATTRIBUTE DEFAULTS
+    # DEFAULTS
 
     def occupation => 'Unassigned';
     def city       => 'San Franscisco';
