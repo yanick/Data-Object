@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.39 2015-08-13T11:10:34
+0.39 2015-08-13T11:11:17
+ - Updated build.
  - Added req and opt functions to the syntax packages.
  - Removed the alias function.
  - Added tests and POD for the const function.
