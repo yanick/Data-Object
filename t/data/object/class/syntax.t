@@ -130,12 +130,15 @@ subtest 'test the lazy function' => sub {
 };
 
 subtest 'test the opt function' => sub {
-    is_deeply [Data::Object::Class::Syntax::opt()], [
-        required => 0,
+    is_deeply [Data::Object::Class::Syntax::opt('attr')], [
+        '+attr', required => 0,
     ];
     my $code = sub { 1 };
-    is_deeply [Data::Object::Class::Syntax::opt($code)], [
-        required => 0, isa => $code,
+    is_deeply [Data::Object::Class::Syntax::opt('attr', $code)], [
+        '+attr', isa => $code, required => 0,
+    ];
+    is_deeply [Data::Object::Class::Syntax::opt('attr', $code, is => 'ro')], [
+        '+attr', isa => $code, is => 'ro', required => 0,
     ];
 };
 
@@ -164,12 +167,15 @@ subtest 'test the reader function' => sub {
 };
 
 subtest 'test the req function' => sub {
-    is_deeply [Data::Object::Class::Syntax::req()], [
-        required => 1,
+    is_deeply [Data::Object::Class::Syntax::req('attr')], [
+        '+attr', required => 1,
     ];
     my $code = sub { 1 };
-    is_deeply [Data::Object::Class::Syntax::req($code)], [
-        required => 1, isa => $code,
+    is_deeply [Data::Object::Class::Syntax::req('attr', $code)], [
+        '+attr', isa => $code, required => 1,
+    ];
+    is_deeply [Data::Object::Class::Syntax::req('attr', $code, is => 'ro')], [
+        '+attr', isa => $code, is => 'ro', required => 1,
     ];
 };
 

@@ -144,8 +144,11 @@ sub lazy () {
     return lazy => 1;
 }
 
-sub opt (;$) {
-    return required => 0, $_[0] ? isa($_[0]) : ();
+sub opt ($;$@) {
+    my ($name, $type, @props) = @_;
+    my @req = (required => 0);
+    @_ = ($name, ref($type) ? isa($type) : (), @props, @req)
+        and goto &alt;
 }
 
 sub optional (@) {
@@ -160,8 +163,11 @@ sub reader (;$) {
     return reader => $_[0] // 1;
 }
 
-sub req (;$) {
-    return required => 1, $_[0] ? isa($_[0]) : ();
+sub req ($;$@) {
+    my ($name, $type, @props) = @_;
+    my @req = (required => 1);
+    @_ = ($name, ref($type) ? isa($type) : (), @props, @req)
+        and goto &alt;
 }
 
 sub required (@) {
@@ -198,20 +204,37 @@ sub writer (;$) {
 
     use Data::Object::Role;
     use Data::Object::Role::Syntax;
+    use Data::Object::Library ':types';
 
-    has firstname => is required, ro;
-    has lastname  => is required, ro;
+   # ATTRIBUTES
 
-    has address1  => is required, rw;
-    has address2  => is optional, rw;
+    has firstname  => ro;
+    has lastname   => ro;
+    has address1   => rw;
+    has address2   => rw;
+    has city       => rw;
+    has state      => rw;
+    has zip        => rw;
+    has telephone  => rw;
+    has occupation => rw;
 
-    has ['city', 'state', 'zip'] => is required, rw;
+    # ATTRIBUTE CONSTRAINTS
 
-    def city  => 'San Franscisco';
-    def state => 'CA';
+    req firstname  => Str;
+    req lastname   => Str;
+    req address1   => Str;
+    opt address2   => Str;
+    req city       => Str;
+    req state      => StrMatch[qr/^[A-Z]{2}$/];
+    req zip        => Int;
+    opt telephone  => StrMatch[qr/^\d{10,30}$/];
+    opt occupation => Str;
 
-    has telephone  => is optional, rw;
-    has occupation => is optional, rw, default 'Unassigned';
+    # ATTRIBUTE DEFAULTS
+
+    def occupation => 'Unassigned';
+    def city       => 'San Franscisco';
+    def state      => 'CA';
 
     1;
 
@@ -381,15 +404,15 @@ the attribute declaration.
 
 =function opt
 
-    opt;
-    opt sub { ... };
+    opt attr => sub { ... };
 
     # equivalent to
 
-    has attr => ..., required => 0, isa => sub { ... };
+    has '+attr' => ..., required => 0, isa => sub { ... };
 
-The opt function returns a list suitable for configuring the required and isa
-portions of the attribute declaration.
+The opt function alters the preexisting attribute definition for the attribute
+specified using a list suitable for configuring the required and isa portions
+of the attribute declaration.
 
 =cut
 
@@ -436,15 +459,15 @@ of the attribute declaration.
 
 =function req
 
-    req;
-    req sub { ... };
+    req attr => sub { ... };
 
     # equivalent to
 
-    has attr => ..., required => 1, isa => sub { ... };
+    has '+attr' => ..., required => 1, isa => sub { ... };
 
-The req function returns a list suitable for configuring the required and isa
-portions of the attribute declaration.
+The req function alters the preexisting attribute definition for the attribute
+specified using a list suitable for configuring the required and isa portions
+of the attribute declaration.
 
 =cut
 
