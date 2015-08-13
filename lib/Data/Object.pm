@@ -356,8 +356,9 @@ sub detract_deep {
     extends 'Entity';
     with    'Identity';
 
-    has firstname => is required, ro;
-    has lastname  => is required, ro;
+    alt id => is required, ro;
+
+    has ['firstname', 'lastname'] => is required, ro;
 
     has address1  => is required, rw;
     has address2  => is optional, rw;
