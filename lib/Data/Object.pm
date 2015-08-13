@@ -11,7 +11,6 @@ use Exporter qw(import);
 use Scalar::Util qw(blessed looks_like_number reftype);
 
 my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
-    alias
     codify
     const
     data_array
@@ -56,19 +55,6 @@ our %EXPORT_TAGS = (
 
 sub new {
     shift and goto &deduce_deep;
-}
-
-sub alias ($;$) {
-    my $name  = pop;
-    my $alias = shift;
-
-    ($alias) = $name  =~ /(\w+)$/ if !$alias;
-
-    return unless $name and defined $alias;
-
-    const($alias, $name);
-
-    return $alias;
 }
 
 sub const ($$) {
@@ -403,9 +389,8 @@ The all export tag will export all exportable functions.
 
     use Data::Object qw(:core);
 
-The core export tag will export the exportable functions C<alias>, C<const>,
-C<deduce>, C<deduce_deep>, C<detract>, C<detract_deep>, C<load>, and C<throw>
-exclusively.
+The core export tag will export the exportable functions C<const>, C<deduce>,
+C<deduce_deep>, C<detract>, C<detract_deep>, C<load>, and C<throw> exclusively.
 
 =cut
 
@@ -427,31 +412,17 @@ prefixed with the word "type".
 
 =cut
 
-=function alias
-
-    # given 'Exception::Unknown';
-
-    alias 'Exception::Unknown'; # Unknown
-
-The alias function creates and returns an alias to the package specified. An
-alias is a string representing the name of a fully-qualified constant function
-which returns the specified package name.
-
-=cut
-
 =function const
 
     # given 'Exception::Unknown';
 
-    const 'ExceptionUnknown' => 'Exception::Unknown'; # Exception::Unknown
+    const UnknownException => sub { throw 'Exception::Unknown' }
 
 The const function creates a constant function using the name and expression
 supplied to it. A constant function is a function that does not accept any
 arguments and whose result(s) should be deterministic.
 
 =cut
-
-
 
 =function data_array
 
