@@ -414,13 +414,13 @@ prefixed with the word "type".
 
 =function const
 
-    # given 'Exception::Unknown';
+    # given 1.098765;
 
-    const UnknownException => sub { throw 'Exception::Unknown' }
+    const VERSION => 1.098765;
 
 The const function creates a constant function using the name and expression
 supplied to it. A constant function is a function that does not accept any
-arguments and whose result(s) should be deterministic.
+arguments and whose result(s) are deterministic.
 
 =cut
 
