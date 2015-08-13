@@ -6,7 +6,7 @@ Data::Object - Object Orientation for Perl 5
 
 # VERSION
 
-version 0.38
+version 0.39
 
 # SYNOPSIS
 
@@ -49,9 +49,8 @@ The all export tag will export all exportable functions.
 
     use Data::Object qw(:core);
 
-The core export tag will export the exportable functions `alias`, `const`,
-`deduce`, `deduce_deep`, `detract`, `detract_deep`, `load`, and `throw`
-exclusively.
+The core export tag will export the exportable functions `const`, `deduce`,
+`deduce_deep`, `detract`, `detract_deep`, `load`, and `throw` exclusively.
 
 ## data
 
@@ -69,21 +68,11 @@ prefixed with the word "type".
 
 # FUNCTIONS
 
-## alias
-
-    # given 'Exception::Unknown';
-
-    alias 'Exception::Unknown'; # Unknown
-
-The alias function creates and returns an alias to the package specified. An
-alias is a string representing the name of a fully-qualified constant function
-which returns the specified package name.
-
 ## const
 
     # given 'Exception::Unknown';
 
-    const 'ExceptionUnknown' => 'Exception::Unknown'; # Exception::Unknown
+    const UnknownException => sub { throw 'Exception::Unknown' }
 
 The const function creates a constant function using the name and expression
 supplied to it. A constant function is a function that does not accept any
