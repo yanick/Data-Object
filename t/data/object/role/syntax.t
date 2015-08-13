@@ -17,9 +17,11 @@ my @exports = qw(
     is
     isa
     lazy
+    opt
     optional
     predicate
     reader
+    req
     required
     ro
     rw
@@ -127,6 +129,16 @@ subtest 'test the lazy function' => sub {
     ];
 };
 
+subtest 'test the opt function' => sub {
+    is_deeply [Data::Object::Role::Syntax::opt()], [
+        required => 0,
+    ];
+    my $code = sub { 1 };
+    is_deeply [Data::Object::Role::Syntax::opt($code)], [
+        required => 0, isa => $code,
+    ];
+};
+
 subtest 'test the optional function' => sub {
     is_deeply [Data::Object::Role::Syntax::optional()], [
         required => 0,
@@ -148,6 +160,16 @@ subtest 'test the reader function' => sub {
     ];
     is_deeply [Data::Object::Role::Syntax::reader('_get_attr')], [
         reader => '_get_attr',
+    ];
+};
+
+subtest 'test the req function' => sub {
+    is_deeply [Data::Object::Role::Syntax::req()], [
+        required => 1,
+    ];
+    my $code = sub { 1 };
+    is_deeply [Data::Object::Role::Syntax::req($code)], [
+        required => 1, isa => $code,
     ];
 };
 

@@ -23,9 +23,11 @@ our @EXPORT = qw(
     is
     isa
     lazy
+    opt
     optional
     predicate
     reader
+    req
     required
     ro
     rw
@@ -142,6 +144,10 @@ sub lazy () {
     return lazy => 1;
 }
 
+sub opt (;$) {
+    return required => 0, $_[0] ? isa($_[0]) : ();
+}
+
 sub optional (@) {
     return required => 0, @_;
 }
@@ -152,6 +158,10 @@ sub predicate (;$) {
 
 sub reader (;$) {
     return reader => $_[0] // 1;
+}
+
+sub req (;$) {
+    return required => 1, $_[0] ? isa($_[0]) : ();
 }
 
 sub required (@) {
@@ -369,6 +379,20 @@ the attribute declaration.
 
 =cut
 
+=function opt
+
+    opt;
+    opt sub { ... };
+
+    # equivalent to
+
+    has attr => ..., required => 0, isa => sub { ... };
+
+The opt function returns a list suitable for configuring the required and isa
+portions of the attribute declaration.
+
+=cut
+
 =function optional
 
     optional;
@@ -407,6 +431,20 @@ portion of the attribute declaration.
 
 The reader function returns a list suitable for configuring the reader portion
 of the attribute declaration.
+
+=cut
+
+=function req
+
+    req;
+    req sub { ... };
+
+    # equivalent to
+
+    has attr => ..., required => 1, isa => sub { ... };
+
+The req function returns a list suitable for configuring the required and isa
+portions of the attribute declaration.
 
 =cut
 
