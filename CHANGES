@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.40 2015-08-13T15:35:03
+0.41 2015-08-21T01:23:17
+ - Updated POD for syntax packages.
+
+0.40 2015-08-13T15:35:31
+ - v0.40
  - Updated build.
  - Changed behaviour for req and opt functions.
  - Updated POD for Data::Object.
