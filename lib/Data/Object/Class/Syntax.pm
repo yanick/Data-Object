@@ -202,6 +202,8 @@ sub writer (;$) {
 
     package Person;
 
+    use namespace::autoclean;
+
     use Data::Object::Class;
     use Data::Object::Class::Syntax;
     use Data::Object::Library ':types';
@@ -238,10 +240,13 @@ sub writer (;$) {
 
     1;
 
-rhead1 DESCRIPTION
+=head1 DESCRIPTION
 
 Data::Object::Class::Syntax exports a collection of functions that provide a
 DSL (syntactic sugar) for declaring and describing Data::Object::Class classes.
+It is highly recommended that you also use the L<namespace::autoclean> library
+to automatically cleanup the functions exported by this library and avoid
+method name collisions.
 
 =cut
 

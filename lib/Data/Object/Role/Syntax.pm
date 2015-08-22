@@ -202,6 +202,8 @@ sub writer (;$) {
 
     package Persona;
 
+    use namespace::autoclean;
+
     use Data::Object::Role;
     use Data::Object::Role::Syntax;
     use Data::Object::Library ':types';
@@ -241,7 +243,10 @@ sub writer (;$) {
 =head1 DESCRIPTION
 
 Data::Object::Role::Syntax exports a collection of functions that provide a DSL
-(syntactic sugar) for declaring and describing Data::Object::Role roles.
+(syntactic sugar) for declaring and describing Data::Object::Role roles. It is
+highly recommended that you also use the L<namespace::autoclean> library to
+automatically cleanup the functions exported by this library and avoid method
+name collisions.
 
 =cut
 
