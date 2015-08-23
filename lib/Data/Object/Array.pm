@@ -801,7 +801,7 @@ method.
     $array->pairs_array; # [[0,1],[1,2],[2,3],[3,4],[4,5]]
 
 The pairs_array method returns an array reference consisting of array references
-where each sub array reference has two elements corresponding to the index and
+where each sub-array reference has two elements corresponding to the index and
 value of each element in the array. This method returns a L<Data::Object::Array>
 object.
 

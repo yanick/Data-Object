@@ -576,7 +576,7 @@ method.
     $hash->pairs_array; # [[1,2],[3,4],[5,6],[7,8]]
 
 The pairs_array method returns an array reference consisting of array references
-where each sub array reference has two elements corresponding to the key and
+where each sub-array reference has two elements corresponding to the key and
 value of each element in the hash. This method returns a L<Data::Object::Array>
 object.
 

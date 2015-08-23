@@ -85,7 +85,7 @@ sub codify ($) {
 
     croak $error unless $sub;
     return $sub;
-};
+}
 
 sub load ($) {
     my $class  = shift;
@@ -99,7 +99,7 @@ sub load ($) {
         $@
     };
 
-    croak join ": ", "Error attempting to load $class", $error
+    croak "Error attempting to load $class: $error"
         if $error or $failed or not $loaded;
 
     return $class;
