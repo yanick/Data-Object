@@ -73,6 +73,17 @@ role and implements proxy methods as documented herewith.
 
 =cut
 
+=method new
+
+    # given qr(something to match against)
+
+    my $re = Data::Object::Regexp->new(qr(something to match against));
+
+The new method expects a regular-expression object and returns a new class
+instance.
+
+=cut
+
 =method search
 
     # given qr((test))

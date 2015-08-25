@@ -203,6 +203,16 @@ L<Data::Object::Number> object representing a boolean.
 
 =cut
 
+=method new
+
+    # given 9
+
+    my $integer = Data::Object::Integer->new(9);
+
+The new method expects a number and returns a new class instance.
+
+=cut
+
 =method to
 
     # given 1

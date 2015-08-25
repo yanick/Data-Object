@@ -212,6 +212,16 @@ call method.
 
 =cut
 
+=method new
+
+    # given sub { shift + 1 }
+
+    my $code = Data::Object::Code->new(sub { shift + 1 });
+
+The new method expects a code reference and returns a new class instance.
+
+=cut
+
 =method rcurry
 
     # given sub { [@_] }

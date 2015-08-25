@@ -5,7 +5,6 @@ use 5.010;
 use Data::Object::Role;
 
 map with($_), our @ROLES = qw(
-    Data::Object::Role::Constructor
     Data::Object::Role::Defined
     Data::Object::Role::Detract
     Data::Object::Role::Output
@@ -35,10 +34,6 @@ types.
 This role is composed of the following roles.
 
 =over 4
-
-=item *
-
-L<Data::Object::Role::Constructor>
 
 =item *
 

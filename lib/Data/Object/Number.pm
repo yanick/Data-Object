@@ -424,6 +424,16 @@ L<Data::Object::Integer> object.
 
 =cut
 
+=method new
+
+    # given 1_000_000
+
+    my $number = Data::Object::Number->new(1_000_000);
+
+The new method expects a number and returns a new class instance.
+
+=cut
+
 =method pow
 
     # given 12345

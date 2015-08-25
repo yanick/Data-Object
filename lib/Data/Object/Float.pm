@@ -204,6 +204,16 @@ L<Data::Object::Number> object representing a boolean.
 
 =cut
 
+=method new
+
+    # given 9.9999
+
+    my $float = Data::Object::Float->new(9.9999);
+
+The new method expects a floating-point number and returns a new class instance.
+
+=cut
+
 =method to
 
     # given 1.23

@@ -743,6 +743,18 @@ method returns a L<Data::Object::Number> object.
 
 =cut
 
+=method new
+
+    # given 1..9
+
+    my $array = Data::Object::Array->new(1..9);
+    my $array = Data::Object::Array->new([1..9]);
+
+The new method expects a list or array reference and returns a new class
+instance.
+
+=cut
+
 =method none
 
     # given [2..5]

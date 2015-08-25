@@ -11,6 +11,22 @@ with 'Data::Object::Role::Scalar';
 
 # VERSION
 
+sub new {
+    my $class = shift;
+    my $data  = shift;
+    my $role  = 'Data::Object::Role::Type';
+
+    $data = $data->data if blessed($data)
+        and $data->can('does')
+        and $data->does($role);
+
+    if (blessed($data) && $data->isa('Regexp') && $^V <= v5.12.0) {
+        $data = do {\(my $q = qr/$data/)};
+    }
+
+    return bless ref($data) ? $data : \$data, $class;
+}
+
 sub data {
     goto &detract;
 }
@@ -38,6 +54,16 @@ objects. Scalar methods work on data that meets the criteria for being a scalar.
 
 This class inherits all functionality from the L<Data::Object::Role::Scalar>
 role and implements proxy methods as documented herewith.
+
+=cut
+
+=method new
+
+    # given \12345
+
+    my $scalar = Data::Object::Scalar->new(\12345);
+
+The new method expects a scalar reference and returns a new class instance.
 
 =cut
 

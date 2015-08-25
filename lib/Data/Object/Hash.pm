@@ -557,6 +557,18 @@ object.
 
 =cut
 
+=method new
+
+    # given 1..4
+
+    my $hash = Data::Object::Hash->new(1..4);
+    my $hash = Data::Object::Hash->new({1..4});
+
+The new method expects a list or hash reference and returns a new class
+instance.
+
+=cut
+
 =method pairs
 
     # given {1..8}

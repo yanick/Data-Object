@@ -80,6 +80,16 @@ L<Data::Object::Number> object.
 
 =cut
 
+=method new
+
+    # given undef
+
+    my $undef = Data::Object::Undef->new(undef);
+
+The new method expects an undefined value and returns a new class instance.
+
+=cut
+
 =head1 OPERATORS
 
 This class overloads the following operators for your convenience.

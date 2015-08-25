@@ -388,6 +388,16 @@ L<Data::Object::String> object.
 
 =cut
 
+=method new
+
+    # given abcedfghi
+
+    my $string = Data::Object::String->new('abcedfghi');
+
+The new method expects a string and returns a new class instance.
+
+=cut
+
 =method replace
 
     # given 'Hello World'
