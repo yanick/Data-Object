@@ -372,9 +372,13 @@ sub detract_deep {
 
 =head1 DESCRIPTION
 
-Data::Object is a framework for writing structured and highly object-oriented
-Perl 5 software programs. This distribution contains classes which wrap Perl 5
-native data types and provides methods for operating on the data.
+Data::Object is a Modern Perl framework intended enhance the development of
+highly object-oriented Perl 5 software. This distribution contains classes
+which wrap Perl 5 native data types and provides methods for operating on the
+data. All values can be treated as objects and manipulated using method-calls.
+This distribution also provides object-orientation via L<Data::Object::Class>,
+and a DSL, L<Data::Object::Class::Syntax>, for easily defining classes, roles
+(traits), and constraints.
 
 =cut
 
