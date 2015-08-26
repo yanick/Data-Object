@@ -367,6 +367,7 @@ sub detract_deep {
 
     def city  => 'San Franscisco';
     def state => 'CA';
+    def zip   => '94107';
 
     1;
 
