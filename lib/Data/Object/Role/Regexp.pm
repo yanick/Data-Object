@@ -1,7 +1,10 @@
 # ABSTRACT: Regexp Object Role for Perl 5
 package Data::Object::Role::Regexp;
 
-use 5.010;
+use 5.014;
+use Type::Tiny;
+use Type::Tiny::Signatures;
+
 use Data::Object::Role;
 
 use Data::Object 'throw';

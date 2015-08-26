@@ -1,9 +1,13 @@
 # ABSTRACT: Class Declaration DSL for Perl 5
 package Data::Object::Class::Syntax;
 
-use 5.010;
+use 5.014;
+use Type::Tiny;
+use Type::Tiny::Signatures;
+
 use strict;
 use warnings;
+
 use parent 'Exporter';
 
 use Sub::Quote;

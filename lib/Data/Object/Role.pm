@@ -1,7 +1,10 @@
 # ABSTRACT: Role Declaration for Perl 5
 package Data::Object::Role;
 
-use 5.010;
+use 5.014;
+use Type::Tiny;
+use Type::Tiny::Signatures;
+
 use parent 'Moo::Role';
 
 # VERSION

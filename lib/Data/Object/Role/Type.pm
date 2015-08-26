@@ -1,7 +1,10 @@
 # Default Data Type Role
 package Data::Object::Role::Type;
 
-use 5.010;
+use 5.014;
+use Type::Tiny;
+use Type::Tiny::Signatures;
+
 use Data::Object::Role;
 
 use Data::Object ();

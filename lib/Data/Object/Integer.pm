@@ -1,7 +1,9 @@
 # ABSTRACT: Integer Object for Perl 5
 package Data::Object::Integer;
 
-use 5.010;
+use 5.014;
+use Type::Tiny;
+use Type::Tiny::Signatures;
 
 use Scalar::Util 'blessed', 'looks_like_number';
 use Data::Object 'deduce_deep', 'detract_deep', 'throw';

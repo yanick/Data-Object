@@ -2,6 +2,7 @@
 !Build/
 *.komodoproject
 *.swp
+*.txt
 DZP-*
 .build/
 .last_cover_stats
@@ -31,6 +32,7 @@ inc/
 nytprof.out
 pm_to_blib
 tags
+templates
 vagrantfile
 *.pl
 *.txt

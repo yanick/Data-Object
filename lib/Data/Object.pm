@@ -1,7 +1,10 @@
 # ABSTRACT: Object Orientation for Perl 5
 package Data::Object;
 
-use 5.010;
+use 5.014;
+use Type::Tiny;
+use Type::Tiny::Signatures;
+
 use strict;
 use warnings;
 

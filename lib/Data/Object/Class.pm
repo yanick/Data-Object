@@ -1,7 +1,10 @@
 # ABSTRACT: Class Declaration for Perl 5
 package Data::Object::Class;
 
-use 5.010;
+use 5.014;
+use Type::Tiny;
+use Type::Tiny::Signatures;
+
 use parent 'Moo';
 
 # VERSION

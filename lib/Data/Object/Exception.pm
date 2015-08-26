@@ -1,7 +1,9 @@
 # ABSTRACT: Exception Object for Perl 5
 package Data::Object::Exception;
 
-use 5.010;
+use 5.014;
+use Type::Tiny;
+use Type::Tiny::Signatures;
 
 use overload (
     '""'     => 'to_string',
