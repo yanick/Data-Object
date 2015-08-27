@@ -22,6 +22,7 @@ map with($_), our @ROLES = qw(
     Data::Object::Role::Output
     Data::Object::Role::Ref
     Data::Object::Role::Values
+    Data::Object::Role::Throwable
     Data::Object::Role::Type
 );
 

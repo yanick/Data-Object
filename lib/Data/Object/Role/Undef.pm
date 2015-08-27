@@ -14,6 +14,7 @@ use Data::Object::Role;
 map with($_), our @ROLES = qw(
     Data::Object::Role::Detract
     Data::Object::Role::Output
+    Data::Object::Role::Throwable
     Data::Object::Role::Type
 );
 
