@@ -18,6 +18,18 @@ with 'Data::Object::Role::Array';
 
 # VERSION
 
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return Data::Object::detract_deep(shift);
+}
+
+sub list {
+    goto &values;
+}
+
 sub new {
     my $class = shift;
     my $args  = @_ > 1 ? [@_] : shift;
@@ -56,14 +68,6 @@ around 'count' => sub {
     my $result = $self->$orig(@args);
     return scalar Data::Object::deduce_deep($result);
 };
-
-sub data {
-    goto &detract;
-}
-
-sub detract {
-    return Data::Object::detract_deep shift;
-}
 
 around 'defined' => sub {
     my ($orig, $self, @args) = @_;
@@ -178,10 +182,6 @@ around 'length' => sub {
     my $result = $self->$orig(@args);
     return scalar Data::Object::deduce_deep($result);
 };
-
-sub list {
-    goto &values;
-}
 
 around 'map' => sub {
     my ($orig, $self, @args) = @_;

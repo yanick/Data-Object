@@ -25,6 +25,14 @@ use overload (
 
 # VERSION
 
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return Data::Object::detract_deep(shift);
+}
+
 sub new {
     my $class = shift;
     my $args  = shift;
@@ -40,14 +48,6 @@ sub new {
         unless defined($args) && !ref($args) && Scalar::Util::looks_like_number($args);
 
     return bless \$args, $class;
-}
-
-sub data {
-    goto &detract;
-}
-
-sub detract {
-    return Data::Object::detract_deep shift;
 }
 
 around 'downto' => sub {

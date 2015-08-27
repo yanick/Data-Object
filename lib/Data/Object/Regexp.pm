@@ -19,6 +19,14 @@ with 'Data::Object::Role::Regexp';
 
 # VERSION
 
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return Data::Object::detract_deep(shift);
+}
+
 sub new {
     my $class = shift;
     my $args  = shift;
@@ -32,14 +40,6 @@ sub new {
         unless defined($args) && !! re::is_regexp($args);
 
     return bless \$args, $class;
-}
-
-sub data {
-    goto &detract;
-}
-
-sub detract {
-    return Data::Object::detract_deep shift;
 }
 
 around 'search' => sub {

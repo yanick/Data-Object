@@ -17,6 +17,14 @@ with 'Data::Object::Role::Scalar';
 
 # VERSION
 
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return Data::Object::detract_deep(shift);
+}
+
 sub new {
     my $class = shift;
     my $data  = shift;
@@ -31,14 +39,6 @@ sub new {
     }
 
     return bless ref($data) ? $data : \$data, $class;
-}
-
-sub data {
-    goto &detract;
-}
-
-sub detract {
-    return Data::Object::detract_deep shift;
 }
 
 1;

@@ -58,47 +58,54 @@ our %EXPORT_TAGS = (
 
 # VERSION
 
-sub new {
+fun new (Str $class, Any @args) {
+
     shift and goto &deduce_deep;
+
 }
 
-sub const ($$) {
-    my $name = shift;
-    my $expr = shift;
-
-    return unless $name and defined $expr;
+fun const (Str $name, Defined $data) :prototype($$) {
 
     my $class = caller(0);
        $class = caller(1) if __PACKAGE__ eq $class;
+
     my $fqsn  = $name =~ /(::|')/ ? $name : "${class}::${name}";
 
     no strict 'refs';
     no warnings 'redefine';
 
-    *{ $fqsn } = sub () { (ref $expr eq "CODE") ? goto &$expr : $expr };
+    *{ $fqsn } = sub () { (ref $data eq "CODE") ? goto &$data : $data };
 
-    return $expr;
+    return $data;
+
 }
 
-sub codify ($) {
-    my $code = shift;
+fun codify (Maybe[Str] $code = '') :prototype($) {
+
+    $code ||= 'return @_';
+
     my $vars = sprintf 'my ($%s) = @_;', join ',$', 'a'..'z';
-    my $body = sprintf 'sub { %s do { %s } }', $vars, $code // 'return(@_)';
+    my $body = sprintf 'sub { %s do { %s } }', $vars, $code;
 
     my $sub;
     my $error = do { local $@; $sub = eval $body; $@ };
 
     croak $error unless $sub;
+
     return $sub;
+
 }
 
-sub immutable ($) {
-    unshift @_, my $class = load('Data::Object::Immutable');
+fun immutable (Any @args) :prototype($) {
+
+    my $class = load('Data::Object::Immutable');
+
+    @_ = ($class, @args);
     goto $class->can('new');
+
 }
 
-sub load ($) {
-    my $class  = shift;
+fun load (Str $class) :prototype($) {
 
     my $failed = ! $class || $class !~ /^\w(?:[\w:']*\w)?$/;
     my $loaded;
@@ -113,80 +120,128 @@ sub load ($) {
         if $error or $failed or not $loaded;
 
     return $class;
+
 }
 
-sub throw (@) {
-    unshift @_, my $class = load('Data::Object::Exception');
+fun throw (Any @args) :prototype(@) {
+
+    my $class = load('Data::Object::Exception');
+
+    @_ = ($class, @args);
     goto $class->can('throw');
+
 }
 
-sub data_array ($) {
-    unshift @_, my $class = load('Data::Object::Array');
+fun data_array (ArrayRef $data) :prototype($) {
+
+    my $class = load('Data::Object::Array');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_code ($) {
-    unshift @_, my $class = load('Data::Object::Code');
+fun data_code (CodeRef $data) :prototype($) {
+
+    my $class = load('Data::Object::Code');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_float ($) {
-    unshift @_, my $class = load('Data::Object::Float');
+fun data_float (Num $data) :prototype($) {
+
+    my $class = load('Data::Object::Float');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_hash ($) {
-    unshift @_, my $class = load('Data::Object::Hash');
+fun data_hash (HashRef $data) :prototype($) {
+
+    my $class = load('Data::Object::Hash');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_integer ($) {
-    unshift @_, my $class = load('Data::Object::Integer');
+fun data_integer (Str $data) :prototype($) {
+
+    my $class = load('Data::Object::Integer');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_number ($) {
-    unshift @_, my $class = load('Data::Object::Number');
+fun data_number (Num $data) :prototype($) {
+
+    my $class = load('Data::Object::Number');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_regexp ($) {
-    unshift @_, my $class = load('Data::Object::Regexp');
+fun data_regexp (RegexpRef $data) :prototype($) {
+
+    my $class = load('Data::Object::Regexp');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_scalar ($) {
-    unshift @_, my $class = load('Data::Object::Scalar');
+fun data_scalar (Ref $data) :prototype($) {
+
+    my $class = load('Data::Object::Scalar');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_string ($) {
-    unshift @_, my $class = load('Data::Object::String');
+fun data_string (Str $data) :prototype($) {
+
+    my $class = load('Data::Object::String');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_undef (;$) {
-    unshift @_, my $class = load('Data::Object::Undef');
+fun data_undef (Undef $data) :prototype(;$) {
+
+    my $class = load('Data::Object::Undef');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub data_universal ($) {
-    unshift @_, my $class = load('Data::Object::Universal');
+fun data_universal (Any $data) :prototype($) {
+
+    my $class = load('Data::Object::Universal');
+
+    @_ = ($class, $data);
     goto $class->can('new');
+
 }
 
-sub deduce ($) {
-    my $scalar = shift;
+fun deduce (Any $data) :prototype($) {
 
     # return undef
-    if (not defined $scalar) {
-        return data_undef $scalar;
+    if (not defined $data) {
+        return data_undef $data;
     }
 
     # handle blessed objects
-    elsif (Scalar::Util::blessed($scalar)) {
-        return data_regexp $scalar if $scalar->isa('Regexp');
-        return $scalar;
+    elsif (Scalar::Util::blessed($data)) {
+        return data_regexp $data if $data->isa('Regexp');
+        return $data;
     }
 
     # handle data types
@@ -194,148 +249,155 @@ sub deduce ($) {
     else {
 
         # handle references
-        if (ref $scalar) {
-            return data_array $scalar if 'ARRAY' eq ref $scalar;
-            return data_hash  $scalar if 'HASH'  eq ref $scalar;
-            return data_code  $scalar if 'CODE'  eq ref $scalar;
+        if (ref $data) {
+            return data_array $data if 'ARRAY' eq ref $data;
+            return data_hash  $data if 'HASH'  eq ref $data;
+            return data_code  $data if 'CODE'  eq ref $data;
         }
 
         # handle non-references
         else {
-            if (Scalar::Util::looks_like_number($scalar)) {
-                return data_float   $scalar if $scalar =~ /\./;
-                return data_number  $scalar if $scalar =~ /^\d+$/;
-                return data_integer $scalar;
+            if (Scalar::Util::looks_like_number($data)) {
+                return data_float   $data if $data =~ /\./;
+                return data_number  $data if $data =~ /^\d+$/;
+                return data_integer $data;
             }
             else {
-                return data_string $scalar;
+                return data_string $data;
             }
         }
 
         # handle unhandled
-        return data_scalar $scalar;
+        return data_scalar $data;
 
     }
 
     # fallback
-    return data_undef $scalar;
+    return data_undef $data;
+
 }
 
-sub deduce_deep {
-    my @objects = @_;
+fun deduce_deep (Any @data) :prototype(@) {
 
-    for my $object (@objects) {
+    for my $data (@data) {
         my $type;
 
-        $object = deduce($object);
-        $type   = deduce_type($object);
+        $data = deduce($data);
+        $type   = deduce_type($data);
 
         if ($type and $type eq 'HASH') {
-            for my $i (keys %$object) {
-                my $val = $object->{$i};
-                $object->{$i} = ref($val) ? deduce_deep($val) : deduce($val);
+            for my $i (keys %$data) {
+                my $val = $data->{$i};
+                $data->{$i} = ref($val) ? deduce_deep($val) : deduce($val);
             }
         }
 
         if ($type and $type eq 'ARRAY') {
-            for (my $i = 0; $i < @$object; $i++) {
-                my $val = $object->[$i];
-                $object->[$i] = ref($val) ? deduce_deep($val) : deduce($val);
+            for (my $i = 0; $i < @$data; $i++) {
+                my $val = $data->[$i];
+                $data->[$i] = ref($val) ? deduce_deep($val) : deduce($val);
             }
         }
     }
 
-    return wantarray ? (@objects) : $objects[0];
+    return wantarray ? (@data) : $data[0];
+
 }
 
-sub deduce_type ($) {
-    my $object = deduce shift;
+fun deduce_type (Any $data) :prototype($) {
 
-    return 'ARRAY'     if $object->isa('Data::Object::Array');
-    return 'HASH'      if $object->isa('Data::Object::Hash');
-    return 'CODE'      if $object->isa('Data::Object::Code');
+    $data = deduce $data;
 
-    return 'FLOAT'     if $object->isa('Data::Object::Float');
-    return 'NUMBER'    if $object->isa('Data::Object::Number');
-    return 'INTEGER'   if $object->isa('Data::Object::Integer');
+    return 'ARRAY'     if $data->isa('Data::Object::Array');
+    return 'HASH'      if $data->isa('Data::Object::Hash');
+    return 'CODE'      if $data->isa('Data::Object::Code');
 
-    return 'STRING'    if $object->isa('Data::Object::String');
-    return 'SCALAR'    if $object->isa('Data::Object::Scalar');
-    return 'REGEXP'    if $object->isa('Data::Object::Regexp');
+    return 'FLOAT'     if $data->isa('Data::Object::Float');
+    return 'NUMBER'    if $data->isa('Data::Object::Number');
+    return 'INTEGER'   if $data->isa('Data::Object::Integer');
 
-    return 'UNDEF'     if $object->isa('Data::Object::Undef');
-    return 'UNIVERSAL' if $object->isa('Data::Object::Universal');
+    return 'STRING'    if $data->isa('Data::Object::String');
+    return 'SCALAR'    if $data->isa('Data::Object::Scalar');
+    return 'REGEXP'    if $data->isa('Data::Object::Regexp');
+
+    return 'UNDEF'     if $data->isa('Data::Object::Undef');
+    return 'UNIVERSAL' if $data->isa('Data::Object::Universal');
 
     return undef;
+
 }
 
-sub detract ($) {
-    my $object = deduce shift;
-    my $type   = deduce_type $object;
+fun detract (Any $data) :prototype($) {
+
+    $data = deduce $data;
+
+    my $type = deduce_type $data;
 
     INSPECT:
-    return $object unless $type;
+    return $data unless $type;
 
-    return [@$object] if $type eq 'ARRAY';
-    return {%$object} if $type eq 'HASH';
-    return $$object   if $type eq 'REGEXP';
-    return $$object   if $type eq 'FLOAT';
-    return $$object   if $type eq 'NUMBER';
-    return $$object   if $type eq 'INTEGER';
-    return $$object   if $type eq 'STRING';
-    return undef      if $type eq 'UNDEF';
+    return [@$data] if $type eq 'ARRAY';
+    return {%$data} if $type eq 'HASH';
+    return $$data   if $type eq 'REGEXP';
+    return $$data   if $type eq 'FLOAT';
+    return $$data   if $type eq 'NUMBER';
+    return $$data   if $type eq 'INTEGER';
+    return $$data   if $type eq 'STRING';
+    return undef    if $type eq 'UNDEF';
 
     if ($type eq 'SCALAR' or $type eq 'UNIVERSAL') {
-        $type = Scalar::Util::reftype($object) // '';
+        $type = Scalar::Util::reftype($data) // '';
 
-        return [@$object] if $type eq 'ARRAY';
-        return {%$object} if $type eq 'HASH';
-        return $$object   if $type eq 'FLOAT';
-        return $$object   if $type eq 'INTEGER';
-        return $$object   if $type eq 'NUMBER';
-        return $$object   if $type eq 'REGEXP';
-        return $$object   if $type eq 'SCALAR';
-        return $$object   if $type eq 'STRING';
-        return undef      if $type eq 'UNDEF';
+        return [@$data] if $type eq 'ARRAY';
+        return {%$data} if $type eq 'HASH';
+        return $$data   if $type eq 'FLOAT';
+        return $$data   if $type eq 'INTEGER';
+        return $$data   if $type eq 'NUMBER';
+        return $$data   if $type eq 'REGEXP';
+        return $$data   if $type eq 'SCALAR';
+        return $$data   if $type eq 'STRING';
+        return undef    if $type eq 'UNDEF';
 
         if ($type eq 'REF') {
-            $type = deduce_type($object = $$object)
+            $type = deduce_type($data = $$data)
                 and goto INSPECT;
         }
     }
 
     if ($type eq 'CODE') {
-        return sub { goto &{$object} };
+        return sub { goto &{$data} };
     }
 
     return undef;
+
 }
 
-sub detract_deep {
-    my @objects = @_;
+fun detract_deep (Any @data) :prototype(@) {
 
-    for my $object (@objects) {
-        $object = detract($object);
+    for my $data (@data) {
+        $data = detract($data);
 
-        if ($object and 'HASH' eq ref $object) {
-            for my $i (keys %$object) {
-                my $val = $object->{$i};
-                $object->{$i} = ref($val) ? detract_deep($val) : detract($val);
+        if ($data and 'HASH' eq ref $data) {
+            for my $i (keys %$data) {
+                my $val = $data->{$i};
+                $data->{$i} = ref($val) ? detract_deep($val) : detract($val);
             }
         }
 
-        if ($object and 'ARRAY' eq ref $object) {
-            for (my $i = 0; $i < @$object; $i++) {
-                my $val = $object->[$i];
-                $object->[$i] = ref($val) ? detract_deep($val) : detract($val);
+        if ($data and 'ARRAY' eq ref $data) {
+            for (my $i = 0; $i < @$data; $i++) {
+                my $val = $data->[$i];
+                $data->[$i] = ref($val) ? detract_deep($val) : detract($val);
             }
         }
     }
 
-    return wantarray ? (@objects) : $objects[0];
+    return wantarray ? (@data) : $data[0];
+
 }
 
 {
+
     # aliases
     no warnings 'once';
 
@@ -350,6 +412,7 @@ sub detract_deep {
     *type_string    = \&data_string;
     *type_undef     = \&data_undef;
     *type_universal = \&data_universal;
+
 }
 
 1;

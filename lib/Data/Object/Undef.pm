@@ -25,6 +25,14 @@ use overload (
 
 # VERSION
 
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return Data::Object::detract_deep(shift);
+}
+
 sub new {
     my $class = shift;
     my $args  = shift;
@@ -40,19 +48,11 @@ sub new {
     return bless \$args, $class;
 }
 
-sub data {
-    goto &detract;
-}
-
 around 'defined' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
     return scalar Data::Object::deduce_deep($result);
 };
-
-sub detract {
-    return Data::Object::detract_deep shift;
-}
 
 1;
 

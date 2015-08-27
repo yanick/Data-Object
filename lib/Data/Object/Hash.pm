@@ -18,6 +18,18 @@ with 'Data::Object::Role::Hash';
 
 # VERSION
 
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return Data::Object::detract_deep(shift);
+}
+
+sub list {
+    goto &values;
+}
+
 sub new {
     my $class = shift;
     my $args  = @_ > 1 && !(@_ % 2) ? {@_} : shift;
@@ -50,14 +62,6 @@ around 'clear' => sub {
     my $result = $self->$orig(@args);
     return scalar Data::Object::deduce_deep($result);
 };
-
-sub data {
-    goto &detract;
-}
-
-sub detract {
-    return Data::Object::detract_deep shift;
-}
 
 around 'defined' => sub {
     my ($orig, $self, @args) = @_;
@@ -160,10 +164,6 @@ around 'keys' => sub {
     my $result = $self->$orig(@args);
     return scalar Data::Object::deduce_deep($result);
 };
-
-sub list {
-    goto &values;
-}
 
 around 'lookup' => sub {
     my ($orig, $self, @args) = @_;

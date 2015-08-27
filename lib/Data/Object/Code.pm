@@ -18,6 +18,14 @@ with 'Data::Object::Role::Code';
 
 # VERSION
 
+sub data {
+    goto &detract;
+}
+
+sub detract {
+    return Data::Object::detract_deep(shift);
+}
+
 sub new {
     my $class = shift;
     my $args  = shift;
@@ -58,14 +66,6 @@ around 'curry' => sub {
     my $result = $self->$orig(@args);
     return scalar Data::Object::deduce_deep($result);
 };
-
-sub data {
-    goto &detract;
-}
-
-sub detract {
-    return Data::Object::detract_deep shift;
-}
 
 around 'disjoin' => sub {
     my ($orig, $self, @args) = @_;
