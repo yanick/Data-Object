@@ -33,6 +33,7 @@ my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
     deduce_type
     detract
     detract_deep
+    immutable
     load
     throw
     type_array
@@ -91,6 +92,11 @@ sub codify ($) {
     return $sub;
 }
 
+sub immutable ($) {
+    unshift @_, my $class = load('Data::Object::Immutable');
+    goto $class->can('new');
+}
+
 sub load ($) {
     my $class  = shift;
 
@@ -110,62 +116,62 @@ sub load ($) {
 }
 
 sub throw (@) {
-    unshift @_, my $class = load 'Data::Object::Exception';
+    unshift @_, my $class = load('Data::Object::Exception');
     goto $class->can('throw');
 }
 
 sub data_array ($) {
-    unshift @_, my $class = load 'Data::Object::Array';
+    unshift @_, my $class = load('Data::Object::Array');
     goto $class->can('new');
 }
 
 sub data_code ($) {
-    unshift @_, my $class = load 'Data::Object::Code';
+    unshift @_, my $class = load('Data::Object::Code');
     goto $class->can('new');
 }
 
 sub data_float ($) {
-    unshift @_, my $class = load 'Data::Object::Float';
+    unshift @_, my $class = load('Data::Object::Float');
     goto $class->can('new');
 }
 
 sub data_hash ($) {
-    unshift @_, my $class = load 'Data::Object::Hash';
+    unshift @_, my $class = load('Data::Object::Hash');
     goto $class->can('new');
 }
 
 sub data_integer ($) {
-    unshift @_, my $class = load 'Data::Object::Integer';
+    unshift @_, my $class = load('Data::Object::Integer');
     goto $class->can('new');
 }
 
 sub data_number ($) {
-    unshift @_, my $class = load 'Data::Object::Number';
+    unshift @_, my $class = load('Data::Object::Number');
     goto $class->can('new');
 }
 
 sub data_regexp ($) {
-    unshift @_, my $class = load 'Data::Object::Regexp';
+    unshift @_, my $class = load('Data::Object::Regexp');
     goto $class->can('new');
 }
 
 sub data_scalar ($) {
-    unshift @_, my $class = load 'Data::Object::Scalar';
+    unshift @_, my $class = load('Data::Object::Scalar');
     goto $class->can('new');
 }
 
 sub data_string ($) {
-    unshift @_, my $class = load 'Data::Object::String';
+    unshift @_, my $class = load('Data::Object::String');
     goto $class->can('new');
 }
 
 sub data_undef (;$) {
-    unshift @_, my $class = load 'Data::Object::Undef';
+    unshift @_, my $class = load('Data::Object::Undef');
     goto $class->can('new');
 }
 
 sub data_universal ($) {
-    unshift @_, my $class = load 'Data::Object::Universal';
+    unshift @_, my $class = load('Data::Object::Universal');
     goto $class->can('new');
 }
 
@@ -400,7 +406,8 @@ The all export tag will export all exportable functions.
     use Data::Object qw(:core);
 
 The core export tag will export the exportable functions C<const>, C<deduce>,
-C<deduce_deep>, C<detract>, C<detract_deep>, C<load>, and C<throw> exclusively.
+C<deduce_deep>, C<detract>, C<detract_deep>, C<immutable>, C<load>, and
+C<throw> exclusively.
 
 =cut
 
@@ -650,6 +657,19 @@ The detract_deep function returns a value of native type. If the data provided
 is complex, this function traverses the data converting all nested data type
 objects into native values using the objects underlying reference. Note:
 Blessed objects are not traversed.
+
+=cut
+
+=function immutable
+
+    # given [1,2,3];
+
+    $object = immutable data_array [1,2,3];
+    $object->isa('Data::Object::Array); # via Data::Object::Immutable
+
+The immutable function makes the data type object provided immutable. This
+function loads L<Data::Object::Immutable> and returns the object provided as an
+argument.
 
 =cut
 

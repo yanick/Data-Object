@@ -45,8 +45,14 @@ sub import {
     my $class  = $_[0];
     my $target = caller;
 
-    if (my $orig = $target->can('has')) {
+    unless ($target->can('BUILD')) {
+        no strict 'refs';
+        no warnings 'redefine';
 
+        *{"${target}::BUILD"} = sub { shift };
+    }
+
+    if (my $orig = $target->can('has')) {
         no strict 'refs';
         no warnings 'redefine';
 
@@ -90,7 +96,6 @@ sub import {
 
             return $orig->($alt ? "+$name" : $name, %props);
         };
-
     }
 
     return $class->export_to_level(1, @_);
