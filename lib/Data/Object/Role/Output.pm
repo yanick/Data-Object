@@ -1,13 +1,16 @@
 # Output Data Type Role for Perl 5
 package Data::Object::Role::Output;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
+use Data::Object;
 use Data::Object::Role;
-
-use Data::Object 'detract_deep';
 
 # VERSION
 
@@ -24,7 +27,7 @@ sub dump {
     local $Data::Dumper::Terse     = 1;
     local $Data::Dumper::Useqq     = 1;
 
-    my $result = Data::Dumper::Dumper(detract_deep(shift));
+    my $result = Data::Dumper::Dumper(Data::Object::detract_deep(shift));
        $result =~ s/^"|"$//g;
 
     return $result;

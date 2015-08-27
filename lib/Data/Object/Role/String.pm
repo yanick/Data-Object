@@ -1,7 +1,11 @@
 # ABSTRACT: String Object Role for Perl 5
 package Data::Object::Role::String;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
@@ -30,12 +34,12 @@ sub camelcase {
 
 sub chomp {
     my ($string) = @_;
-    CORE::chomp $string and return $string;
+    CORE::chomp($string) and return $string;
 }
 
 sub chop {
     my ($string) = @_;
-    CORE::chop $string and return $string;
+    CORE::chop($string) and return $string;
 }
 
 sub concat {
@@ -57,28 +61,28 @@ sub contains {
 
 sub hex {
     my ($string) = @_;
-    return CORE::hex $string;
+    return CORE::hex($string);
 }
 
 sub index {
     my ($string, $substr, $start) = @_;
-    return CORE::index $string, $substr if not defined $start;
-    return CORE::index $string, $substr, $start;
+    return CORE::index($string, $substr) if not defined $start;
+    return CORE::index($string, $substr, $start);
 }
 
 sub lc {
     my ($string) = @_;
-    return CORE::lc $string;
+    return CORE::lc($string);
 }
 
 sub lcfirst {
     my ($string) = @_;
-    return CORE::lcfirst $string;
+    return CORE::lcfirst($string);
 }
 
 sub length {
     my ($string) = @_;
-    return CORE::length $string;
+    return CORE::length($string);
 }
 
 sub lines {
@@ -103,13 +107,13 @@ sub replace {
 
 sub reverse {
     my ($string) = @_;
-    return CORE::reverse $string;
+    return CORE::reverse($string);
 }
 
 sub rindex {
     my ($string, $substr, $start) = @_;
-    return CORE::rindex $string, $substr if not defined $start;
-    return CORE::rindex $string, $substr, $start;
+    return CORE::rindex($string, $substr) if not defined $start;
+    return CORE::rindex($string, $substr, $start);
 }
 
 sub snakecase {
@@ -144,12 +148,12 @@ sub trim {
 
 sub uc {
     my ($string) = @_;
-    return CORE::uc $string;
+    return CORE::uc($string);
 }
 
 sub ucfirst {
     my ($string) = @_;
-    return CORE::ucfirst $string;
+    return CORE::ucfirst($string);
 }
 
 sub uppercase {

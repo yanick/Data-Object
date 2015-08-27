@@ -1,7 +1,11 @@
 # ABSTRACT: Number Object Role for Perl 5
 package Data::Object::Role::Number;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
@@ -19,17 +23,17 @@ map with($_), our @ROLES = qw(
 
 sub abs {
     my ($number) = @_;
-    return CORE::abs $number;
+    return CORE::abs($number);
 }
 
 sub atan2 {
     my ($number, $x) = @_;
-    return CORE::atan2 $number, $x;
+    return CORE::atan2($number, $x);
 }
 
 sub cos {
     my ($number) = @_;
-    return CORE::cos $number;
+    return CORE::cos($number);
 }
 
 sub decr {
@@ -39,7 +43,7 @@ sub decr {
 
 sub exp {
     my ($number) = @_;
-    return CORE::exp $number;
+    return CORE::exp($number);
 }
 
 sub hex {
@@ -54,12 +58,12 @@ sub incr {
 
 sub int {
     my ($number) = @_;
-    return CORE::int $number;
+    return CORE::int($number);
 }
 
 sub log {
     my ($number) = @_;
-    return CORE::log $number;
+    return CORE::log($number);
 }
 
 sub mod {
@@ -79,12 +83,12 @@ sub pow {
 
 sub sin {
     my ($number) = @_;
-    return CORE::sin $number;
+    return CORE::sin($number);
 }
 
 sub sqrt {
     my ($number) = @_;
-    return CORE::sqrt $number;
+    return CORE::sqrt($number);
 }
 
 1;

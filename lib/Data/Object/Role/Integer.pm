@@ -1,7 +1,11 @@
 # ABSTRACT: Integer Object Role for Perl 5
 package Data::Object::Role::Integer;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 

@@ -1,13 +1,16 @@
 # ABSTRACT: Result Object for Perl 5
 package Data::Object::Regexp::Result;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
+use Data::Object;
 use Data::Object::Class;
-
-use Data::Object 'deduce_deep';
 
 extends 'Data::Object::Array';
 
@@ -29,32 +32,32 @@ sub captures {
         push @captures, substr "$string", $start, $end - $start;
     }
 
-    return deduce_deep [@captures];
+    return Data::Object::deduce_deep [@captures];
 }
 
 sub count {
     my $self = shift;
-    return deduce_deep $self->[2];
+    return Data::Object::deduce_deep($self->[2]);
 }
 
 sub initial {
     my $self = shift;
-    return deduce_deep $self->[6];
+    return Data::Object::deduce_deep($self->[6]);
 }
 
 sub last_match_end {
     my $self = shift;
-    return deduce_deep $self->[4];
+    return Data::Object::deduce_deep($self->[4]);
 }
 
 sub last_match_start {
     my $self = shift;
-    return deduce_deep $self->[3];
+    return Data::Object::deduce_deep($self->[3]);
 }
 
 sub named_captures {
     my $self = shift;
-    return deduce_deep $self->[5];
+    return Data::Object::deduce_deep($self->[5]);
 }
 
 sub matched {
@@ -67,7 +70,7 @@ sub matched {
     my $start = $last_match_start->[0] || 0;
     my $end   = $last_match_end->[0]   || 0;
 
-    return deduce_deep substr "$string", $start, $end - $start;
+    return Data::Object::deduce_deep substr "$string", $start, $end - $start;
 }
 
 sub prematched {
@@ -80,7 +83,7 @@ sub prematched {
     my $start = $last_match_start->[0] || 0;
     my $end   = $last_match_end->[0]   || 0;
 
-    return deduce_deep substr "$string", 0, $start;
+    return Data::Object::deduce_deep substr "$string", 0, $start;
 }
 
 sub postmatched {
@@ -93,17 +96,17 @@ sub postmatched {
     my $start = $last_match_start->[0] || 0;
     my $end   = $last_match_end->[0]   || 0;
 
-    return deduce_deep substr "$string", $end;
+    return Data::Object::deduce_deep substr "$string", $end;
 }
 
 sub regexp {
     my $self = shift;
-    return deduce_deep $self->[0];
+    return Data::Object::deduce_deep($self->[0]);
 }
 
 sub string {
     my $self = shift;
-    return deduce_deep $self->[1];
+    return Data::Object::deduce_deep($self->[1]);
 }
 
 1;

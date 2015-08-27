@@ -1,17 +1,18 @@
 # ABSTRACT: Object Orientation for Perl 5
 package Data::Object;
 
-use 5.014;
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use strict;
 use warnings;
 
+use 5.014;
+
+use Type::Tiny;
+use Type::Tiny::Signatures;
+
 use Carp;
+use Scalar::Util;
 
 use Exporter qw(import);
-use Scalar::Util qw(blessed looks_like_number reftype);
 
 my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
     codify
@@ -177,7 +178,7 @@ sub deduce ($) {
     }
 
     # handle blessed objects
-    elsif (blessed $scalar) {
+    elsif (Scalar::Util::blessed($scalar)) {
         return data_regexp $scalar if $scalar->isa('Regexp');
         return $scalar;
     }
@@ -195,7 +196,7 @@ sub deduce ($) {
 
         # handle non-references
         else {
-            if (looks_like_number $scalar) {
+            if (Scalar::Util::looks_like_number($scalar)) {
                 return data_float   $scalar if $scalar =~ /\./;
                 return data_number  $scalar if $scalar =~ /^\d+$/;
                 return data_integer $scalar;
@@ -279,7 +280,7 @@ sub detract ($) {
     return undef      if $type eq 'UNDEF';
 
     if ($type eq 'SCALAR' or $type eq 'UNIVERSAL') {
-        $type = reftype $object // '';
+        $type = Scalar::Util::reftype($object) // '';
 
         return [@$object] if $type eq 'ARRAY';
         return {%$object} if $type eq 'HASH';

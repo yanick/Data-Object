@@ -1,12 +1,17 @@
 # ABSTRACT: Undef Object for Perl 5
 package Data::Object::Undef;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
-use Scalar::Util 'blessed';
-use Data::Object 'deduce_deep', 'detract_deep', 'throw';
+use Data::Object;
+use Scalar::Util;
+
 use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Undef';
@@ -25,11 +30,11 @@ sub new {
     my $args  = shift;
     my $role  = 'Data::Object::Role::Type';
 
-    $args = $args->data if blessed($args)
+    $args = $args->data if Scalar::Util::blessed($args)
         and $args->can('does')
         and $args->does($role);
 
-    throw 'Type Instantiation Error: Not an Undefined value'
+    Data::Object::throw('Type Instantiation Error: Not an Undefined value')
         if defined $args;
 
     return bless \$args, $class;
@@ -42,11 +47,11 @@ sub data {
 around 'defined' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 sub detract {
-    return detract_deep shift;
+    return Data::Object::detract_deep shift;
 }
 
 1;

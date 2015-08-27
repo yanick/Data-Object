@@ -1,12 +1,17 @@
 # ABSTRACT: Float Object for Perl 5
 package Data::Object::Float;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
-use Scalar::Util 'blessed', 'looks_like_number';
-use Data::Object 'deduce_deep', 'detract_deep', 'throw';
+use Data::Object;
+use Scalar::Util;
+
 use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Float';
@@ -25,15 +30,14 @@ sub new {
     my $args  = shift;
     my $role  = 'Data::Object::Role::Type';
 
-    $args = $args->data if blessed($args)
+    $args = $args->data if Scalar::Util::blessed($args)
         and $args->can('does')
         and $args->does($role);
 
     $args =~ s/^\+//; # not keen on this but ...
 
-    throw 'Type Instantiation Error: Not a Float or Number'
-        unless defined($args) && !ref($args)
-            && looks_like_number($args);
+    Data::Object::throw('Type Instantiation Error: Not a Float or Number')
+        unless defined($args) && !ref($args) && Scalar::Util::looks_like_number($args);
 
     return bless \$args, $class;
 }
@@ -43,61 +47,61 @@ sub data {
 }
 
 sub detract {
-    return detract_deep shift;
+    return Data::Object::detract_deep shift;
 }
 
 around 'downto' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 around 'eq' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 around 'gt' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 around 'gte' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 around 'lt' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 around 'lte' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 around 'ne' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 around 'to' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 around 'upto' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
-    return scalar deduce_deep $result;
+    return scalar Data::Object::deduce_deep($result);
 };
 
 1;

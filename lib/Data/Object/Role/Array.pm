@@ -1,14 +1,17 @@
 # ABSTRACT: Array Object Role for Perl 5
 package Data::Object::Role::Array;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
+use Data::Object;
 use Data::Object::Role;
-
-use Data::Object 'codify';
-use Scalar::Util 'looks_like_number';
+use Scalar::Util;
 
 map with($_), our @ROLES = qw(
     Data::Object::Role::Defined
@@ -27,7 +30,7 @@ map with($_), our @ROLES = qw(
 sub all {
     my ($array, $code, @arguments) = @_;
 
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     my $found = CORE::grep { $code->($_, @arguments) } @$array;
 
     return $found == @$array ? 1 : 0;
@@ -36,7 +39,7 @@ sub all {
 sub any {
     my ($array, $code, @arguments) = @_;
 
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     my $found = CORE::grep { $code->($_, @arguments) } @$array;
 
     return $found ? 1 : 0;
@@ -52,19 +55,19 @@ sub count {
 
 sub defined {
     my ($array, $index) = @_;
-    return CORE::defined $array->[$index];
+    return CORE::defined($array->[$index]);
 }
 
 sub delete {
     my ($array, $index) = @_;
-    return CORE::delete $array->[$index];
+    return CORE::delete($array->[$index]);
 }
 
 sub each {
     my ($array, $code, @arguments) = @_;
 
     my $i=0;
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     foreach my $value (@$array) {
         $code->($i, $value, @arguments); $i++;
     }
@@ -75,7 +78,7 @@ sub each {
 sub each_key {
     my ($array, $code, @arguments) = @_;
 
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     $code->($_, @arguments) for (0..$#{$array});
 
     return $array;
@@ -85,7 +88,7 @@ sub each_n_values {
     my ($array, $number, $code, @arguments) = @_;
 
     my @values = @$array;
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     $code->(splice(@values, 0, $number), @arguments) while @values;
 
     return $array;
@@ -94,7 +97,7 @@ sub each_n_values {
 sub each_value {
     my ($array, $code, @arguments) = @_;
 
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     $code->($array->[$_], @arguments) for (0..$#{$array});
 
     return $array;
@@ -123,7 +126,7 @@ sub get {
 
 sub grep {
     my ($array, $code, @arguments) = @_;
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     return [CORE::grep { $code->($_, @arguments) } @$array];
 }
 
@@ -131,8 +134,8 @@ sub hashify {
     my ($array, $code, @arguments) = @_;
 
     my $data = {};
-    $code = codify $code // 1 if !ref $code;
-    for (CORE::grep { CORE::defined $_ } @$array) {
+    $code = Data::Object::codify($code) // 1 if !ref $code;
+    for (CORE::grep { CORE::defined($_) } @$array) {
         $data->{$_} = $code->($_, @arguments);
     }
 
@@ -183,7 +186,7 @@ sub length {
 
 sub map {
     my ($array, $code, @arguments) = @_;
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     return [map { $code->($_, @arguments) } @$array];
 }
 
@@ -194,7 +197,7 @@ sub max {
     for my $val (@$array) {
         next if ref($val);
         next if ! CORE::defined($val);
-        next if ! looks_like_number($val);
+        next if ! Scalar::Util::looks_like_number($val);
         $max //= $val;
         $max = $val if $val > $max;
     }
@@ -209,7 +212,7 @@ sub min {
     for my $val (@$array) {
         next if ref($val);
         next if ! CORE::defined($val);
-        next if ! looks_like_number($val);
+        next if ! Scalar::Util::looks_like_number($val);
         $min //= $val;
         $min = $val if $val < $min;
     }
@@ -219,7 +222,7 @@ sub min {
 
 sub none {
     my ($array, $code, @arguments) = @_;
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     my $found = CORE::grep { $code->($_, @arguments) } @$array;
     return $found ? 0 : 1;
 }
@@ -231,7 +234,7 @@ sub nsort {
 
 sub one {
     my ($array, $code, @arguments) = @_;
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     my $found = CORE::grep { $code->($_, @arguments) } @$array;
     return $found == 1 ? 1 : 0;
 }
@@ -252,7 +255,7 @@ sub pairs_hash {
 
 sub part {
     my ($array, $code, @arguments) = @_;
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
 
     my $result = [[],[]];
     foreach my $value (@$array) {
@@ -333,7 +336,7 @@ sub sum {
     for my $val (@$array) {
         next if ref($val);
         next if !CORE::defined($val);
-        next if !looks_like_number($val);
+        next if !Scalar::Util::looks_like_number($val);
         $sum += $val;
     }
 

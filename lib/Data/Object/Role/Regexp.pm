@@ -1,13 +1,16 @@
 # ABSTRACT: Regexp Object Role for Perl 5
 package Data::Object::Role::Regexp;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
+use Data::Object;
 use Data::Object::Role;
-
-use Data::Object 'throw';
 
 map with($_), our @ROLES = qw(
     Data::Object::Role::Defined
@@ -31,7 +34,7 @@ sub search {
     my $expr = join ';', $capt, $mtch;
 
     my $error = do { local $@; eval $expr; $@ };
-    throw $error if $error;
+    Data::Object::throw($error) if $error;
 
     return [$$self, $string, $captures, @matches, $string];
 }
@@ -50,7 +53,7 @@ sub replace {
     my $initial = $string;
 
     my $error = do { local $@; eval $expr; $@ };
-    throw $error if $error;
+    Data::Object::throw($error) if $error;
 
     return [$$self, $string, $captures, @matches, $initial];
 }

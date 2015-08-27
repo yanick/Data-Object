@@ -1,15 +1,18 @@
 # ABSTRACT: Hash Object Role for Perl 5
 package Data::Object::Role::Hash;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
+use Data::Object;
 use Data::Object::Role;
-
-use Data::Object 'codify';
-use Scalar::Util 'blessed';
-use Storable     'dclone';
+use Scalar::Util;
+use Storable;
 
 map with($_), our @ROLES = qw(
     Data::Object::Role::Defined
@@ -39,17 +42,17 @@ sub clear {
 
 sub defined {
     my ($hash, $argument) = @_;
-    return CORE::defined $hash->{$argument};
+    return CORE::defined($hash->{$argument});
 }
 
 sub delete {
     my ($hash, $argument) = @_;
-    return CORE::delete $hash->{$argument};
+    return CORE::delete($hash->{$argument});
 }
 
 sub each {
     my ($hash, $code, @arguments) = @_;
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
 
     for my $key (CORE::keys %$hash) {
       $code->($key, $hash->{$key}, @arguments);
@@ -61,7 +64,7 @@ sub each {
 sub each_key {
     my ($hash, $code, @arguments) = @_;
 
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     $code->($_, @arguments) for CORE::keys %$hash;
 
     return $hash;
@@ -70,7 +73,7 @@ sub each_key {
 sub each_n_values {
     my ($hash, $number, $code, @arguments) = @_;
 
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     my @values = CORE::values %$hash;
     $code->(CORE::splice(@values, 0, $number), @arguments) while @values;
 
@@ -80,7 +83,7 @@ sub each_n_values {
 sub each_value {
     my ($hash, $code, @arguments) = @_;
 
-    $code = codify $code if !ref $code;
+    $code = Data::Object::codify($code) if !ref $code;
     $code->($_, @arguments) for CORE::values %$hash;
 
     return $hash;
@@ -94,7 +97,7 @@ sub empty {
 
 sub exists {
     my ($hash, $key) = @_;
-    return CORE::exists $hash->{$key};
+    return CORE::exists($hash->{$key});
 }
 
 sub filter_exclude {
@@ -102,8 +105,8 @@ sub filter_exclude {
     my %i = map { $_ => $_ } @arguments;
 
     return {
-        CORE::map  { CORE::exists $hash->{$_} ? ($_ => $hash->{$_}) : () }
-        CORE::grep { not CORE::exists $i{$_} } CORE::keys %$hash
+        CORE::map  { CORE::exists($hash->{$_}) ? ($_ => $hash->{$_}) : () }
+        CORE::grep { not CORE::exists($i{$_}) } CORE::keys %$hash
     };
 }
 
@@ -111,7 +114,7 @@ sub filter_include {
     my ($hash, @arguments) = @_;
 
     return {
-        CORE::map { CORE::exists $hash->{$_} ? ($_ => $hash->{$_}) : () }
+        CORE::map { CORE::exists($hash->{$_}) ? ($_ => $hash->{$_}) : () }
         @arguments
     };
 }
@@ -177,13 +180,13 @@ sub invert {
 
     my $temp = {};
     for (CORE::keys %$hash) {
-        CORE::defined $hash->{$_} ?
-            $temp->{CORE::delete $hash->{$_}} = $_ :
-            CORE::delete $hash->{$_};
+        CORE::defined($hash->{$_}) ?
+            $temp->{CORE::delete($hash->{$_})} = $_ :
+            CORE::delete($hash->{$_});
     }
 
     for (CORE::keys %$temp) {
-        $hash->{$_} = CORE::delete $temp->{$_};
+        $hash->{$_} = CORE::delete($temp->{$_});
     }
 
     return $hash;
@@ -209,7 +212,8 @@ sub lookup {
     my ($hash, $path) = @_;
 
     return undef unless ($hash and $path) and (
-        ('HASH' eq ref($hash)) or blessed($hash) and $hash->isa('HASH')
+        ('HASH' eq ref($hash)) or Scalar::Util::blessed($hash)
+            and $hash->isa('HASH')
     );
 
     return $hash->{$path} if $hash->{$path};
@@ -238,8 +242,8 @@ sub pairs_array {
 sub merge {
     my ($left, @arguments) = @_;
 
-    return dclone $left if ! @arguments;
-    return dclone merge($left, merge(@arguments)) if @arguments > 1;
+    return Storable::dclone($left) if ! @arguments;
+    return Storable::dclone merge($left, merge(@arguments)) if @arguments > 1;
 
     my ($right) = @arguments;
     my (%merge) = %$left;
@@ -252,7 +256,7 @@ sub merge {
             ? merge($$left{$key}, $$right{$key}) : $$right{$key};
     }
 
-    return dclone \%merge;
+    return Storable::dclone \%merge;
 }
 
 sub reset {
@@ -266,7 +270,7 @@ sub reverse {
 
     my $temp = {};
     for (CORE::keys %$hash) {
-        $temp->{$_} = $hash->{$_} if CORE::defined $hash->{$_};
+        $temp->{$_} = $hash->{$_} if CORE::defined($hash->{$_});
     }
 
     return {CORE::reverse %$temp};

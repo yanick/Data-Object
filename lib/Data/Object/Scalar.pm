@@ -1,13 +1,17 @@
 # ABSTRACT: Scalar Object for Perl 5
 package Data::Object::Scalar;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
-use Scalar::Util 'blessed';
-use Data::Object 'deduce_deep', 'detract_deep', 'throw';
-use Data::Object::Class 'with';
+use Data::Object;
+use Data::Object::Class;
+use Scalar::Util;
 
 with 'Data::Object::Role::Scalar';
 
@@ -18,11 +22,11 @@ sub new {
     my $data  = shift;
     my $role  = 'Data::Object::Role::Type';
 
-    $data = $data->data if blessed($data)
+    $data = $data->data if Scalar::Util::blessed($data)
         and $data->can('does')
         and $data->does($role);
 
-    if (blessed($data) && $data->isa('Regexp') && $^V <= v5.12.0) {
+    if (Scalar::Util::blessed($data) && $data->isa('Regexp') && $^V <= v5.12.0) {
         $data = do {\(my $q = qr/$data/)};
     }
 
@@ -34,7 +38,7 @@ sub data {
 }
 
 sub detract {
-    return detract_deep shift;
+    return Data::Object::detract_deep shift;
 }
 
 1;

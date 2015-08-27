@@ -1,7 +1,11 @@
 # ABSTRACT: Exception Object for Perl 5
 package Data::Object::Exception;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
@@ -67,7 +71,7 @@ sub to_string {
     my $default = $self->message;
     my $object  = $self->object;
 
-    my $objref  = overload::StrVal $object if $object;
+    my $objref  = overload::StrVal($object) if $object;
     my $message = $default || "An exception ($class) was thrown";
     my @with    = join " ", "with", $objref if $objref and not $default;
 

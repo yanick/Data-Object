@@ -1,13 +1,16 @@
 # ABSTRACT: Code Object Role for Perl 5
 package Data::Object::Role::Code;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
+use Data::Object;
 use Data::Object::Role;
-
-use Data::Object 'codify';
 
 map with($_), our @ROLES = qw(
     Data::Object::Role::Defined
@@ -36,19 +39,19 @@ sub rcurry {
 
 sub compose {
     my ($code, $next, @arguments) = @_;
-    $next = codify $next if !ref $next;
+    $next = Data::Object::codify($next) if !ref $next;
     return curry(sub { $next->($code->(@_)) }, @arguments);
 }
 
 sub disjoin {
     my ($code, $next) = @_;
-    $next = codify $next if !ref $next;
+    $next = Data::Object::codify($next) if !ref $next;
     return sub { $code->(@_) || $next->(@_) };
 }
 
 sub conjoin {
     my ($code, $next) = @_;
-    $next = codify $next if !ref $next;
+    $next = Data::Object::codify($next) if !ref $next;
     return sub { $code->(@_) && $next->(@_) };
 }
 

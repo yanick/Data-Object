@@ -1,7 +1,11 @@
 # ABSTRACT: Class Declaration for Perl 5
 package Data::Object::Class;
 
+use strict;
+use warnings;
+
 use 5.014;
+
 use Type::Tiny;
 use Type::Tiny::Signatures;
 
