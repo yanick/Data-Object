@@ -17,17 +17,20 @@ with 'Data::Object::Role::Scalar';
 
 # VERSION
 
-sub data {
-    goto &detract;
+method data () {
+
+    @_ = $self and goto &detract;
+
 }
 
-sub detract {
-    return Data::Object::detract_deep(shift);
+method detract () {
+
+    return Data::Object::detract_deep($self);
+
 }
 
-sub new {
-    my $class = shift;
-    my $data  = shift;
+method new (ClassName $class: ("Ref | InstanceOf['Data::Object::Scalar']") $data) {
+
     my $role  = 'Data::Object::Role::Type';
 
     $data = $data->data if Scalar::Util::blessed($data)
@@ -39,6 +42,7 @@ sub new {
     }
 
     return bless ref($data) ? $data : \$data, $class;
+
 }
 
 1;

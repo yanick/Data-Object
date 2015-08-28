@@ -19,27 +19,31 @@ with 'Data::Object::Role::Regexp';
 
 # VERSION
 
-sub data {
-    goto &detract;
+method data () {
+
+    @_ = $self and goto &detract;
+
 }
 
-sub detract {
-    return Data::Object::detract_deep(shift);
+method detract () {
+
+    return Data::Object::detract_deep($self);
+
 }
 
-sub new {
-    my $class = shift;
-    my $args  = shift;
+method new (ClassName $class: ("RegexpRef | InstanceOf['Data::Object::Regexp']") $data) {
+
     my $role  = 'Data::Object::Role::Type';
 
-    $args = $args->data if Scalar::Util::blessed($args)
-        and $args->can('does')
-        and $args->does($role);
+    $data = $data->data if Scalar::Util::blessed($data)
+        and $data->can('does')
+        and $data->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not a RegexpRef')
-        unless defined($args) && !! re::is_regexp($args);
+        unless defined($data) && !! re::is_regexp($data);
 
-    return bless \$args, $class;
+    return bless \$data, $class;
+
 }
 
 around 'search' => sub {

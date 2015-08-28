@@ -25,29 +25,35 @@ use overload (
 
 # VERSION
 
-sub data {
-    goto &detract;
+method data () {
+
+    @_ = $self and goto &detract;
+
 }
 
-sub detract {
-    return Data::Object::detract_deep(shift);
+method detract () {
+
+    return Data::Object::detract_deep($self);
+
 }
 
-sub new {
-    my $class = shift;
-    my $args  = shift;
+method new (ClassName $class: ("Str | Num | InstanceOf['Data::Object::Number']") $data) {
+
     my $role  = 'Data::Object::Role::Type';
 
-    $args = $args->data if Scalar::Util::blessed($args)
-        and $args->can('does')
-        and $args->does($role);
+    $data = $data->data if Scalar::Util::blessed($data)
+        and $data->can('does')
+        and $data->does($role);
 
-    $args =~ s/^\+//; # not keen on this but ...
+    $data =~ s/^\+//; # not keen on this but ...
 
     Data::Object::throw('Type Instantiation Error: Not a Float or Number')
-        unless defined($args) && !ref($args) && Scalar::Util::looks_like_number($args);
+        unless defined($data) && !ref($data) && Scalar::Util::looks_like_number($data);
 
-    return bless \$args, $class;
+    $data += 0 unless $data =~ /[a-zA-Z]/;
+
+    return bless \$data, $class;
+
 }
 
 around 'downto' => sub {

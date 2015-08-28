@@ -25,27 +25,31 @@ use overload (
 
 # VERSION
 
-sub data {
-    goto &detract;
+method data () {
+
+    @_ = $self and goto &detract;
+
 }
 
-sub detract {
-    return Data::Object::detract_deep(shift);
+method detract () {
+
+    return Data::Object::detract_deep($self);
+
 }
 
-sub new {
-    my $class = shift;
-    my $args  = shift;
+method new (ClassName $class: ("Undef | InstanceOf['Data::Object::Undef']") $data) {
+
     my $role  = 'Data::Object::Role::Type';
 
-    $args = $args->data if Scalar::Util::blessed($args)
-        and $args->can('does')
-        and $args->does($role);
+    $data = $data->data if Scalar::Util::blessed($data)
+        and $data->can('does')
+        and $data->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not an Undefined value')
-        if defined $args;
+        if defined $data;
 
-    return bless \$args, $class;
+    return bless \$data, $class;
+
 }
 
 around 'defined' => sub {

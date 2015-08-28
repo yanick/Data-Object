@@ -18,31 +18,37 @@ with 'Data::Object::Role::Hash';
 
 # VERSION
 
-sub data {
-    goto &detract;
+method data () {
+
+    @_ = $self and goto &detract;
+
 }
 
-sub detract {
-    return Data::Object::detract_deep(shift);
+method detract () {
+
+    return Data::Object::detract_deep($self);
+
 }
 
-sub list {
-    goto &values;
+method list () {
+
+    @_ = $self and goto &values;
+
 }
 
-sub new {
-    my $class = shift;
-    my $args  = @_ > 1 && !(@_ % 2) ? {@_} : shift;
-    my $role  = 'Data::Object::Role::Type';
+method new (ClassName $class: ("HashRef | InstanceOf['Data::Object::Hash']") $data) {
 
-    $args = $args->data if Scalar::Util::blessed($args)
-        and $args->can('does')
-        and $args->does($role);
+    my $role = 'Data::Object::Role::Type';
+
+    $data = $data->data if Scalar::Util::blessed($data)
+        and $data->can('does')
+        and $data->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not a HashRef')
-        unless 'HASH' eq ref $args;
+        unless 'HASH' eq ref $data;
 
-    return bless $args, $class;
+    return bless $data, $class;
+
 }
 
 around 'array_slice' => sub {
@@ -175,6 +181,12 @@ around 'merge' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
     return scalar Data::Object::deduce_deep($result);
+};
+
+around 'new' => sub {
+    my ($orig, $self, @args) = @_;
+    my $result = $self->$orig(@args > 1 && !(@args % 2) ? {@args} : shift @args);
+    return $result;
 };
 
 around 'pairs' => sub {

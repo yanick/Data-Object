@@ -18,31 +18,37 @@ with 'Data::Object::Role::Array';
 
 # VERSION
 
-sub data {
-    goto &detract;
+method data () {
+
+    @_ = $self and goto &detract;
+
 }
 
-sub detract {
-    return Data::Object::detract_deep(shift);
+method detract () {
+
+    return Data::Object::detract_deep($self);
+
 }
 
-sub list {
-    goto &values;
+method list () {
+
+    @_ = $self and goto &values;
+
 }
 
-sub new {
-    my $class = shift;
-    my $args  = @_ > 1 ? [@_] : shift;
-    my $role  = 'Data::Object::Role::Type';
+method new (ClassName $class: ("ArrayRef | InstanceOf['Data::Object::Array']") $data) {
 
-    $args = $args->data if Scalar::Util::blessed($args)
-        and $args->can('does')
-        and $args->does($role);
+    my $role = 'Data::Object::Role::Type';
+
+    $data = $data->data if Scalar::Util::blessed($data)
+        and $data->can('does')
+        and $data->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not an ArrayRef')
-        unless 'ARRAY' eq ref $args;
+        unless 'ARRAY' eq ref $data;
 
-    return bless $args, $class;
+    return bless $data, $class;
+
 }
 
 around 'all' => sub {
@@ -199,6 +205,12 @@ around 'min' => sub {
     my ($orig, $self, @args) = @_;
     my $result = $self->$orig(@args);
     return scalar Data::Object::deduce_deep($result);
+};
+
+around 'new' => sub {
+    my ($orig, $self, @args) = @_;
+    my $result = $self->$orig(@args > 1 ? [@args] : shift @args);
+    return $result;
 };
 
 around 'none' => sub {
