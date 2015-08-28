@@ -12,7 +12,7 @@ subtest 'test object overloading' => sub {
     ok $number;
     ok $number == '-12345';
     ok $number =~ qr/^-12345$/;
-    is "$number", '-12345';
+    is $number => '-12345';
 };
 
 ok 1 and done_testing;

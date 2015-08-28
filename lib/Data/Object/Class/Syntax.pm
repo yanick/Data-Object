@@ -42,6 +42,7 @@ our @EXPORT = qw(
 );
 
 sub import {
+
     my $class  = $_[0];
     my $target = caller;
 
@@ -99,109 +100,154 @@ sub import {
     }
 
     return $class->export_to_level(1, @_);
+
 }
 
 sub alt ($@) {
+
     my ($name, @props) = @_;
     if (my $has = caller->can('has')) {
         my @name = ref $name ? @$name : $name;
         @_ = ((map "+$_", @name), @props) and goto $has;
     }
+
 }
 
 sub builder (;$) {
+
     return builder => $_[0] // 1;
+
 }
 
 sub clearer (;$) {
+
     return clearer => $_[0] // 1;
+
 }
 
 sub coerce () {
+
     return coerce => 1;
+
 }
 
 sub def ($$@) {
+
     my ($name, $code, @props) = @_;
     @_ = ($name, 'default', $code, @props) and goto &alt;
+
 }
 
 sub default ($) {
+
     return default => $_[0];
+
 }
 
 sub defaulter (;$) {
+
     return defaulter => $_[0] // 1;
+
 }
 
 sub handles ($) {
+
     return handles => $_[0];
+
 }
 
 sub init_arg ($) {
+
     return init_arg => $_[0];
+
 }
 
 sub is (@) {
+
     return (@_);
+
 }
 
 sub isa ($) {
+
     return isa => $_[0];
+
 }
 
 sub lazy () {
+
     return lazy => 1;
+
 }
 
 sub opt ($;$@) {
+
     my ($name, $type, @props) = @_;
     my @req = (required => 0);
-    @_ = ($name, ref($type) ? isa($type) : (), @props, @req)
-        and goto &alt;
+    @_ = ($name, ref($type) ? isa($type) : (), @props, @req) and goto &alt;
+
 }
 
 sub optional (@) {
+
     return required => 0, @_;
+
 }
 
 sub predicate (;$) {
+
     return predicate => $_[0] // 1;
+
 }
 
 sub reader (;$) {
+
     return reader => $_[0] // 1;
+
 }
 
 sub req ($;$@) {
+
     my ($name, $type, @props) = @_;
     my @req = (required => 1);
-    @_ = ($name, ref($type) ? isa($type) : (), @props, @req)
-        and goto &alt;
+    @_ = ($name, ref($type) ? isa($type) : (), @props, @req) and goto &alt;
+
 }
 
 sub required (@) {
+
     return required => 1, @_;
+
 }
 
 sub ro () {
+
     return is => 'ro';
+
 }
 
 sub rw () {
+
     return is => 'rw';
+
 }
 
 sub trigger (;$) {
+
     return trigger => $_[0] // 1;
+
 }
 
 sub weak_ref () {
+
     return weak_ref => 1;
+
 }
 
 sub writer (;$) {
+
     return writer => $_[0] // 1;
+
 }
 
 1;

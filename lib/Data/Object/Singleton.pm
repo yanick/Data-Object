@@ -13,8 +13,8 @@ use parent 'Moo';
 
 # VERSION
 
-sub import {
-    my $class  = shift;
+fun import (ClassName $class, Any @args) {
+
     my $target = caller;
     my $state  = undef;
 
@@ -29,6 +29,7 @@ sub import {
     *{"${target}::renew"} = sub { $state = $new->(@_) } if !$renew;
 
     return;
+
 }
 
 1;
@@ -47,7 +48,7 @@ sub import {
 
 =head1 DESCRIPTION
 
-Data::Object::Singleton inherits all methods and behaviour from L<Moo>.
+Data::Object::Singleton inherits all methods and behaviour from L<Moo>
 Please see that documentation for more usage information. Additionally, see
 L<Data::Object::Class::Syntax> which provides a DSL that makes declaring
 classes easier and more fun.

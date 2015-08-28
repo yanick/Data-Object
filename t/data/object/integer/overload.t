@@ -12,7 +12,7 @@ subtest 'test object overloading' => sub {
     ok $integer;
     ok $integer == '99999';
     ok $integer =~ qr/9{5}/;
-    is "$integer", '99999';
+    is $integer => '99999';
 };
 
 ok 1 and done_testing;

@@ -346,6 +346,7 @@ fun detract (Any $data) :prototype($) {
     return undef    if $type eq 'UNDEF';
 
     if ($type eq 'SCALAR' or $type eq 'UNIVERSAL') {
+
         $type = Scalar::Util::reftype($data) // '';
 
         return [@$data] if $type eq 'ARRAY';
@@ -362,6 +363,7 @@ fun detract (Any $data) :prototype($) {
             $type = deduce_type($data = $$data)
                 and goto INSPECT;
         }
+
     }
 
     if ($type eq 'CODE') {
@@ -446,13 +448,13 @@ fun detract_deep (Any @data) :prototype(@) {
 
 =head1 DESCRIPTION
 
-Data::Object is a Modern Perl framework intended enhance the development of
-highly object-oriented Perl 5 software. This distribution contains classes
-which wrap Perl 5 native data types and provides methods for operating on the
-data. All values can be treated as objects and manipulated using method-calls.
-This distribution also provides object-orientation via L<Data::Object::Class>,
-and a DSL, L<Data::Object::Class::Syntax>, for easily defining classes, roles
-(traits), and constraints.
+Data::Object is an object-orientation framework which enhances the development
+of highly object-oriented Perl 5 software; It also serves as the foundation for
+a collection of related modules. This distribution provides a DSL for easily
+defining classes, roles, objects, and constraints. Additionally, this
+distribution also contains classes which wrap Perl 5 native data types and
+provides methods for operating on the data so that all values can be treated as
+objects and operated on using method calls.
 
 =cut
 

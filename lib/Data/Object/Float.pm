@@ -50,8 +50,6 @@ method new (ClassName $class: ("Str | Num | InstanceOf['Data::Object::Number']")
     Data::Object::throw('Type Instantiation Error: Not a Float or Number')
         unless defined($data) && !ref($data) && Scalar::Util::looks_like_number($data);
 
-    $data += 0 unless $data =~ /[a-zA-Z]/;
-
     return bless \$data, $class;
 
 }
