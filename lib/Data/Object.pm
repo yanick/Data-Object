@@ -233,19 +233,18 @@ fun data_universal (Any $data) :prototype($) {
 
 fun deduce (Any $data) :prototype($) {
 
-    # return undef
+    # return undefined
     if (not defined $data) {
         return data_undef $data;
     }
 
-    # handle blessed objects
+    # handle blessed
     elsif (Scalar::Util::blessed($data)) {
         return data_regexp $data if $data->isa('Regexp');
         return $data;
     }
 
-    # handle data types
-    # ... using spaces for clarity
+    # handle defined
     else {
 
         # handle references
