@@ -6,19 +6,19 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
-use overload (
-    '""'     => 'to_string',
-    '~~'     => 'to_string',
-    fallback => 1,
-);
+use Data::Object;
+use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
+use Scalar::Util;
 
 use Data::Dumper ();
-use Scalar::Util ();
 
-use Data::Object::Class;
+use overload (
+    '""'     => 'data',
+    '~~'     => 'data',
+    fallback => 1,
+);
 
 # VERSION
 
@@ -29,42 +29,24 @@ has object     => ( is => 'ro' );
 has package    => ( is => 'ro' );
 has subroutine => ( is => 'ro' );
 
-around BUILDARGS => sub {
-    my $orig = shift;
-    my $self = shift;
+around BUILDARGS => fun ($orig, $self, @args) {
 
-    unshift @_, (ref $_[0] ? 'object' : 'message') if @_ == 1;
+    unshift @args, (ref $args[0] ? 'object' : 'message') if @args == 1;
 
-    return $self->$orig(@_);
+    return $self->$orig(@args);
+
 };
 
-sub catch {
-    my $invocant = shift;
-    my $object   = shift;
-    ! Scalar::Util::blessed($object)
-    && UNIVERSAL::isa($object, $invocant);
+method catch ($object) {
+
+    my $class = ref $self;
+
+    return UNIVERSAL::isa($object, $class);
+
 }
 
-sub dump {
-    my $invocant = shift;
-    local $Data::Dumper::Terse = 1;
-    Data::Dumper::Dumper($invocant);
-}
+method data () {
 
-sub throw {
-    my $invocant = shift;
-    my $package  = ref $invocant || $invocant;
-    unshift @_, (ref $_[0] ? 'object' : 'message') if @_ == 1;
-    die $package->new(ref $invocant ? (%$invocant) : (), @_,
-        file       => (caller(0))[1],
-        line       => (caller(0))[2],
-        package    => (caller(0))[0],
-        subroutine => (caller(0))[3],
-    );
-}
-
-sub to_string {
-    my $self    = shift;
     my $class   = ref $self;
     my $file    = $self->file;
     my $line    = $self->line;
@@ -76,6 +58,30 @@ sub to_string {
     my @with    = join " ", "with", $objref if $objref and not $default;
 
     return join(" ", $message, @with, "in $file at line $line") . "\n";
+
+}
+
+method dump () {
+
+    local $Data::Dumper::Terse = 1;
+
+    return Data::Dumper::Dumper($self);
+
+}
+
+method throw (Any @args) {
+
+    my $class  = ref $self || $self || __PACKAGE__;
+
+    unshift @args, (ref $args[0] ? 'object' : 'message') if @args == 1;
+
+    die $class->new(ref $self ? (%$self) : (), @args,
+        file       => (caller(0))[1],
+        line       => (caller(0))[2],
+        package    => (caller(0))[0],
+        subroutine => (caller(0))[3],
+    );
+
 }
 
 1;
@@ -89,6 +95,8 @@ sub to_string {
     my $exception = Data::Object::Exception->new;
 
     $exception->throw('Something went wrong');
+
+=cut
 
 =head1 DESCRIPTION
 
@@ -106,62 +114,22 @@ invocant.
 
 =cut
 
+=method data
+
+    # given $exception
+
+    $exception->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
 =method dump
 
     $exception->dump;
 
 The dump method returns a stringified version of the exception object.
-
-=cut
-
-=method file
-
-    $exception->file;
-
-The file method returns the path to the file where the exception was thrown.
-
-=cut
-
-=method line
-
-    $exception->line;
-
-The line method returns the line number in the file where the exception was
-thrown.
-
-=cut
-
-=method message
-
-    $exception->message;
-
-The message method returns the message associated with the exception.
-
-=cut
-
-=method object
-
-    $exception->object;
-
-The object method returns the object (or data) associated with the exception if
-available.
-
-=cut
-
-=method package
-
-    $exception->package;
-
-The package method returns the package name where the exception was thrown.
-
-=cut
-
-=method subroutine
-
-    $exception->subroutine;
-
-The subroutine method returns the fully-qualified subroutine name where the
-exception was thrown.
 
 =cut
 
@@ -171,36 +139,6 @@ exception was thrown.
 
 The throw method terminates the program using the core die keyword passing the
 exception object as the only argument.
-
-=cut
-
-=method to_string
-
-    $exception->to_string;
-
-The to_string method returns an informatve description of the exception thrown.
-
-=cut
-
-=head1 OPERATORS
-
-This class overloads the following operators for your convenience.
-
-=operator string
-
-    "$exception"
-
-    # equivilent to
-
-    $exception->to_string
-
-=operator smartmatch
-
-    $value ~~ $exception
-
-    # equivilent to
-
-    $exception->data
 
 =cut
 
@@ -278,8 +216,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

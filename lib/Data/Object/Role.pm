@@ -6,8 +6,8 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
+use Data::Object;
+use Scalar::Util;
 
 use parent 'Moo::Role';
 
@@ -29,6 +29,8 @@ use parent 'Moo::Role';
     has id => ( is => 'ro' );
 
     1;
+
+=cut
 
 =head1 DESCRIPTION
 
@@ -113,8 +115,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

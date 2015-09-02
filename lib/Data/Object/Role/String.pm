@@ -6,164 +6,228 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
+use Data::Object;
 use Data::Object::Role;
+use Data::Object::Library;
+use Data::Object::Signatures;
+use Scalar::Util;
 
 map with($_), our @ROLES = qw(
-    Data::Object::Role::Defined
-    Data::Object::Role::Detract
-    Data::Object::Role::Output
-    Data::Object::Role::Throwable
-    Data::Object::Role::Type
+    Data::Object::Role::Item
+    Data::Object::Role::Alphabetic
+    Data::Object::Role::Value
 );
 
 # VERSION
 
-sub append {
-    return join ' ', @_;
+method append (@args) {
+
+    return CORE::join(' ', "$self", @args);
+
 }
 
-sub camelcase {
-    my ($string) = @_;
-    $string = CORE::ucfirst(CORE::lc("$string"));
-    $string =~ s/[^a-zA-Z0-9]+([a-z])/\U$1/g;
-    $string =~ s/[^a-zA-Z0-9]+//g;
-    return $string;
+method camelcase () {
+
+    my $result = CORE::ucfirst(CORE::lc("$self"));
+
+    $result =~ s/[^a-zA-Z0-9]+([a-z])/\U$1/g;
+    $result =~ s/[^a-zA-Z0-9]+//g;
+
+    return $result;
+
 }
 
-sub chomp {
-    my ($string) = @_;
-    CORE::chomp($string) and return $string;
+method chomp () {
+
+    my $result = "$self";
+
+    CORE::chomp($result);
+
+    return $result;
+
 }
 
-sub chop {
-    my ($string) = @_;
-    CORE::chop($string) and return $string;
+method chop () {
+
+    my $result = "$self";
+
+    CORE::chop($result);
+
+    return $result;
+
 }
 
-sub concat {
-    my ($string, @args) = @_;
-    return join '', $string, @args;
+method concat (@args) {
+
+    return CORE::join('', "$self", @args);
+
 }
 
-sub contains {
-    my ($string, $pattern) = @_;
+method contains ($pattern) {
 
-    return ($string =~ $pattern) ? 1 : 0
-        if 'Regexp' eq ref $pattern;
+    return 0 unless CORE::defined($pattern);
 
-    return index($string, $pattern) < 0 ? 0 : 1
-        if defined $pattern;
+    my $regexp = UNIVERSAL::isa($pattern, 'Regexp');
 
-    return 0;
+    return CORE::index("$self", $pattern) < 0 ? 0 : 1 if ! $regexp;
+
+    return ("$self" =~ $pattern) ? 1 : 0;
+
 }
 
-sub hex {
-    my ($string) = @_;
-    return CORE::hex($string);
+method defined () {
+
+    return 1;
+
 }
 
-sub index {
-    my ($string, $substr, $start) = @_;
-    return CORE::index($string, $substr) if not defined $start;
-    return CORE::index($string, $substr, $start);
+method hex () {
+
+    return CORE::hex("$self");
+
 }
 
-sub lc {
-    my ($string) = @_;
-    return CORE::lc($string);
+method index ($substr, $start) {
+
+    return CORE::index("$self", $substr) if not CORE::defined $start;
+
+    return CORE::index("$self", $substr, $start);
+
 }
 
-sub lcfirst {
-    my ($string) = @_;
-    return CORE::lcfirst($string);
+method lc () {
+
+    return CORE::lc("$self");
+
 }
 
-sub length {
-    my ($string) = @_;
-    return CORE::length($string);
+method lcfirst () {
+
+    return CORE::lcfirst("$self");
+
 }
 
-sub lines {
-    my ($string) = @_;
-    return [CORE::split /\n+/, $string];
+method length () {
+
+    return CORE::length("$self");
+
 }
 
-sub lowercase {
-    goto &lc
+method lines () {
+
+    return [CORE::split(/[\n\r]+/, "$self")];
+
 }
 
-sub replace {
-    my ($self, $find, $replace, $flags) = @_;
-    $flags = defined $flags ? $flags : '';
-    $find  = quotemeta $find if $find and 'Regexp' ne ref $find;
+method lowercase () {
 
-    local $@;
-    eval("sub { \$_[0] =~ s/$find/$replace/$flags }")->($self);
+    return $self->lc;
 
-    return $self;
 }
 
-sub reverse {
-    my ($string) = @_;
-    return CORE::reverse($string);
+method replace ($search, $replace, $flags) {
+
+    my $result = "$self";
+    my $regexp = UNIVERSAL::isa($search, 'Regexp');
+
+    $flags  = CORE::defined($flags) ? $flags : '';
+    $search = CORE::quotemeta($search) if $search and ! $regexp;
+
+    local $@; eval("sub { \$_[0] =~ s/$search/$replace/$flags }")->($result);
+
+    return $result;
+
 }
 
-sub rindex {
-    my ($string, $substr, $start) = @_;
-    return CORE::rindex($string, $substr) if not defined $start;
-    return CORE::rindex($string, $substr, $start);
+method reverse () {
+
+    return CORE::reverse("$self");
+
 }
 
-sub snakecase {
-    my ($string) = @_;
-    $string = CORE::lc("$string");
-    $string =~ s/[^a-zA-Z0-9]+([a-z])/\U$1/g;
-    $string =~ s/[^a-zA-Z0-9]+//g;
-    return $string;
+method rindex ($substr, $start) {
+
+    return CORE::rindex("$self", $substr) if not CORE::defined $start;
+
+    return CORE::rindex("$self", $substr, $start);
+
 }
 
-sub split {
-    my ($string, $pattern, $limit) = @_;
-    $pattern = quotemeta $pattern if $pattern and !ref $pattern;
-    return [CORE::split /$pattern/, $string] if !defined $limit;
-    return [CORE::split /$pattern/, $string, $limit];
+method snakecase () {
+
+    my $result = CORE::lc("$self");
+
+    $result =~ s/[^a-zA-Z0-9]+([a-z])/\U$1/g;
+    $result =~ s/[^a-zA-Z0-9]+//g;
+
+    return $result;
+
 }
 
-sub strip {
-    my ($string) = @_;
-    $string =~ s/\s{2,}/ /g and return $string;
+method split ($pattern, $limit) {
+
+    my $regexp = UNIVERSAL::isa($pattern, 'Regexp');
+
+    $pattern = CORE::quotemeta($pattern) if $pattern and ! $regexp;
+
+    return [CORE::split(/$pattern/, "$self")] if ! CORE::defined($limit);
+
+    return [CORE::split(/$pattern/, "$self", $limit)];
+
 }
 
-sub titlecase {
-    my ($string) = @_;
-    $string =~ s/\b(\w)/\U$1/g and return $string;
+method strip () {
+
+    my $result = "$self";
+
+    $result =~ s/\s{2,}/ /g;
+
+    return $result;
+
 }
 
-sub trim {
-    my ($string) = @_;
-    $string =~ s/^\s+|\s+$//g and return $string;
+method titlecase () {
+
+    my $result = "$self";
+
+    $result =~ s/\b(\w)/\U$1/g;
+
+    return $result;
+
 }
 
-sub uc {
-    my ($string) = @_;
-    return CORE::uc($string);
+method trim () {
+
+    my $result = "$self";
+
+    $result =~ s/^\s+|\s+$//g;
+
+    return $result;
+
 }
 
-sub ucfirst {
-    my ($string) = @_;
-    return CORE::ucfirst($string);
+method uc () {
+
+    return CORE::uc("$self");
+
 }
 
-sub uppercase {
-    goto &uc;
+method ucfirst () {
+
+    return CORE::ucfirst("$self");
+
 }
 
-sub words {
-    my ($string) = @_;
-    return [CORE::split /\s+/, $string];
+method uppercase () {
+
+    return $self->uc;
+
+}
+
+method words () {
+
+    return [ CORE::split(/\s+/, "$self") ];
+
 }
 
 1;
@@ -174,18 +238,28 @@ sub words {
 
     use Data::Object::Role::String;
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Role::String provides functions for operating on Perl 5 string
+Data::Object::Role::String provides routines for operating on Perl 5 string
 data.
 
 =cut
 
 =head1 ROLES
 
-This role is composed of the following roles.
+This package is comprised of the following roles.
 
 =over 4
+
+=item *
+
+L<Data::Object::Role::Alphabetic>
+
+=item *
+
+L<Data::Object::Role::Comparison>
 
 =item *
 
@@ -197,9 +271,556 @@ L<Data::Object::Role::Detract>
 
 =item *
 
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
+
+=item *
+
 L<Data::Object::Role::Output>
 
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
+
+=item *
+
+L<Data::Object::Role::Value>
+
 =back
+
+=cut
+
+=method append
+
+    # given 'firstname'
+
+    $string->append('lastname'); # firstname lastname
+
+The append method modifies and returns the string with the argument list
+appended to it separated using spaces. This method returns a
+string object.
+
+=cut
+
+=method camelcase
+
+    # given 'hello world'
+
+    $string->camelcase; # HelloWorld
+
+The camelcase method modifies the string such that it will no longer have any
+non-alphanumeric characters and each word (group of alphanumeric characters
+separated by 1 or more non-alphanumeric characters) is capitalized. Note, this
+method modifies the string. This method returns a L<Data::Object::String>
+object.
+
+=cut
+
+=method chomp
+
+    # given "name, age, dob, email\n"
+
+    $string->chomp; # name, age, dob, email
+
+The chomp method is a safer version of the chop method, it's used to remove the
+newline (or the current value of $/) from the end of the string. Note, this
+method modifies and returns the string. This method returns a
+string object.
+
+=cut
+
+=method chop
+
+    # given "this is just a test."
+
+    $string->chop; # this is just a test
+
+The chop method removes the last character of a string and returns the character
+chopped. It is much more efficient than "s/.$//s" because it neither scans nor
+copies the string. Note, this method modifies and returns the string. This
+method returns a string object.
+
+=cut
+
+=method concat
+
+    # given 'ABC'
+
+    $string->concat('DEF', 'GHI'); # ABCDEFGHI
+
+The concat method modifies and returns the string with the argument list
+appended to it. This method returns a string object.
+
+=cut
+
+=method contains
+
+    # given 'Nullam ultrices placerat nibh vel malesuada.'
+
+    $string->contains('trices'); # 1; true
+    $string->contains('itrices'); # 0; false
+
+    $string->contains(qr/trices/); # 1; true
+    $string->contains(qr/itrices/); # 0; false
+
+The contains method searches the string for the string specified in the
+argument and returns true if found, otherwise returns false. If the argument is
+a string, the search will be performed using the core index function. If the
+argument is a regular expression reference, the search will be performed using
+the regular expression engine. This method returns a L<Data::Object::Number>
+object.
+
+=cut
+
+=method data
+
+    # given $string
+
+    $string->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
+=method defined
+
+    # given $string
+
+    $string->defined; # 1
+
+The defined method returns true if the object represents a value that meets the
+criteria for being defined, otherwise it returns false. This method returns a
+number object.
+
+=cut
+
+=method detract
+
+    # given $string
+
+    $string->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
+
+=cut
+
+=method dump
+
+    # given 'exciting'
+
+    $string->dump; # 'exciting'
+
+The dump method returns returns a string string representation of the object.
+This method returns a string object.
+
+=cut
+
+=method eq
+
+    # given 'exciting'
+
+    $string->eq('Exciting'); # 0
+
+The eq method returns true if the argument provided is equal to the value
+represented by the object. This method returns a number object.
+
+=cut
+
+=method ge
+
+    # given 'exciting'
+
+    $string->ge('Exciting'); # 1
+
+The ge method returns true if the argument provided is greater-than or equal-to
+the value represented by the object. This method returns a Data::Object::Number
+object.
+
+=cut
+
+=method gt
+
+    # given 'exciting'
+
+    $string->gt('Exciting'); # 1
+
+The gt method returns true if the argument provided is greater-than the value
+represented by the object. This method returns a number object.
+
+=cut
+
+=method hex
+
+    # given '0xaf'
+
+    string->hex; # 175
+
+The hex method returns the value resulting from interpreting the string as a
+hex string. This method returns a data type object to be determined after
+execution.
+
+=cut
+
+=method index
+
+    # given 'unexplainable'
+
+    $string->index('explain'); # 2
+    $string->index('explain', 0); # 2
+    $string->index('explain', 1); # 2
+    $string->index('explain', 2); # 2
+    $string->index('explain', 3); # -1
+    $string->index('explained'); # -1
+
+The index method searches for the argument within the string and returns the
+position of the first occurrence of the argument. This method optionally takes a
+second argument which would be the position within the string to start
+searching from (also known as the base). By default, starts searching from the
+beginning of the string. This method returns a data type object to be determined
+after execution.
+
+=cut
+
+=method lc
+
+    # given 'EXCITING'
+
+    $string->lc; # exciting
+
+The lc method returns a lowercased version of the string. This method returns a
+string object. This method is an alias to the lowercase method.
+
+=cut
+
+=method lcfirst
+
+    # given 'EXCITING'
+
+    $string->lcfirst; # eXCITING
+
+The lcfirst method returns a the string with the first character lowercased.
+This method returns a string object.
+
+=cut
+
+=method le
+
+    # given 'exciting'
+
+    $string->le('Exciting'); # 0
+
+The le method returns true if the argument provided is less-than or equal-to
+the value represented by the object. This method returns a Data::Object::Number
+object.
+
+=cut
+
+=method length
+
+    # given 'longggggg'
+
+    $string->length; # 9
+
+The length method returns the number of characters within the string. This
+method returns a number object.
+
+=cut
+
+=method lines
+
+    # given "who am i?\nwhere am i?\nhow did I get here"
+
+    $string->lines; # ['who am i?','where am i?','how did i get here']
+
+The lines method breaks the string into pieces, split on 1 or more newline
+characters, and returns an array reference consisting of the pieces. This method
+returns an array object.
+
+=cut
+
+=method lowercase
+
+    # given 'EXCITING'
+
+    $string->lowercase; # exciting
+
+The lowercase method is an alias to the lc method. This method returns a
+string object.
+
+=cut
+
+=method lt
+
+    # given 'exciting'
+
+    $string->lt('Exciting'); # 0
+
+The lt method returns true if the argument provided is less-than the value
+represented by the object. This method returns a number object.
+
+=cut
+
+=method methods
+
+    # given $string
+
+    $string->methods;
+
+The methods method returns the list of methods attached to object. This method
+returns an array object.
+
+=cut
+
+=method ne
+
+    # given 'exciting'
+
+    $string->ne('Exciting'); # 1
+
+The ne method returns true if the argument provided is not equal to the value
+represented by the object. This method returns a number object.
+
+=cut
+
+=method new
+
+    # given abcedfghi
+
+    my $string = Data::Object::String->new('abcedfghi');
+
+The new method expects a string and returns a new class instance.
+
+=cut
+
+=method print
+
+    # given 'exciting'
+
+    $string->print; # 'exciting'
+
+The print method outputs the value represented by the object to STDOUT and
+returns true. This method returns a number object.
+
+=cut
+
+=method replace
+
+    # given 'Hello World'
+
+    $string->replace('World', 'Universe'); # Hello Universe
+    $string->replace('world', 'Universe', 'i'); # Hello Universe
+    $string->replace(qr/world/i, 'Universe'); # Hello Universe
+    $string->replace(qr/.*/, 'Nada'); # Nada
+
+The replace method performs a smart search and replace operation and returns the
+modified string (if any modification occurred). This method optionally takes a
+replacement modifier as it's final argument. Note, this operation expects the
+2nd argument to be a replacement String. This method returns a
+string object.
+
+=cut
+
+=method reverse
+
+    # given 'dlrow ,olleH'
+
+    $string->reverse; # Hello, world
+
+The reverse method returns a string where the characters in the string are in
+the opposite order. This method returns a string object.
+
+=cut
+
+=method rindex
+
+    # given 'explain the unexplainable'
+
+    $string->rindex('explain'); # 14
+    $string->rindex('explain', 0); # 0
+    $string->rindex('explain', 21); # 14
+    $string->rindex('explain', 22); # 14
+    $string->rindex('explain', 23); # 14
+    $string->rindex('explain', 20); # 14
+    $string->rindex('explain', 14); # 0
+    $string->rindex('explain', 13); # 0
+    $string->rindex('explain', 0); # 0
+    $string->rindex('explained'); # -1
+
+The rindex method searches for the argument within the string and returns the
+position of the last occurrence of the argument. This method optionally takes a
+second argument which would be the position within the string to start
+searching from (beginning at or before the position). By default, starts
+searching from the end of the string. This method returns a data type object to
+be determined after execution.
+
+=cut
+
+=method roles
+
+    # given $string
+
+    $string->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns an array object.
+
+=cut
+
+=method say
+
+    # given 'exciting'
+
+    $string->say; # 'exciting\n'
+
+The say method outputs the value represented by the object appeneded with a
+newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
+object.
+
+=cut
+
+=method snakecase
+
+    # given 'hello world'
+
+    $string->snakecase; # helloWorld
+
+The snakecase method modifies the string such that it will no longer have any
+non-alphanumeric characters and each word (group of alphanumeric characters
+separated by 1 or more non-alphanumeric characters) is capitalized. The only
+difference between this method and the camelcase method is that this method
+ensures that the first character will always be lowercased. Note, this method
+modifies the string. This method returns a string object.
+
+=cut
+
+=method split
+
+    # given 'name, age, dob, email'
+
+    $string->split(', '); # ['name', 'age', 'dob', 'email']
+    $string->split(', ', 2); # ['name', 'age, dob, email']
+    $string->split(qr/\,\s*/); # ['name', 'age', 'dob', 'email']
+    $string->split(qr/\,\s*/, 2); # ['name', 'age, dob, email']
+
+The split method splits the string into a list of strings, separating each
+chunk by the argument (string or regexp object), and returns that list as an
+array reference. This method optionally takes a second argument which would be
+the limit (number of matches to capture). Note, this operation expects the 1st
+argument to be a Regexp object or a String. This method returns a
+array object.
+
+=cut
+
+=method strip
+
+    # given 'one,  two,  three'
+
+    $string->strip; # one, two, three
+
+The strip method returns the string replacing occurences of 2 or more
+whitespaces with a single whitespace. This method returns a
+string object.
+
+=cut
+
+=method throw
+
+    # given $string
+
+    $string->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns an exception object.
+
+=cut
+
+=method titlecase
+
+    # given 'mr. john doe'
+
+    $string->titlecase; # Mr. John Doe
+
+The titlecase method returns the string capitalizing the first character of
+each word (group of alphanumeric characters separated by 1 or more whitespaces).
+Note, this method modifies the string. This method returns a
+string object.
+
+=cut
+
+=method trim
+
+    # given ' system is   ready   '
+
+    $string->trim; # system is   ready
+
+The trim method removes 1 or more consecutive leading and/or trailing spaces
+from the string. This method returns a string object.
+
+=cut
+
+=method type
+
+    # given $string
+
+    $string->type; # STRING
+
+The type method returns a string representing the internal data type object name.
+This method returns a string object.
+
+=cut
+
+=method uc
+
+    # given 'exciting'
+
+    $string->uc; # EXCITING
+
+The uc method returns an uppercased version of the string. This method returns a
+string object. This method is an alias to the uppercase method.
+
+=cut
+
+=method ucfirst
+
+    # given 'exciting'
+
+    $string->ucfirst; # Exciting
+
+The ucfirst method returns a the string with the first character uppercased.
+This method returns a string object.
+
+=cut
+
+=method uppercase
+
+    # given 'exciting'
+
+    $string->uppercase; # EXCITING
+
+The uppercase method is an alias to the uc method. This method returns a
+string object.
+
+=cut
+
+=method words
+
+    # given "is this a bug we're experiencing"
+
+    $string->words; # ["is","this","a","bug","we're","experiencing"]
+
+The words method splits the string into a list of strings, separating each
+group of characters by 1 or more consecutive spaces, and returns that list as an
+array reference. This method returns an array object.
 
 =cut
 
@@ -277,8 +898,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

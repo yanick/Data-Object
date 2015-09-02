@@ -1,12 +1,14 @@
-# ABSTRACT: Method and Function Signatures for Perl 5
+# ABSTRACT: Signatures Object for Perl 5
 package Data::Object::Signatures;
-
-use 5.14.0;
 
 use strict;
 use warnings;
 
+use 5.014;
+
+use Data::Object;
 use Data::Object::Library;
+use Scalar::Util;
 
 use parent 'Type::Tiny::Signatures';
 
@@ -22,12 +24,97 @@ our @DEFAULTS = @Type::Tiny::Signatures::DEFAULTS = 'Data::Object::Library';
 
     use Data::Object::Signatures;
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Signatures is a subclass of L<Type::Tiny::Signatures> and derives
-its functionality to provide method and function signatures with support for
-all the standard L<Type::Tiny> type constraints, as well as a few additional
-type constraints provided by L<Data::Object::Library>.
+Data::Object::Signatures is a subclass of Type::Tiny::Signatures providing
+method and function signatures supporting all the type constraints provided by
+Data::Object::Library.
+
+=cut
+
+=head1 SEE ALSO
+
+=over 4
+
+=item *
+
+L<Data::Object::Array>
+
+=item *
+
+L<Data::Object::Class>
+
+=item *
+
+L<Data::Object::Class::Syntax>
+
+=item *
+
+L<Data::Object::Code>
+
+=item *
+
+L<Data::Object::Float>
+
+=item *
+
+L<Data::Object::Hash>
+
+=item *
+
+L<Data::Object::Integer>
+
+=item *
+
+L<Data::Object::Number>
+
+=item *
+
+L<Data::Object::Role>
+
+=item *
+
+L<Data::Object::Role::Syntax>
+
+=item *
+
+L<Data::Object::Regexp>
+
+=item *
+
+L<Data::Object::Scalar>
+
+=item *
+
+L<Data::Object::String>
+
+=item *
+
+L<Data::Object::Undef>
+
+=item *
+
+L<Data::Object::Universal>
+
+=item *
+
+L<Data::Object::Autobox>
+
+=item *
+
+L<Data::Object::Library>
+
+=item *
+
+L<Data::Object::Prototype>
+
+=item *
+
+L<Data::Object::Signatures>
+
+=back
 
 =cut
 

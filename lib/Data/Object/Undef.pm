@@ -6,56 +6,42 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
+use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
 use Scalar::Util;
-
-use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Undef';
 
-use overload (
-    'bool'   => 'data',
-    '""'     => 'data',
-    '~~'     => 'data',
-    fallback => 1,
-);
-
 # VERSION
 
-method data () {
+method new ($class: @args) {
 
-    @_ = $self and goto &detract;
+    my $arg  = $args[0];
+    my $role = 'Data::Object::Role::Type';
 
-}
-
-method detract () {
-
-    return Data::Object::detract_deep($self);
-
-}
-
-method new (ClassName $class: ("Undef | InstanceOf['Data::Object::Undef']") $data) {
-
-    my $role  = 'Data::Object::Role::Type';
-
-    $data = $data->data if Scalar::Util::blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $arg = $arg->data if Scalar::Util::blessed($arg)
+        and $arg->can('does')
+        and $arg->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not an Undefined value')
-        if defined $data;
+        if defined $arg;
 
-    return bless \$data, $class;
+    return bless \$arg, $class;
 
 }
 
-around 'defined' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
+our @METHODS = @{ __PACKAGE__->methods };
+
+my  $exclude = qr/^data|detract|new$/;
+
+around [ grep { !/$exclude/ } @METHODS ] => fun ($orig, $self, @args) {
+
+    my $results = $self->$orig(@args);
+
+    return Data::Object::deduce_deep($results);
+
 };
 
 1;
@@ -68,15 +54,76 @@ around 'defined' => sub {
 
     my $undef = Data::Object::Undef->new(undef);
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Undef provides common methods for operating on Perl 5 undefined
+Data::Object::Undef provides routines for operating on Perl 5 undefined
 data. Undef methods work on undefined values.
+
+=cut
 
 =head1 COMPOSITION
 
-This class inherits all functionality from the L<Data::Object::Role::Undef>
+This package inherits all functionality from the L<Data::Object::Role::Undef>
 role and implements proxy methods as documented herewith.
+
+=cut
+
+=head1 ROLES
+
+This package is comprised of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Comparison>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
+
+=item *
+
+L<Data::Object::Role::Value>
+
+=back
+
+=cut
+
+=method data
+
+    # given $undef
+
+    $undef->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
 
 =cut
 
@@ -91,6 +138,105 @@ L<Data::Object::Number> object.
 
 =cut
 
+=method detract
+
+    # given $undef
+
+    $undef->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
+
+=cut
+
+=method dump
+
+    # given $undef
+
+    $undef->dump; # 'undef'
+
+The dump method returns returns a string string representation of the object.
+This method returns a L<Data::Object::String> object.
+
+=cut
+
+=method eq
+
+    # given $undef
+
+    $undef->eq; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method ge
+
+    # given $undef
+
+    $undef->ge; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method gt
+
+    # given $undef
+
+    $undef->gt; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method le
+
+    # given $undef
+
+    $undef->le; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method lt
+
+    # given $undef
+
+    $undef->lt; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method methods
+
+    # given $undef
+
+    $undef->methods;
+
+The methods method returns the list of methods attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
+=method ne
+
+    # given $undef
+
+    $undef->ne; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
 =method new
 
     # given undef
@@ -101,33 +247,60 @@ The new method expects an undefined value and returns a new class instance.
 
 =cut
 
-=head1 OPERATORS
+=method print
 
-This class overloads the following operators for your convenience.
+    # given $undef
 
-=operator bool
+    $undef->print; # 'undef'
 
-    !!$undef
+The print method outputs the value represented by the object to STDOUT and
+returns true. This method returns a L<Data::Object::Number> object.
 
-    # equivilent to
+=cut
 
-    $undef->data
+=method roles
 
-=operator string
+    # given $undef
 
-    "$undef"
+    $undef->roles;
 
-    # equivilent to
+The roles method returns the list of roles attached to object. This method
+returns a L<Data::Object::Array> object.
 
-    $undef->data
+=cut
 
-=operator smartmatch
+=method say
 
-    $value ~~ $undef
+    # given $undef
 
-    # equivilent to
+    $undef->say; # 'undef\n'
 
-    $undef->data
+The say method outputs the value represented by the object appeneded with a
+newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
+object.
+
+=cut
+
+=method throw
+
+    # given $undef
+
+    $undef->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns a L<Data::Object::Exception> object.
+
+=cut
+
+=method type
+
+    # given $undef
+
+    $undef->type; # UNDEF
+
+The type method returns a string representing the internal data type object name.
+This method returns a L<Data::Object::String> object.
 
 =cut
 
@@ -205,8 +378,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

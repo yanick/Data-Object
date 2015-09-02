@@ -6,363 +6,515 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
 use Data::Object::Role;
+use Data::Object::Library;
+use Data::Object::Signatures;
 use Scalar::Util;
 
 map with($_), our @ROLES = qw(
-    Data::Object::Role::Defined
     Data::Object::Role::Collection
-    Data::Object::Role::Detract
-    Data::Object::Role::Indexed
-    Data::Object::Role::List
-    Data::Object::Role::Output
-    Data::Object::Role::Ref
-    Data::Object::Role::Values
-    Data::Object::Role::Throwable
-    Data::Object::Role::Type
+    Data::Object::Role::Item
 );
 
 # VERSION
 
-sub all {
-    my ($array, $code, @arguments) = @_;
+method all ($code, @args) {
 
-    $code = Data::Object::codify($code) if !ref $code;
-    my $found = CORE::grep { $code->($_, @arguments) } @$array;
+    $code = Data::Object::codify($code) if ! ref $code;
 
-    return $found == @$array ? 1 : 0;
+    my $found = CORE::grep { $code->($_, @args) } @$self;
+
+    return $found == @$self ? 1 : 0;
+
 }
 
-sub any {
-    my ($array, $code, @arguments) = @_;
+method any ($code, @args) {
 
-    $code = Data::Object::codify($code) if !ref $code;
-    my $found = CORE::grep { $code->($_, @arguments) } @$array;
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    my $found = CORE::grep { $code->($_, @args) } @$self;
 
     return $found ? 1 : 0;
+
 }
 
-sub clear {
-    goto &empty;
+method clear () {
+
+    return $self->empty;
+
 }
 
-sub count {
-    goto &length;
+method count () {
+
+    return $self->length;
+
 }
 
-sub defined {
-    my ($array, $index) = @_;
-    return CORE::defined($array->[$index]);
+method defined ($index) {
+
+    return CORE::defined($self->[$index]);
+
 }
 
-sub delete {
-    my ($array, $index) = @_;
-    return CORE::delete($array->[$index]);
+method delete ($index) {
+
+    return CORE::delete($self->[$index]);
+
 }
 
-sub each {
-    my ($array, $code, @arguments) = @_;
+method each ($code, @args) {
 
     my $i=0;
-    $code = Data::Object::codify($code) if !ref $code;
-    foreach my $value (@$array) {
-        $code->($i, $value, @arguments); $i++;
+
+    $code = Data::Object::codify($code) if ! CORE::ref $code;
+
+    foreach my $value (@$self) {
+
+        $code->($i, $value, @args); $i++;
+
     }
 
-    return $array;
+    return $self;
+
 }
 
-sub each_key {
-    my ($array, $code, @arguments) = @_;
+method each_key ($code, @args) {
 
-    $code = Data::Object::codify($code) if !ref $code;
-    $code->($_, @arguments) for (0..$#{$array});
+    $code = Data::Object::codify($code) if ! ref $code;
 
-    return $array;
+    $code->($_, @args) for (0 .. $#{$self});
+
+    return $self;
+
 }
 
-sub each_n_values {
-    my ($array, $number, $code, @arguments) = @_;
+method each_n_values ($number, $code, @args) {
 
-    my @values = @$array;
-    $code = Data::Object::codify($code) if !ref $code;
-    $code->(splice(@values, 0, $number), @arguments) while @values;
+    my @values = @$self;
 
-    return $array;
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    $code->(CORE::splice(@values, 0, $number), @args) while @values;
+
+    return $self;
+
 }
 
-sub each_value {
-    my ($array, $code, @arguments) = @_;
+method each_value ($code, @args) {
 
-    $code = Data::Object::codify($code) if !ref $code;
-    $code->($array->[$_], @arguments) for (0..$#{$array});
+    $code = Data::Object::codify($code) if ! ref $code;
 
-    return $array;
+    $code->($self->[$_], @args) for (0 .. $#{$self});
+
+    return $self;
+
 }
 
-sub empty {
-    my ($array) = @_;
-    $#$array = -1;
-    return $array;
+method empty () {
+
+    $#$self = -1;
+
+    return $self;
+
 }
 
-sub exists {
-    my ($array, $index) = @_;
-    return $index <= $#{$array};
+method eq {
+
+    $self->throw("The eq() comparison operation is not supported");
+
+    return;
+
 }
 
-sub first {
-    my ($array) = @_;
-    return $array->[0];
+method exists ($index) {
+
+    return $index <= $#{$self};
+
 }
 
-sub get {
-    my ($array, $index) = @_;
-    return $array->[$index];
+method first () {
+
+    return $self->[0];
+
 }
 
-sub grep {
-    my ($array, $code, @arguments) = @_;
-    $code = Data::Object::codify($code) if !ref $code;
-    return [CORE::grep { $code->($_, @arguments) } @$array];
+method ge {
+
+    $self->throw("the ge() comparison operation is not supported");
+
+    return;
+
 }
 
-sub hashify {
-    my ($array, $code, @arguments) = @_;
+method get ($index) {
+
+    return $self->[$index];
+
+}
+
+method grep ($code, @args) {
+
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    return [ CORE::grep { $code->($_, @args) } @$self ];
+
+}
+
+method gt {
+
+    $self->throw("the gt() comparison operation is not supported");
+
+    return;
+
+}
+
+method hash () {
+
+    return $self->pairs_hash;
+
+}
+
+method hashify ($code, @args) {
 
     my $data = {};
-    $code = Data::Object::codify($code) // 1 if !ref $code;
-    for (CORE::grep { CORE::defined($_) } @$array) {
-        $data->{$_} = $code->($_, @arguments);
+
+    $code = Data::Object::codify($code) // 1 if ! ref $code;
+
+    for (CORE::grep { CORE::defined($_) } @$self) {
+
+        $data->{$_} = $code->($_, @args);
+
     }
 
     return $data;
+
 }
 
-sub head {
-    my ($array) = @_;
-    return $array->[0];
+method head () {
+
+    return $self->[0];
+
 }
 
-sub iterator {
-    my ($array) = @_;
+method invert () {
+
+    return $self->reverse;
+
+}
+
+method iterator () {
+
     my $i=0;
 
     return sub {
-        return undef if $i > $#{$array};
-        return $array->[$i++];
+
+        return undef if $i > $#{$self};
+
+        return $self->[$i++];
+
     }
+
 }
 
-sub join {
-    my ($array, $separator) = @_;
-    return join $separator // '', @$array;
+method join ($delimiter) {
+
+    return CORE::join $delimiter // '', @$self;
+
 }
 
-sub keyed {
-    my ($array, @keys) = @_;
+method keyed (@keys) {
 
     my $i=0;
-    return { map { $_ => $array->[$i++] } @keys };
+
+    return { CORE::map { $_ => $self->[$i++] } @keys };
+
 }
 
-sub keys {
-    my ($array) = @_;
-    return [0 .. $#{$array}];
+method keys () {
+
+    return [ 0 .. $#{$self} ];
+
 }
 
-sub last {
-    my ($array) = @_;
-    return $array->[-1];
+method last () {
+
+    return $self->[-1];
+
 }
 
-sub length {
-    my ($array) = @_;
-    return scalar @$array;
+method le {
+
+    $self->throw("the le() comparison operation is not supported");
+
+    return;
+
 }
 
-sub map {
-    my ($array, $code, @arguments) = @_;
-    $code = Data::Object::codify($code) if !ref $code;
-    return [map { $code->($_, @arguments) } @$array];
+method length () {
+
+    return scalar @$self;
+
 }
 
-sub max {
-    my ($array) = @_;
+method list () {
+
+    return [ @$self ];
+
+}
+
+method lt {
+
+    $self->throw("the lt() comparison operation is not supported");
+
+    return;
+
+}
+
+method map ($code, @args) {
+
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    return [ CORE::map { $code->($_, @args) } @$self ];
+
+}
+
+method max () {
 
     my $max;
-    for my $val (@$array) {
+
+    for my $val (@$self) {
+
         next if ref($val);
         next if ! CORE::defined($val);
         next if ! Scalar::Util::looks_like_number($val);
+
         $max //= $val;
         $max = $val if $val > $max;
+
     }
 
     return $max;
+
 }
 
-sub min {
-    my ($array) = @_;
+method min () {
 
     my $min;
-    for my $val (@$array) {
+
+    for my $val (@$self) {
+
         next if ref($val);
         next if ! CORE::defined($val);
         next if ! Scalar::Util::looks_like_number($val);
+
         $min //= $val;
         $min = $val if $val < $min;
+
     }
 
     return $min;
+
 }
 
-sub none {
-    my ($array, $code, @arguments) = @_;
-    $code = Data::Object::codify($code) if !ref $code;
-    my $found = CORE::grep { $code->($_, @arguments) } @$array;
+method ne {
+
+    $self->throw("the ne() comparison operation is not supported");
+
+    return;
+
+}
+
+method none ($code, @args) {
+
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    my $found = CORE::grep { $code->($_, @args) } @$self;
+
     return $found ? 0 : 1;
+
 }
 
-sub nsort {
-    my ($array) = @_;
-    return [sort { $a <=> $b } @$array];
+method nsort () {
+
+    return [ CORE::sort { $a <=> $b } @$self ];
+
 }
 
-sub one {
-    my ($array, $code, @arguments) = @_;
-    $code = Data::Object::codify($code) if !ref $code;
-    my $found = CORE::grep { $code->($_, @arguments) } @$array;
+method one ($code, @args) {
+
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    my $found = CORE::grep { $code->($_, @args) } @$self;
+
     return $found == 1 ? 1 : 0;
+
 }
 
-sub pairs {
-    goto &pairs_array;
+method pairs () {
+
+    return $self->pairs_array;
+
 }
 
-sub pairs_array {
-    my ($array) = @_; my $i=0;
-    return [map +[$i++, $_], @$array];
+method pairs_array () {
+
+    my $i=0;
+
+    return [ CORE::map +[$i++, $_], @$self ];
+
 }
 
-sub pairs_hash {
-    my ($array) = @_; my $i=0;
-    return {map {$i++ => $_} @$array};
+method pairs_hash () {
+
+    my $i=0;
+
+    return { CORE::map {$i++ => $_} @$self };
+
 }
 
-sub part {
-    my ($array, $code, @arguments) = @_;
-    $code = Data::Object::codify($code) if !ref $code;
+method part ($code, @args) {
+
+    $code = Data::Object::codify($code) if ! CORE::ref $code;
 
     my $result = [[],[]];
-    foreach my $value (@$array) {
-        my $slot = $code->($value, @arguments) ?
-            $$result[0] : $$result[1]
-        ;
-        push @$slot, $value;
+
+    foreach my $value (@$self) {
+
+        my $slot = $code->($value, @args) ?  $$result[0] : $$result[1] ;
+
+        CORE::push @$slot, $value;
+
     }
 
     return $result;
+
 }
 
-sub pop {
-    my ($array) = @_;
-    return pop @$array;
+method pop () {
+
+    return CORE::pop @$self;
+
 }
 
-sub push {
-    my ($array, @arguments) = @_;
-    push @$array, @arguments;
-    return $array;
+method push (@args) {
+
+    CORE::push @$self, @args;
+
+    return $self;
+
 }
 
-sub random {
-    my ($array) = @_;
-    return @$array[rand(1+$#{$array})];
+method random () {
+
+    return @$self[ CORE::rand( $#{$self} + 1 ) ];
+
 }
 
-sub reverse {
-    my ($array) = @_;
-    return [reverse @$array];
+method reverse () {
+
+    return [ CORE::reverse(@$self) ];
+
 }
 
-sub rotate {
-    my ($array) = @_;
-    CORE::push @$array, CORE::shift @$array;
-    return $array;
+method rotate () {
+
+    CORE::push(@$self, CORE::shift(@$self));
+
+    return $self;
+
 }
 
-sub rnsort {
-    my ($array) = @_;
-    return [sort { $b <=> $a } @$array];
+method rnsort () {
+
+    return [ CORE::sort { $b <=> $a } @$self ];
+
 }
 
-sub rsort {
-    my ($array) = @_;
-    return [sort { $b cmp $a } @$array];
+method rsort () {
+
+    return [ CORE::sort { $b cmp $a } @$self ];
+
 }
 
-sub set {
-    my ($array, $index, $value) = @_;
-    return $array->[$index] = $value;
+method set ($index, $value) {
+
+    return $self->[$index] = $value;
+
 }
 
-sub shift {
-    my ($array) = @_;
-    return CORE::shift @$array;
+method shift () {
+
+    return CORE::shift(@$self);
+
 }
 
-sub size {
-    goto &length;
+method size () {
+
+    return $self->length;
+
 }
 
-sub slice {
-    my ($array, @arguments) = @_;
-    return [@$array[@arguments]];
+method slice (@args) {
+
+    return [ @$self[@args] ];
+
 }
 
-sub sort {
-    my ($array) = @_;
-    return [sort { $a cmp $b } @$array];
+method sort () {
+
+    return [ CORE::sort { $a cmp $b } @$self ];
+
 }
 
-sub sum {
-    my ($array) = @_;
+method sum () {
 
     my $sum = 0;
-    for my $val (@$array) {
-        next if ref($val);
+
+    for my $val (@$self) {
+
         next if !CORE::defined($val);
+        next if Scalar::Util::blessed($val)
+            and not $val->does('Data::Object::Role::Numeric');
+
+        $val += 0;
+
         next if !Scalar::Util::looks_like_number($val);
+
         $sum += $val;
+
     }
 
     return $sum;
+
 }
 
-sub tail {
-    my ($array) = @_;
-    return [@$array[1 .. $#$array]];
+method tail () {
+
+    return [ @$self[ 1 .. $#$self ] ];
+
 }
 
-sub unique {
-    my ($array) = @_; my %seen;
-    return [CORE::grep { not $seen{$_}++ } @$array];
+method unique () {
+
+    my %seen;
+
+    return [ CORE::grep { not $seen{$_}++ } @$self ];
+
 }
 
-sub unshift {
-    my ($array, @arguments) = @_;
-    CORE::unshift @$array, @arguments;
-    return $array;
+method unshift (@args) {
+
+    CORE::unshift(@$self, @args);
+
+    return $self;
+
 }
 
-sub values {
-    my ($array) = @_;
-    return [@$array];
+method values (@args) {
+
+    return [ @args ? @$self[@args] : @$self ];
+
 }
 
 1;
@@ -373,22 +525,28 @@ sub values {
 
     use Data::Object::Role::Array;
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Role::Array provides functions for operating on Perl 5 array
+Data::Object::Role::Array provides routines for operating on Perl 5 array
 references.
 
 =cut
 
 =head1 ROLES
 
-This role is composed of the following roles.
+This package is comprised of the following roles.
 
 =over 4
 
 =item *
 
 L<Data::Object::Role::Collection>
+
+=item *
+
+L<Data::Object::Role::Comparison>
 
 =item *
 
@@ -400,7 +558,11 @@ L<Data::Object::Role::Detract>
 
 =item *
 
-L<Data::Object::Role::Indexed>
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
 
 =item *
 
@@ -412,13 +574,881 @@ L<Data::Object::Role::Output>
 
 =item *
 
-L<Data::Object::Role::Ref>
+L<Data::Object::Role::Throwable>
 
 =item *
 
-L<Data::Object::Role::Values>
+L<Data::Object::Role::Type>
 
 =back
+
+=cut
+
+=method all
+
+    # given [2..5]
+
+    $array->all('$a > 1'); # 1; true
+    $array->all('$a > 3'); # 0; false
+
+The all method returns true if all of the elements in the array meet the
+criteria set by the operand and rvalue. This method supports codification, i.e,
+takes an argument which can be a codifiable string, a code reference, or a code
+data type object. This method returns a number object.
+
+=cut
+
+=method any
+
+    # given [2..5]
+
+    $array->any('$a > 5'); # 0; false
+    $array->any('$a > 3'); # 1; true
+
+The any method returns true if any of the elements in the array meet the
+criteria set by the operand and rvalue. This method supports codification, i.e,
+takes an argument which can be a codifiable string, a code reference, or a code
+data type object. This method returns a number object.
+
+=cut
+
+=method clear
+
+    # given ['a'..'g']
+
+    $array->clear; # []
+
+The clear method is an alias to the empty method. This method returns a
+undef object. This method is an alias to the empty method.
+Note: This method modifies the array.
+
+=cut
+
+=method count
+
+    # given [1..5]
+
+    $array->count; # 5
+
+The count method returns the number of elements within the array. This method
+returns a number object.
+
+=cut
+
+=method data
+
+    # given $array
+
+    $array->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
+=method defined
+
+    # given [1,2,undef,4,5]
+
+    $array->defined(2); # 0; false
+    $array->defined(1); # 1; true
+
+The defined method returns true if the element within the array at the index
+specified by the argument meets the criteria for being defined, otherwise it
+returns false. This method returns a number object.
+
+=cut
+
+=method delete
+
+    # given [1..5]
+
+    $array->delete(2); # 3
+
+The delete method returns the value of the element within the array at the
+index specified by the argument after removing it from the array. This method
+returns a data type object to be determined after execution. Note: This method
+modifies the array.
+
+=cut
+
+=method detract
+
+    # given $array
+
+    $array->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
+
+=cut
+
+=method dump
+
+    # given [1..5]
+
+    $array->dump; # '[1,2,3,4,5]'
+
+The dump method returns returns a string string representation of the object.
+This method returns a string object.
+
+=cut
+
+=method each
+
+    # given ['a'..'g']
+
+    $array->each(sub{
+        my $index = shift; # 0
+        my $value = shift; # a
+        ...
+    });
+
+The each method iterates over each element in the array, executing the code
+reference supplied in the argument, passing the routine the index and value at
+the current position in the loop. This method supports codification, i.e, takes
+an argument which can be a codifiable string, a code reference, or a code data
+type object. This method returns an array object.
+
+=cut
+
+=method each_key
+
+    # given ['a'..'g']
+
+    $array->each_key(sub{
+        my $index = shift; # 0
+        ...
+    });
+
+The each_key method iterates over each element in the array, executing the
+code reference supplied in the argument, passing the routine the index at the
+current position in the loop. This method supports codification, i.e, takes an
+argument which can be a codifiable string, a code reference, or a code data type
+object. This method returns an array object.
+
+=cut
+
+=method each_n_values
+
+    # given ['a'..'g']
+
+    $array->each_n_values(4, sub{
+        my $value_1 = shift; # a
+        my $value_2 = shift; # b
+        my $value_3 = shift; # c
+        my $value_4 = shift; # d
+        ...
+    });
+
+The each_n_values method iterates over each element in the array, executing
+the code reference supplied in the argument, passing the routine the next n
+values until all values have been seen. This method supports codification, i.e,
+takes an argument which can be a codifiable string, a code reference, or a code
+data type object. This method returns an array object.
+
+=cut
+
+=method each_value
+
+    # given ['a'..'g']
+
+    $array->each_value(sub{
+        my $value = shift; # a
+        ...
+    });
+
+The each_value method iterates over each element in the array, executing the
+code reference supplied in the argument, passing the routine the value at the
+current position in the loop. This method supports codification, i.e, takes an
+argument which can be a codifiable string, a code reference, or a code data type
+object. This method returns an array object.
+
+=cut
+
+=method empty
+
+    # given ['a'..'g']
+
+    $array->empty; # []
+
+The empty method drops all elements from the array. This method returns a
+array object. Note: This method modifies the array.
+
+=cut
+
+=method eq
+
+    # given $array
+
+    $array->eq; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method exists
+
+    # given [1,2,3,4,5]
+
+    $array->exists(5); # 0; false
+    $array->exists(0); # 1; true
+
+The exists method returns true if the element within the array at the index
+specified by the argument exists, otherwise it returns false. This method
+returns a number object.
+
+=cut
+
+=method first
+
+    # given [1..5]
+
+    $array->first; # 1
+
+The first method returns the value of the first element in the array. This
+method returns a data type object to be determined after execution.
+
+=cut
+
+=method ge
+
+    # given $array
+
+    $array->ge; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method get
+
+    # given [1..5]
+
+    $array->get(0); # 1;
+
+The get method returns the value of the element in the array at the index
+specified by the argument. This method returns a data type object to be
+determined after execution.
+
+=cut
+
+=method grep
+
+    # given [1..5]
+
+    $array->grep(sub{
+        shift >= 3
+    });
+
+    # [3,4,5]
+
+The grep method iterates over each element in the array, executing the
+code reference supplied in the argument, passing the routine the value at the
+current position in the loop and returning a new array reference containing
+the elements for which the argument evaluated true. This method supports
+codification, i.e, takes an argument which can be a codifiable string, a code
+reference, or a code data type object. This method returns a
+array object.
+
+=cut
+
+=method gt
+
+    # given $array
+
+    $array->gt; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method hash
+
+    # given [1..5]
+
+    $array->hash; # {0=>1,1=>2,2=>3,3=>4,4=>5}
+
+The hash method returns a hash reference where each key and value pairs
+corresponds to the index and value of each element in the array. This method
+returns a hash object.
+
+=cut
+
+=method hashify
+
+    # given [1..5]
+
+    $array->hashify; # {1=>1,2=>1,3=>1,4=>1,5=>1}
+    $array->hashify(sub { shift % 2 }); # {1=>1,2=>0,3=>1,4=>0,5=>1}
+
+The hashify method returns a hash reference where the elements of array become
+the hash keys and the corresponding values are assigned a value of 1. This
+method supports codification, i.e, takes an argument which can be a codifiable
+string, a code reference, or a code data type object. Note, undefined elements
+will be dropped. This method returns a hash object.
+
+=cut
+
+=method head
+
+    # given [9,8,7,6,5]
+
+    my $head = $array->head; # 9
+
+The head method returns the value of the first element in the array. This
+method returns a data type object to be determined after execution.
+
+=cut
+
+=method invert
+
+    # given [1..5]
+
+    $array->invert; # [5,4,3,2,1]
+
+The invert method returns an array reference containing the elements in the
+array in reverse order. This method returns an array object.
+
+=cut
+
+=method iterator
+
+    # given [1..5]
+
+    my $iterator = $array->iterator;
+    while (my $value = $iterator->next) {
+        say $value; # 1
+    }
+
+The iterator method returns a code reference which can be used to iterate over
+the array. Each time the iterator is executed it will return the next element
+in the array until all elements have been seen, at which point the iterator
+will return an undefined value. This method returns a L<Data::Object::Code>
+object.
+
+=cut
+
+=method join
+
+    # given [1..5]
+
+    $array->join; # 12345
+    $array->join(', '); # 1, 2, 3, 4, 5
+
+The join method returns a string consisting of all the elements in the array
+joined by the join-string specified by the argument. Note: If the argument is
+omitted, an empty string will be used as the join-string. This method returns a
+string object.
+
+=cut
+
+=method keyed
+
+    # given [1..5]
+
+    $array->keyed('a'..'d'); # {a=>1,b=>2,c=>3,d=>4}
+
+The keyed method returns a hash reference where the arguments become the keys,
+and the elements of the array become the values. This method returns a
+hash object.
+
+=cut
+
+=method keys
+
+    # given ['a'..'d']
+
+    $array->keys; # [0,1,2,3]
+
+The keys method returns an array reference consisting of the indicies of the
+array. This method returns an array object.
+
+=cut
+
+=method last
+
+    # given [1..5]
+
+    $array->last; # 5
+
+The last method returns the value of the last element in the array. This method
+returns a data type object to be determined after execution.
+
+=cut
+
+=method le
+
+    # given $array
+
+    $array->le; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method length
+
+    # given [1..5]
+
+    $array->length; # 5
+
+The length method returns the number of elements in the array. This method
+returns a number object.
+
+=cut
+
+=method list
+
+    # given $array
+
+    my $list = $array->list;
+
+The list method returns a shallow copy of the underlying array reference as an
+array reference. This method return an array object.
+
+=cut
+
+=method lt
+
+    # given $array
+
+    $array->lt; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method map
+
+    # given [1..5]
+
+    $array->map(sub{
+        shift + 1
+    });
+
+    # [2,3,4,5,6]
+
+The map method iterates over each element in the array, executing the
+code reference supplied in the argument, passing the routine the value at the
+current position in the loop and returning a new array reference containing
+the elements for which the argument returns a value or non-empty list. This
+method returns an array object.
+
+=cut
+
+=method max
+
+    # given [8,9,1,2,3,4,5]
+
+    $array->max; # 9
+
+The max method returns the element in the array with the highest numerical
+value. All non-numerical element are skipped during the evaluation process. This
+method returns a number object.
+
+=cut
+
+=method methods
+
+    # given $array
+
+    $array->methods;
+
+The methods method returns the list of methods attached to object. This method
+returns an array object.
+
+=cut
+
+=method min
+
+    # given [8,9,1,2,3,4,5]
+
+    $array->min; # 1
+
+The min method returns the element in the array with the lowest numerical
+value. All non-numerical element are skipped during the evaluation process. This
+method returns a number object.
+
+=cut
+
+=method ne
+
+    # given $array
+
+    $array->ne; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method new
+
+    # given 1..9
+
+    my $array = Data::Object::Array->new(1..9);
+    my $array = Data::Object::Array->new([1..9]);
+
+The new method expects a list or array reference and returns a new class
+instance.
+
+=cut
+
+=method none
+
+    # given [2..5]
+
+    $array->none('$a <= 1'); # 1; true
+    $array->none('$a <= 2'); # 0; false
+
+The none method returns true if none of the elements in the array meet the
+criteria set by the operand and rvalue. This method supports codification, i.e,
+takes an argument which can be a codifiable string, a code reference, or a code
+data type object. This method returns a number object.
+
+=cut
+
+=method nsort
+
+    # given [5,4,3,2,1]
+
+    $array->nsort; # [1,2,3,4,5]
+
+The nsort method returns an array reference containing the values in the array
+sorted numerically. This method returns an array object.
+
+=cut
+
+=method one
+
+    # given [2..5]
+
+    $array->one('$a == 5'); # 1; true
+    $array->one('$a == 6'); # 0; false
+
+The one method returns true if only one of the elements in the array meet the
+criteria set by the operand and rvalue. This method supports codification, i.e,
+takes an argument which can be a codifiable string, a code reference, or a code
+data type object. This method returns a number object.
+
+=cut
+
+=method pairs
+
+    # given [1..5]
+
+    $array->pairs; # [[0,1],[1,2],[2,3],[3,4],[4,5]]
+
+The pairs method is an alias to the pairs_array method. This method returns a
+array object. This method is an alias to the pairs_array
+method.
+
+=cut
+
+=method pairs_array
+
+    # given [1..5]
+
+    $array->pairs_array; # [[0,1],[1,2],[2,3],[3,4],[4,5]]
+
+The pairs_array method returns an array reference consisting of array references
+where each sub-array reference has two elements corresponding to the index and
+value of each element in the array. This method returns a L<Data::Object::Array>
+object.
+
+=cut
+
+=method pairs_hash
+
+    # given [1..5]
+
+    $array->pairs_hash; # {0=>1,1=>2,2=>3,3=>4,4=>5}
+
+The pairs_hash method returns a hash reference where each key and value pairs
+corresponds to the index and value of each element in the array. This method
+returns a hash object.
+
+=cut
+
+=method part
+
+    # given [1..10]
+
+    $array->part(sub { shift > 5 }); # [[6, 7, 8, 9, 10], [1, 2, 3, 4, 5]]
+
+The part method iterates over each element in the array, executing the
+code reference supplied in the argument, using the result of the code reference
+to partition to array into two distinct array references. This method returns
+an array reference containing exactly two array references. This method supports
+codification, i.e, takes an argument which can be a codifiable string, a code
+reference, or a code data type object. This method returns a
+array object.
+
+=cut
+
+=method pop
+
+    # given [1..5]
+
+    $array->pop; # 5
+
+The pop method returns the last element of the array shortening it by one. Note,
+this method modifies the array. This method returns a data type object to be
+determined after execution. Note: This method modifies the array.
+
+=cut
+
+=method print
+
+    # given [1..5]
+
+    $array->print; # '[1,2,3,4,5]'
+
+The print method outputs the value represented by the object to STDOUT and
+returns true. This method returns a number object.
+
+=cut
+
+=method push
+
+    # given [1..5]
+
+    $array->push(6,7,8); # [1,2,3,4,5,6,7,8]
+
+The push method appends the array by pushing the agruments onto it and returns
+itself. This method returns a data type object to be determined after execution.
+Note: This method modifies the array.
+
+=cut
+
+=method random
+
+    # given [1..5]
+
+    $array->random; # 4
+
+The random method returns a random element from the array. This method returns a
+data type object to be determined after execution.
+
+=cut
+
+=method reverse
+
+    # given [1..5]
+
+    $array->reverse; # [5,4,3,2,1]
+
+The reverse method returns an array reference containing the elements in the
+array in reverse order. This method returns an array object.
+
+=cut
+
+=method rnsort
+
+    # given [5,4,3,2,1]
+
+    $array->rnsort; # [5,4,3,2,1]
+
+The rnsort method returns an array reference containing the values in the
+array sorted numerically in reverse. This method returns a
+array object.
+
+=cut
+
+=method roles
+
+    # given $array
+
+    $array->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns an array object.
+
+=cut
+
+=method rotate
+
+    # given [1..5]
+
+    $array->rotate; # [2,3,4,5,1]
+    $array->rotate; # [3,4,5,1,2]
+    $array->rotate; # [4,5,1,2,3]
+
+The rotate method rotates the elements in the array such that first elements
+becomes the last element and the second element becomes the first element each
+time this method is called. This method returns an array object.
+Note: This method modifies the array.
+
+=cut
+
+=method rsort
+
+    # given ['a'..'d']
+
+    $array->rsort; # ['d','c','b','a']
+
+The rsort method returns an array reference containing the values in the array
+sorted alphanumerically in reverse. This method returns a L<Data::Object::Array>
+object.
+
+=cut
+
+=method say
+
+    # given [1..5]
+
+    $array->say; # '[1,2,3,4,5]\n'
+
+The say method outputs the value represented by the object appeneded with a
+newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
+object.
+
+=cut
+
+=method set
+
+    # given [1..5]
+
+    $array->set(4,6); # [1,2,3,4,6]
+
+The set method returns the value of the element in the array at the index
+specified by the argument after updating it to the value of the second argument.
+This method returns a data type object to be determined after execution. Note:
+This method modifies the array.
+
+=cut
+
+=method shift
+
+    # given [1..5]
+
+    $array->shift; # 1
+
+The shift method returns the first element of the array shortening it by one.
+This method returns a data type object to be determined after execution. Note:
+This method modifies the array.
+
+=cut
+
+=method size
+
+    # given [1..5]
+
+    $array->size; # 5
+
+The size method is an alias to the length method. This method returns a
+number object. This method is an alias to the length method.
+
+=cut
+
+=method slice
+
+    # given [1..5]
+
+    $array->slice(2,4); # [3,5]
+
+The slice method returns an array reference containing the elements in the
+array at the index(es) specified in the arguments. This method returns a
+array object.
+
+=cut
+
+=method sort
+
+    # given ['d','c','b','a']
+
+    $array->sort; # ['a','b','c','d']
+
+The sort method returns an array reference containing the values in the array
+sorted alphanumerically. This method returns an array object.
+
+=cut
+
+=method sum
+
+    # given [1..5]
+
+    $array->sum; # 15
+
+The sum method returns the sum of all values for all numerical elements in the
+array. All non-numerical element are skipped during the evaluation process. This
+method returns a number object.
+
+=cut
+
+=method tail
+
+    # given [1..5]
+
+    $array->tail; # [2,3,4,5]
+
+The tail method returns an array reference containing the second through the
+last elements in the array omitting the first. This method returns a
+array object.
+
+=cut
+
+=method throw
+
+    # given $array
+
+    $array->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns an exception object.
+
+=cut
+
+=method type
+
+    # given $array
+
+    $array->type; # ARRAY
+
+The type method returns a string representing the internal data type object name.
+This method returns a string object.
+
+=cut
+
+=method unique
+
+    # given [1,1,1,1,2,3,1]
+
+    $array->unique; # [1,2,3]
+
+The unique method returns an array reference consisting of the unique elements
+in the array. This method returns an array object.
+
+=cut
+
+=method unshift
+
+    # given [1..5]
+
+    $array->unshift(-2,-1,0); # [-2,-1,0,1,2,3,4,5]
+
+The unshift method prepends the array by pushing the agruments onto it and
+returns itself. This method returns a data type object to be determined after
+execution. Note: This method modifies the array.
+
+=cut
+
+=method values
+
+    # given [1..5]
+
+    $array->values; # [1,2,3,4,5]
+
+The values method returns an array reference consisting of the elements in the
+array. This method essentially copies the content of the array into a new
+container. This method returns an array object.
 
 =cut
 
@@ -496,8 +1526,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

@@ -6,58 +6,71 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
 use Data::Object::Role;
+use Data::Object::Library;
+use Data::Object::Signatures;
+use Scalar::Util;
 
 map with($_), our @ROLES = qw(
-    Data::Object::Role::Defined
-    Data::Object::Role::Detract
-    Data::Object::Role::Output
-    Data::Object::Role::Ref
-    Data::Object::Role::Throwable
-    Data::Object::Role::Type
+    Data::Object::Role::Dumper
+    Data::Object::Role::Item
 );
 
 # VERSION
 
-sub call {
-    my ($code, @arguments) = @_;
-    return $code->(@arguments);
+method call (@args) {
+
+    return $self->(@args);
+
 }
 
-sub curry {
-    my ($code, @arguments) = @_;
-    return sub { $code->(@arguments, @_) };
+method compose ($code, @args) {
+
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    return curry(sub { $code->($self->(@_)) }, @args);
+
 }
 
-sub rcurry {
-    my ($code, @arguments) = @_;
-    return sub { $code->(@_, @arguments) };
+method conjoin ($code) {
+
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    return sub { $self->(@_) && $code->(@_) };
+
 }
 
-sub compose {
-    my ($code, $next, @arguments) = @_;
-    $next = Data::Object::codify($next) if !ref $next;
-    return curry(sub { $next->($code->(@_)) }, @arguments);
+method curry (@args) {
+
+    return sub { $self->(@args, @_) };
+
 }
 
-sub disjoin {
-    my ($code, $next) = @_;
-    $next = Data::Object::codify($next) if !ref $next;
-    return sub { $code->(@_) || $next->(@_) };
+method defined () {
+
+    return 1;
+
 }
 
-sub conjoin {
-    my ($code, $next) = @_;
-    $next = Data::Object::codify($next) if !ref $next;
-    return sub { $code->(@_) && $next->(@_) };
+method disjoin ($code) {
+
+    $code = Data::Object::codify($code) if ! ref $code;
+
+    return sub { $self->(@_) || $code->(@_) };
+
 }
 
-sub next {
-    goto &call;
+method next (@args) {
+
+    return $self->call(@args);
+
+}
+
+method rcurry (@args) {
+
+    return sub { $self->(@_, @args) };
+
 }
 
 1;
@@ -68,16 +81,18 @@ sub next {
 
     use Data::Object::Role::Code;
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Role::Code provides functions for operating on Perl 5 code
+Data::Object::Role::Code provides routines for operating on Perl 5 code
 references.
 
 =cut
 
 =head1 ROLES
 
-This role is composed of the following roles.
+This package is comprised of the following roles.
 
 =over 4
 
@@ -91,13 +106,226 @@ L<Data::Object::Role::Detract>
 
 =item *
 
-L<Data::Object::Role::Output>
+L<Data::Object::Role::Dumper>
 
 =item *
 
-L<Data::Object::Role::Ref>
+L<Data::Object::Role::Item>
+
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
 
 =back
+
+=cut
+
+=method call
+
+    # given sub { (shift // 0) + 1 }
+
+    $code->call; # 1
+    $code->call(0); # 1
+    $code->call(1); # 2
+    $code->call(2); # 3
+
+The call method executes and returns the result of the code. This method returns
+a data type object to be determined after execution.
+
+=cut
+
+=method compose
+
+    # given sub { [@_] }
+
+    $code = $code->compose($code, 1,2,3);
+    $code->(4,5,6); # [[1,2,3,4,5,6]]
+
+    # this can be confusing, here's what's really happening:
+    my $listing = sub {[@_]}; # produces an arrayref of args
+    $listing->($listing->(@args)); # produces a listing within a listing
+    [[@args]] # the result
+
+The compose method creates a code reference which executes the first argument
+(another code reference) using the result from executing the code as it's
+argument, and returns a code reference which executes the created code reference
+passing it the remaining arguments when executed. This method returns a
+code object.
+
+=cut
+
+=method conjoin
+
+    # given sub { $_[0] % 2 }
+
+    $code = $code->conjoin(sub { 1 });
+    $code->(0); # 0
+    $code->(1); # 1
+    $code->(2); # 0
+    $code->(3); # 1
+    $code->(4); # 0
+
+The conjoin method creates a code reference which execute the code and the
+argument in a logical AND operation having the code as the lvalue and the
+argument as the rvalue. This method returns a code object.
+
+=cut
+
+=method curry
+
+    # given sub { [@_] }
+
+    $code = $code->curry(1,2,3);
+    $code->(4,5,6); # [1,2,3,4,5,6]
+
+The curry method returns a code reference which executes the code passing it
+the arguments and any additional parameters when executed. This method returns a
+code object.
+
+=cut
+
+=method data
+
+    # given $code
+
+    $code->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
+=method defined
+
+    # given $code
+
+    $code->defined; # 1
+
+The defined method returns true if the object represents a value that meets the
+criteria for being defined, otherwise it returns false. This method returns a
+number object.
+
+=cut
+
+=method detract
+
+    # given $code
+
+    $code->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
+
+=cut
+
+=method disjoin
+
+    # given sub { $_[0] % 2 }
+
+    $code = $code->disjoin(sub { -1 });
+    $code->(0); # -1
+    $code->(1); #  1
+    $code->(2); # -1
+    $code->(3); #  1
+    $code->(4); # -1
+
+The disjoin method creates a code reference which execute the code and the
+argument in a logical OR operation having the code as the lvalue and the
+argument as the rvalue. This method returns a code object.
+
+=cut
+
+=method dump
+
+    # given $code
+
+    $code->dump; # sub { package Data::Object; goto \\&{\$data}; }
+
+The dump method returns returns a string string representation of the object.
+This method returns a string object.
+
+=cut
+
+=method methods
+
+    # given $code
+
+    $code->methods;
+
+The methods method returns the list of methods attached to object. This method
+returns an array object.
+
+=cut
+
+=method new
+
+    # given sub { shift + 1 }
+
+    my $code = Data::Object::Code->new(sub { shift + 1 });
+
+The new method expects a code reference and returns a new class instance.
+
+=cut
+
+=method next
+
+    $code->next;
+
+The next method is an alias to the call method. The naming is especially useful
+(i.e. helps with readability) when used with closure-based iterators. This
+method returns a code object. This method is an alias to the
+call method.
+
+=cut
+
+=method rcurry
+
+    # given sub { [@_] }
+
+    $code = $code->rcurry(1,2,3);
+    $code->(4,5,6); # [4,5,6,1,2,3]
+
+The rcurry method returns a code reference which executes the code passing it
+the any additional parameters and any arguments when executed. This method
+returns a code object.
+
+=cut
+
+=method roles
+
+    # given $code
+
+    $code->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns an array object.
+
+=cut
+
+=method throw
+
+    # given $code
+
+    $code->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns an exception object.
+
+=cut
+
+=method type
+
+    # given $code
+
+    $code->type; # CODE
+
+The type method returns a string representing the internal data type object name.
+This method returns a string object.
 
 =cut
 
@@ -175,8 +403,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

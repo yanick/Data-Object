@@ -6,13 +6,12 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Carp;
 use Scalar::Util;
 
 use Exporter qw(import);
+
+# VERSION
 
 my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
     codify
@@ -35,6 +34,7 @@ my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
     detract_deep
     immutable
     load
+    prototype
     throw
     type_array
     type_code
@@ -52,19 +52,20 @@ my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
 our %EXPORT_TAGS = (
     all  => [@EXPORT_OK],
     core => [@CORE],
-    data => [grep m/data_/, @EXPORT_OK],
-    type => [grep m/type_/, @EXPORT_OK],
+    data => [grep m/^data_/, @EXPORT_OK],
+    type => [grep m/^type_/, @EXPORT_OK],
 );
 
-# VERSION
-
-fun new (Str $class, Any @args) {
+sub new {
 
     shift and goto &deduce_deep;
 
 }
 
-fun const (Str $name, Defined $data) :prototype($$) {
+sub const ($$) {
+
+    my $name = shift;
+    my $data = shift;
 
     my $class = caller(0);
        $class = caller(1) if __PACKAGE__ eq $class;
@@ -80,15 +81,13 @@ fun const (Str $name, Defined $data) :prototype($$) {
 
 }
 
-fun codify (Maybe[Str] $code = '') :prototype($) {
+sub codify ($) {
 
-    $code ||= 'return @_';
-
+    my $code = shift // 'return @_';
     my $vars = sprintf 'my ($%s) = @_;', join ',$', 'a'..'z';
     my $body = sprintf 'sub { %s do { %s } }', $vars, $code;
 
-    my $sub;
-    my $error = do { local $@; $sub = eval $body; $@ };
+    my $sub; my $error = do { local $@; $sub = eval $body; $@ };
 
     croak $error unless $sub;
 
@@ -96,16 +95,17 @@ fun codify (Maybe[Str] $code = '') :prototype($) {
 
 }
 
-fun immutable (Any @args) :prototype($) {
+sub immutable ($) {
 
     my $class = load('Data::Object::Immutable');
 
-    @_ = ($class, @args);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun load (Str $class) :prototype($) {
+sub load ($) {
+
+    my $class = shift;
 
     my $failed = ! $class || $class !~ /^\w(?:[\w:']*\w)?$/;
     my $loaded;
@@ -123,115 +123,113 @@ fun load (Str $class) :prototype($) {
 
 }
 
-fun throw (Any @args) :prototype(@) {
+sub prototype (@) {
+
+    my $class = load('Data::Object::Prototype');
+
+    unshift @_, $class and goto $class->can('new');
+
+}
+
+sub throw (@) {
 
     my $class = load('Data::Object::Exception');
 
-    @_ = ($class, @args);
-    goto $class->can('throw');
+    unshift @_, $class and goto $class->can('throw');
 
 }
 
-fun data_array (ArrayRef $data) :prototype($) {
+sub data_array ($) {
 
     my $class = load('Data::Object::Array');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_code (CodeRef $data) :prototype($) {
+sub data_code ($) {
 
     my $class = load('Data::Object::Code');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_float (Num $data) :prototype($) {
+sub data_float ($) {
 
     my $class = load('Data::Object::Float');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_hash (HashRef $data) :prototype($) {
+sub data_hash ($) {
 
     my $class = load('Data::Object::Hash');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_integer (Str $data) :prototype($) {
+sub data_integer ($) {
 
     my $class = load('Data::Object::Integer');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_number (Num $data) :prototype($) {
+sub data_number ($) {
 
     my $class = load('Data::Object::Number');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_regexp (RegexpRef $data) :prototype($) {
+sub data_regexp ($) {
 
     my $class = load('Data::Object::Regexp');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_scalar (Ref $data) :prototype($) {
+sub data_scalar ($) {
 
     my $class = load('Data::Object::Scalar');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_string (Str $data) :prototype($) {
+sub data_string ($) {
 
     my $class = load('Data::Object::String');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_undef (Undef $data) :prototype(;$) {
+sub data_undef (;$) {
 
     my $class = load('Data::Object::Undef');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun data_universal (Any $data) :prototype($) {
+sub data_universal ($) {
 
     my $class = load('Data::Object::Universal');
 
-    @_ = ($class, $data);
-    goto $class->can('new');
+    unshift @_, $class and goto $class->can('new');
 
 }
 
-fun deduce (Any $data) :prototype($) {
+sub deduce ($) {
+
+    my $data = shift;
 
     # return undefined
     if (not defined $data) {
@@ -276,7 +274,9 @@ fun deduce (Any $data) :prototype($) {
 
 }
 
-fun deduce_deep (Any @data) :prototype(@) {
+sub deduce_deep {
+
+    my @data = @_;
 
     for my $data (@data) {
         my $type;
@@ -303,7 +303,9 @@ fun deduce_deep (Any @data) :prototype(@) {
 
 }
 
-fun deduce_type (Any $data) :prototype($) {
+sub deduce_type ($) {
+
+    my $data = shift;
 
     $data = deduce $data;
 
@@ -326,7 +328,9 @@ fun deduce_type (Any $data) :prototype($) {
 
 }
 
-fun detract (Any $data) :prototype($) {
+sub detract ($) {
+
+    my $data = shift;
 
     $data = deduce $data;
 
@@ -373,7 +377,9 @@ fun detract (Any $data) :prototype($) {
 
 }
 
-fun detract_deep (Any @data) :prototype(@) {
+sub detract_deep {
+
+    my @data = @_;
 
     for my $data (@data) {
         $data = detract($data);
@@ -402,17 +408,17 @@ fun detract_deep (Any @data) :prototype(@) {
     # aliases
     no warnings 'once';
 
-    *type_array     = \&data_array;
-    *type_code      = \&data_code;
-    *type_float     = \&data_float;
-    *type_hash      = \&data_hash;
-    *type_integer   = \&data_integer;
-    *type_number    = \&data_number;
-    *type_regexp    = \&data_regexp;
-    *type_scalar    = \&data_scalar;
-    *type_string    = \&data_string;
-    *type_undef     = \&data_undef;
-    *type_universal = \&data_universal;
+    *type_array     = *data_array;
+    *type_code      = *data_code;
+    *type_float     = *data_float;
+    *type_hash      = *data_hash;
+    *type_integer   = *data_integer;
+    *type_number    = *data_number;
+    *type_regexp    = *data_regexp;
+    *type_scalar    = *data_scalar;
+    *type_string    = *data_string;
+    *type_undef     = *data_undef;
+    *type_universal = *data_universal;
 
 }
 
@@ -441,19 +447,15 @@ fun detract_deep (Any @data) :prototype(@) {
 
     def city  => 'San Franscisco';
     def state => 'CA';
-    def zip   => '94107';
 
     1;
 
 =head1 DESCRIPTION
 
-Data::Object is an object-orientation framework which enhances the development
-of highly object-oriented Perl 5 software; It also serves as the foundation for
-a collection of related modules. This distribution provides a DSL for easily
-defining classes, roles, objects, and constraints. Additionally, this
-distribution also contains classes which wrap Perl 5 native data types and
-provides methods for operating on the data so that all values can be treated as
-objects and operated on using method calls.
+Data::Object is a framework for writing structured and highly object-oriented
+Perl 5 software programs. Additionally, this distribution provides classes
+which wrap Perl 5 native data types and provides methods for operating on the
+data.
 
 =cut
 
@@ -470,8 +472,8 @@ The all export tag will export all exportable functions.
     use Data::Object qw(:core);
 
 The core export tag will export the exportable functions C<const>, C<deduce>,
-C<deduce_deep>, C<detract>, C<detract_deep>, C<immutable>, C<load>, and
-C<throw> exclusively.
+C<deduce_deep>, C<detract>, C<detract_deep>, C<immutable>, C<load>, C<prototype>,
+and C<throw> exclusively.
 
 =cut
 
@@ -748,6 +750,21 @@ returns the package name of the loaded module.
 
 =cut
 
+=function prototype
+
+    # given ('$name' => [is => 'ro']);
+
+    my $proto  = data_prototype '$name' => [is => 'ro'];
+    my $class  = $proto->create; # via Data::Object::Prototype
+    my $object = $class->new(name => '...');
+
+The prototype function returns a prototype object which can be used to
+generate classes, objects, and derivatives. This function loads
+L<Data::Object::Prototype> and returns an object based on the arguments
+provided.
+
+=cut
+
 =function throw
 
     # given $message;
@@ -830,6 +847,10 @@ L<Data::Object::Autobox>
 =item *
 
 L<Data::Object::Library>
+
+=item *
+
+L<Data::Object::Prototype>
 
 =item *
 

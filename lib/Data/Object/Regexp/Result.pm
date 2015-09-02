@@ -1,4 +1,4 @@
-# ABSTRACT: Result Object for Perl 5
+# ABSTRACT: Regexp Result Object for Perl 5
 package Data::Object::Regexp::Result;
 
 use strict;
@@ -6,18 +6,18 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
 use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
+use Scalar::Util;
 
 extends 'Data::Object::Array';
 
 # VERSION
 
-sub captures {
-    my $self   = shift;
+method captures () {
+
     my $string = $self->initial;
 
     my $last_match_start = $self->last_match_start;
@@ -32,36 +32,42 @@ sub captures {
         push @captures, substr "$string", $start, $end - $start;
     }
 
-    return Data::Object::deduce_deep [@captures];
+    return Data::Object::deduce_deep([@captures]);
+
 }
 
-sub count {
-    my $self = shift;
+method count () {
+
     return Data::Object::deduce_deep($self->[2]);
+
 }
 
-sub initial {
-    my $self = shift;
+method initial () {
+
     return Data::Object::deduce_deep($self->[6]);
+
 }
 
-sub last_match_end {
-    my $self = shift;
+method last_match_end () {
+
     return Data::Object::deduce_deep($self->[4]);
+
 }
 
-sub last_match_start {
-    my $self = shift;
+method last_match_start () {
+
     return Data::Object::deduce_deep($self->[3]);
+
 }
 
-sub named_captures {
-    my $self = shift;
+method named_captures () {
+
     return Data::Object::deduce_deep($self->[5]);
+
 }
 
-sub matched {
-    my $self   = shift;
+method matched () {
+
     my $string = $self->initial;
 
     my $last_match_start = $self->last_match_start;
@@ -70,11 +76,12 @@ sub matched {
     my $start = $last_match_start->[0] || 0;
     my $end   = $last_match_end->[0]   || 0;
 
-    return Data::Object::deduce_deep substr "$string", $start, $end - $start;
+    return Data::Object::deduce_deep(substr "$string", $start, $end - $start);
+
 }
 
-sub prematched {
-    my $self   = shift;
+method prematched () {
+
     my $string = $self->initial;
 
     my $last_match_start = $self->last_match_start;
@@ -83,11 +90,12 @@ sub prematched {
     my $start = $last_match_start->[0] || 0;
     my $end   = $last_match_end->[0]   || 0;
 
-    return Data::Object::deduce_deep substr "$string", 0, $start;
+    return Data::Object::deduce_deep(substr "$string", 0, $start);
+
 }
 
-sub postmatched {
-    my $self   = shift;
+method postmatched () {
+
     my $string = $self->initial;
 
     my $last_match_start = $self->last_match_start;
@@ -96,17 +104,20 @@ sub postmatched {
     my $start = $last_match_start->[0] || 0;
     my $end   = $last_match_end->[0]   || 0;
 
-    return Data::Object::deduce_deep substr "$string", $end;
+    return Data::Object::deduce_deep(substr "$string", $end);
+
 }
 
-sub regexp {
-    my $self = shift;
+method regexp () {
+
     return Data::Object::deduce_deep($self->[0]);
+
 }
 
-sub string {
-    my $self = shift;
+method string () {
+
     return Data::Object::deduce_deep($self->[1]);
+
 }
 
 1;
@@ -127,18 +138,13 @@ sub string {
         $initial_string
     ]);
 
-=head1 DESCRIPTION
-
-Data::Object::Regexp::Result provides common methods for introspecting the
-results of an operation involving a regular expressions. These methods work on
-data whose shape conforms to the tuple defined in the synopsis.
-
 =cut
 
-=head1 COMPOSITION
+=head1 DESCRIPTION
 
-This class inherits all functionality from the L<Data::Object::Array>
-class and implements additional methods as documented herewith.
+Data::Object::Regexp::Result provides routines for introspecting the
+results of an operation involving a regular expressions. These methods work on
+data whose shape conforms to the tuple defined in the synopsis.
 
 =cut
 
@@ -208,19 +214,6 @@ information about the results of the regular expression operation.
 
 =cut
 
-=method named_captures
-
-    # given the expression qr/(?<stuff>.* test)/
-    # given the string "example test matching"
-
-    $result->named_captures; # { stuff => "example test" }
-
-The named_captures method returns a hash containing the requested named regular
-expressions and captured string pairs from the result object which contains
-information about the results of the regular expression operation.
-
-=cut
-
 =method matched
 
     # given the expression qr/.* test/
@@ -234,16 +227,16 @@ expression operation.
 
 =cut
 
-=method prematched
+=method named_captures
 
-    # given the expression qr/(test .*)/
+    # given the expression qr/(?<stuff>.* test)/
     # given the string "example test matching"
 
-    $result->prematched; # "example "
+    $result->named_captures; # { stuff => "example test" }
 
-The prematched method returns the portion of the string before the regular
-expression matched from the result object which contains information about the
-results of the regular expression operation.
+The named_captures method returns a hash containing the requested named regular
+expressions and captured string pairs from the result object which contains
+information about the results of the regular expression operation.
 
 =cut
 
@@ -255,6 +248,19 @@ results of the regular expression operation.
     $result->postmatched; # " matching"
 
 The postmatched method returns the portion of the string after the regular
+expression matched from the result object which contains information about the
+results of the regular expression operation.
+
+=cut
+
+=method prematched
+
+    # given the expression qr/(test .*)/
+    # given the string "example test matching"
+
+    $result->prematched; # "example "
+
+The prematched method returns the portion of the string before the regular
 expression matched from the result object which contains information about the
 results of the regular expression operation.
 
@@ -360,8 +366,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

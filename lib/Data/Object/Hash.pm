@@ -6,229 +6,50 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
+use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
 use Scalar::Util;
-
-use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Hash';
 
 # VERSION
 
-method data () {
+method new ($class: @args) {
 
-    @_ = $self and goto &detract;
-
-}
-
-method detract () {
-
-    return Data::Object::detract_deep($self);
-
-}
-
-method list () {
-
-    @_ = $self and goto &values;
-
-}
-
-method new (ClassName $class: ("HashRef | InstanceOf['Data::Object::Hash']") $data) {
-
+    my $arg  = @args > 1 && !(@args % 2) ? {@args} : $args[0];
     my $role = 'Data::Object::Role::Type';
 
-    $data = $data->data if Scalar::Util::blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $arg = $arg->data if Scalar::Util::blessed($arg)
+        and $arg->can('does')
+        and $arg->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not a HashRef')
-        unless 'HASH' eq ref $data;
+        unless ref($arg) eq 'HASH';
 
-    return bless $data, $class;
+    return bless $arg, $class;
 
 }
 
-around 'array_slice' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
+our @METHODS = @{ __PACKAGE__->methods };
+
+my  $exclude = qr/^data|detract|new$/;
+
+around [ grep { !/$exclude/ } @METHODS ] => fun ($orig, $self, @args) {
+
+    my $results = $self->$orig(@args);
+
+    return Data::Object::deduce_deep($results);
+
 };
 
-around 'aslice' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+around 'list' => fun ($orig, $self, @args) {
 
-around 'clear' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    my $results = $self->$orig(@args);
 
-around 'defined' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    return wantarray ? (@$results) : $results;
 
-around 'delete' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'each' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'each_key' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'each_n_values' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'each_value' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'empty' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'exists' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'filter_exclude' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'filter_include' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'fold' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'get' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'hash_slice' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'hslice' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'invert' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'iterator' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'keys' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'lookup' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'merge' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'new' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args > 1 && !(@args % 2) ? {@args} : shift @args);
-    return $result;
-};
-
-around 'pairs' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'pairs_array' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'reset' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'reverse' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'set' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'unfold' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'values' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = Data::Object::deduce_deep($self->$orig(@args));
-    return wantarray ? (@$result) : $result;
 };
 
 1;
@@ -241,62 +62,73 @@ around 'values' => sub {
 
     my $hash = Data::Object::Hash->new({1..4});
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Hash provides common methods for operating on Perl 5 hash
+Data::Object::Hash provides routines for operating on Perl 5 hash
 references. Hash methods work on hash references. Users of these methods should
 be aware of the methods that modify the array reference itself as opposed to
 returning a new array reference. Unless stated, it may be safe to assume that
 the following methods copy, modify and return new hash references based on their
 function.
 
+=cut
+
 =head1 COMPOSITION
 
-This class inherits all functionality from the L<Data::Object::Role::Hash>
+This package inherits all functionality from the L<Data::Object::Role::Hash>
 role and implements proxy methods as documented herewith.
 
-=head1 CODIFICATION
-
-Certain methods provided by the this module support codification, a process
-which converts a string argument into a code reference which can be used to
-supply a callback to the method called. A codified string can access its
-arguments by using variable names which correspond to letters in the alphabet
-which represent the position in the argument list. For example:
-
-    $array->example('$a + $b * $c', 100);
-
-    # if the example method does not supply any arguments automatically then
-    # the variable $a would be assigned the user-supplied value of 100,
-    # however, if the example method supplies two arguments automatically then
-    # those arugments would be assigned to the variables $a and $b whereas $c
-    # would be assigned the user-supplied value of 100
-
-Any place a codified string is accepted, a coderef or L<Data::Object::Code>
-object is also valid. Arguments are passed through the usual C<@_> list.
-
 =cut
 
-=method array_slice
+=head1 ROLES
 
-    # given {1..8}
+This package is comprised of the following roles.
 
-    $hash->array_slice(1,3); # [2,4]
+=over 4
 
-The array_slice method returns an array reference containing the values in the
-hash corresponding to the keys specified in the arguments in the order
-specified. This method returns a L<Data::Object::Array> object.
+=item *
 
-=cut
+L<Data::Object::Role::Collection>
 
-=method aslice
+=item *
 
-    # given {1..8}
+L<Data::Object::Role::Comparison>
 
-    $hash->aslice(1,3); # [2,4]
+=item *
 
-The aslice method is an alias to the array_slice method. This method returns a
-L<Data::Object::Array> object. This method is an alias to the array_slice
-method.
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
+
+=item *
+
+L<Data::Object::Role::List>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
+
+=back
 
 =cut
 
@@ -308,6 +140,28 @@ method.
 
 The clear method is an alias to the empty method. This method returns a
 L<Data::Object::Hash> object. This method is an alias to the empty method.
+
+=cut
+
+=method count
+
+    # given {1..4}
+
+    my $count = $hash->count; # 2
+
+The count method returns the total number of keys defined. This method returns
+a L<Data::Object::Number> object.
+
+=cut
+
+=method data
+
+    # given $hash
+
+    $hash->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
 
 =cut
 
@@ -334,6 +188,28 @@ L<Data::Object::Number> object.
 The delete method returns the value matching the key specified in the argument
 and returns the value. This method returns a data type object to be determined
 after execution.
+
+=cut
+
+=method detract
+
+    # given $hash
+
+    $hash->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
+
+=cut
+
+=method dump
+
+    # given {1..4}
+
+    $hash->dump; # '{1=>2,3=>4}'
+
+The dump method returns returns a string string representation of the object.
+This method returns a L<Data::Object::String> object.
 
 =cut
 
@@ -417,6 +293,17 @@ L<Data::Object::Hash> object. Note: This method modifies the hash.
 
 =cut
 
+=method eq
+
+    # given $hash
+
+    $hash->eq; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
 =method exists
 
     # given {1..8,9,undef}
@@ -467,6 +354,17 @@ returns a L<Data::Object::Hash> object.
 
 =cut
 
+=method ge
+
+    # given $hash
+
+    $hash->ge; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
 =method get
 
     # given {1..8}
@@ -479,26 +377,45 @@ type object to be determined after execution.
 
 =cut
 
-=method hash_slice
+=method grep
 
-    # given {1..8}
+    # given {1..4}
 
-    $hash->hash_slice(1,3); # {1=>2,3=>4}
+    $hash->grep(sub {
+        shift >= 3
+    });
 
-The hash_slice method returns a hash reference containing the key/value pairs
-in the hash corresponding to the keys specified in the arguments. This method
-returns a L<Data::Object::Hash> object.
+    # {3=>5}
+
+The grep method iterates over each key/value pair in the hash, executing the
+code reference supplied in the argument, passing the routine the key and value
+at the current position in the loop and returning a new hash reference
+containing the elements for which the argument evaluated true. This method
+supports codification, i.e, takes an argument which can be a codifiable string,
+a code reference, or a code data type object. This method returns a
+L<Data::Object::Hash> object.
 
 =cut
 
-=method hslice
+=method gt
 
-    # given {1..8}
+    # given $hash
 
-    $hash->hslice(1,3); # {1=>2,3=>4}
+    $hash->gt; # exception thrown
 
-The hslice method is an alias to the array_slice method. This method returns a
-L<Data::Object::Hash> object. This method is an alias to the hash_slice method.
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method head
+
+    # given $hash
+
+    $hash->head; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
 
 =cut
 
@@ -532,6 +449,16 @@ L<Data::Object::Code> object.
 
 =cut
 
+=method join
+
+    # given $hash
+
+    $hash->join; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+=cut
+
 =method keys
 
     # given {1..8}
@@ -540,6 +467,39 @@ L<Data::Object::Code> object.
 
 The keys method returns an array reference consisting of all the keys in the
 hash. This method returns a L<Data::Object::Array> object.
+
+=cut
+
+=method le
+
+    # given $hash
+
+    $hash->le; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method length
+
+    # given {1..8}
+
+    my $length = $hash->length; # 4
+
+The length method returns the number of keys in the hash. This method
+return a L<Data::Object::Number> object.
+
+=cut
+
+=method list
+
+    # given $hash
+
+    my $list = $hash->list;
+
+The list method returns a shallow copy of the underlying hash reference as an
+array reference. This method return a L<Data::Object::Array> object.
 
 =cut
 
@@ -561,6 +521,33 @@ execution.
 
 =cut
 
+=method lt
+
+    # given $hash
+
+    $hash->lt; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method map
+
+    # given {1..4}
+
+    $hash->map(sub {
+        shift + 1
+    });
+
+The map method iterates over each key/value in the hash, executing the code
+reference supplied in the argument, passing the routine the value at the
+current position in the loop and returning a new hash reference containing the
+elements for which the argument returns a value or non-empty list. This method
+returns a L<Data::Object::Hash> object.
+
+=cut
+
 =method merge
 
     # given {1..8}
@@ -573,6 +560,28 @@ merge and clones the datasets to ensure no side-effects. The merge behavior
 merges hash references only, all other data types are assigned with precendence
 given to the value being merged. This method returns a L<Data::Object::Hash>
 object.
+
+=cut
+
+=method methods
+
+    # given $hash
+
+    $hash->methods;
+
+The methods method returns the list of methods attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
+=method ne
+
+    # given $hash
+
+    $hash->ne; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
 
 =cut
 
@@ -600,16 +609,14 @@ method.
 
 =cut
 
-=method pairs_array
+=method print
 
-    # given {1..8}
+    # given {1..4}
 
-    $hash->pairs_array; # [[1,2],[3,4],[5,6],[7,8]]
+    $hash->print; # '{1=>2,3=>4}'
 
-The pairs_array method returns an array reference consisting of array references
-where each sub-array reference has two elements corresponding to the key and
-value of each element in the hash. This method returns a L<Data::Object::Array>
-object.
+The print method outputs the value represented by the object to STDOUT and
+returns true. This method returns a L<Data::Object::Number> object.
 
 =cut
 
@@ -637,6 +644,29 @@ returns a L<Data::Object::Hash> object.
 
 =cut
 
+=method roles
+
+    # given $hash
+
+    $hash->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
+=method say
+
+    # given {1..4}
+
+    $hash->say; # '{1=>2,3=>4}\n'
+
+The say method outputs the value represented by the object appeneded with a
+newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
+object.
+
+=cut
+
 =method set
 
     # given {1..8}
@@ -649,6 +679,63 @@ The set method returns the value of the element in the hash corresponding to
 the key specified by the argument after updating it to the value of the second
 argument. This method returns a data type object to be determined after
 execution.
+
+=cut
+
+=method slice
+
+    # given {1..8}
+
+    my $slice = $hash->slice(1,5); # {1=>2,5=>6}
+
+The slice method returns a hash reference containing the elements in the hash
+at the key(s) specified in the arguments. This method returns a
+L<Data::Object::Hash> object.
+
+=cut
+
+=method sort
+
+    # given $hash
+
+    $hash->sort; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method tail
+
+    # given $hash
+
+    $hash->tail; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method throw
+
+    # given $hash
+
+    $hash->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns a L<Data::Object::Exception> object.
+
+=cut
+
+=method type
+
+    # given $hash
+
+    $hash->type; # HASH
+
+The type method returns a string representing the internal data type object name.
+This method returns a L<Data::Object::String> object.
 
 =cut
 
@@ -751,8 +838,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

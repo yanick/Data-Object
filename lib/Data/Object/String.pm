@@ -6,200 +6,42 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
+use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
 use Scalar::Util;
-
-use Data::Object::Class 'with';
 
 with 'Data::Object::Role::String';
 
-use overload (
-    'bool'   => 'data',
-    '""'     => 'data',
-    '~~'     => 'data',
-    fallback => 1,
-);
-
 # VERSION
 
-method data () {
+method new ($class: @args) {
 
-    @_ = $self and goto &detract;
+    my $arg  = $args[0];
+    my $role = 'Data::Object::Role::Type';
 
-}
-
-method detract () {
-
-    return Data::Object::detract_deep($self);
-
-}
-
-method new (ClassName $class: ("Str | InstanceOf['Data::Object::String']") $data) {
-
-    my $role  = 'Data::Object::Role::Type';
-
-    $data = $data->data if Scalar::Util::blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $arg = $arg->data if Scalar::Util::blessed($arg)
+        and $arg->can('does')
+        and $arg->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not a String')
-        unless defined($data) && not ref($data);
+        unless defined($arg) && not ref($arg);
 
-    return bless \$data, $class;
+    return bless \$arg, $class;
 
 }
 
-around 'append' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
+our @METHODS = @{ __PACKAGE__->methods };
 
-around 'camelcase' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
+my  $exclude = qr/^data|detract|new$/;
 
-around 'chomp' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
+around [ grep { !/$exclude/ } @METHODS ] => fun ($orig, $self, @args) {
 
-around 'chop' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
+    my $results = $self->$orig(@args);
 
-around 'concat' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
+    return Data::Object::deduce_deep($results);
 
-around 'contains' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'hex' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'index' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'lc' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'lcfirst' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'length' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'lines' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'lowercase' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'replace' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'reverse' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'rindex' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'snakecase' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'split' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'strip' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'titlecase' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'trim' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'uc' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'ucfirst' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'uppercase' => sub {
-    my ($orig, $self, @args) = @_;
-    $$self = $self->$orig(@args);
-    return $self;
-};
-
-around 'words' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
 };
 
 1;
@@ -212,9 +54,11 @@ around 'words' => sub {
 
     my $string = Data::Object::String->new('abcedfghi');
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::String provides common methods for operating on Perl 5 string
+Data::Object::String provides routines for operating on Perl 5 string
 data. String methods work on data that meets the criteria for being a string. A
 string holds and manipulates an arbitrary sequence of bytes, typically
 representing characters. Users of strings should be aware of the methods that
@@ -222,10 +66,62 @@ modify the string itself as opposed to returning a new string. Unless stated, it
 may be safe to assume that the following methods copy, modify and return new
 strings based on their function.
 
+=cut
+
 =head1 COMPOSITION
 
-This class inherits all functionality from the L<Data::Object::Role::String>
+This package inherits all functionality from the L<Data::Object::Role::String>
 role and implements proxy methods as documented herewith.
+
+=cut
+
+=head1 ROLES
+
+This package is comprised of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Alphabetic>
+
+=item *
+
+L<Data::Object::Role::Comparison>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
+
+=item *
+
+L<Data::Object::Role::Value>
+
+=back
 
 =cut
 
@@ -311,6 +207,85 @@ object.
 
 =cut
 
+=method data
+
+    # given $string
+
+    $string->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
+=method defined
+
+    # given $string
+
+    $string->defined; # 1
+
+The defined method returns true if the object represents a value that meets the
+criteria for being defined, otherwise it returns false. This method returns a
+L<Data::Object::Number> object.
+
+=cut
+
+=method detract
+
+    # given $string
+
+    $string->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
+
+=cut
+
+=method dump
+
+    # given 'exciting'
+
+    $string->dump; # 'exciting'
+
+The dump method returns returns a string string representation of the object.
+This method returns a L<Data::Object::String> object.
+
+=cut
+
+=method eq
+
+    # given 'exciting'
+
+    $string->eq('Exciting'); # 0
+
+The eq method returns true if the argument provided is equal to the value
+represented by the object. This method returns a L<Data::Object::Number> object.
+
+=cut
+
+=method ge
+
+    # given 'exciting'
+
+    $string->ge('Exciting'); # 1
+
+The ge method returns true if the argument provided is greater-than or equal-to
+the value represented by the object. This method returns a Data::Object::Number
+object.
+
+=cut
+
+=method gt
+
+    # given 'exciting'
+
+    $string->gt('Exciting'); # 1
+
+The gt method returns true if the argument provided is greater-than the value
+represented by the object. This method returns a L<Data::Object::Number> object.
+
+=cut
+
 =method hex
 
     # given '0xaf'
@@ -365,6 +340,18 @@ This method returns a L<Data::Object::String> object.
 
 =cut
 
+=method le
+
+    # given 'exciting'
+
+    $string->le('Exciting'); # 0
+
+The le method returns true if the argument provided is less-than or equal-to
+the value represented by the object. This method returns a Data::Object::Number
+object.
+
+=cut
+
 =method length
 
     # given 'longggggg'
@@ -399,6 +386,39 @@ L<Data::Object::String> object.
 
 =cut
 
+=method lt
+
+    # given 'exciting'
+
+    $string->lt('Exciting'); # 0
+
+The lt method returns true if the argument provided is less-than the value
+represented by the object. This method returns a L<Data::Object::Number> object.
+
+=cut
+
+=method methods
+
+    # given $string
+
+    $string->methods;
+
+The methods method returns the list of methods attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
+=method ne
+
+    # given 'exciting'
+
+    $string->ne('Exciting'); # 1
+
+The ne method returns true if the argument provided is not equal to the value
+represented by the object. This method returns a L<Data::Object::Number> object.
+
+=cut
+
 =method new
 
     # given abcedfghi
@@ -406,6 +426,17 @@ L<Data::Object::String> object.
     my $string = Data::Object::String->new('abcedfghi');
 
 The new method expects a string and returns a new class instance.
+
+=cut
+
+=method print
+
+    # given 'exciting'
+
+    $string->print; # 'exciting'
+
+The print method outputs the value represented by the object to STDOUT and
+returns true. This method returns a L<Data::Object::Number> object.
 
 =cut
 
@@ -461,6 +492,29 @@ be determined after execution.
 
 =cut
 
+=method roles
+
+    # given $string
+
+    $string->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
+=method say
+
+    # given 'exciting'
+
+    $string->say; # 'exciting\n'
+
+The say method outputs the value represented by the object appeneded with a
+newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
+object.
+
+=cut
+
 =method snakecase
 
     # given 'hello world'
@@ -506,11 +560,23 @@ L<Data::Object::String> object.
 
 =cut
 
+=method throw
+
+    # given $string
+
+    $string->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns a L<Data::Object::Exception> object.
+
+=cut
+
 =method titlecase
 
-    # given 'mr. wellington III'
+    # given 'mr. john doe'
 
-    $string->titlecase; # Mr. Wellington III
+    $string->titlecase; # Mr. John Doe
 
 The titlecase method returns the string capitalizing the first character of
 each word (group of alphanumeric characters separated by 1 or more whitespaces).
@@ -527,6 +593,17 @@ L<Data::Object::String> object.
 
 The trim method removes 1 or more consecutive leading and/or trailing spaces
 from the string. This method returns a L<Data::Object::String> object.
+
+=cut
+
+=method type
+
+    # given $string
+
+    $string->type; # STRING
+
+The type method returns a string representing the internal data type object name.
+This method returns a L<Data::Object::String> object.
 
 =cut
 
@@ -572,36 +649,6 @@ L<Data::Object::String> object.
 The words method splits the string into a list of strings, separating each
 group of characters by 1 or more consecutive spaces, and returns that list as an
 array reference. This method returns a L<Data::Object::Array> object.
-
-=cut
-
-=head1 OPERATORS
-
-This class overloads the following operators for your convenience.
-
-=operator bool
-
-    !!$string
-
-    # equivilent to
-
-    $string->data
-
-=operator string
-
-    "$string"
-
-    # equivilent to
-
-    $string->data
-
-=operator smartmatch
-
-    $value ~~ $string
-
-    # equivilent to
-
-    $string->data
 
 =cut
 
@@ -679,8 +726,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

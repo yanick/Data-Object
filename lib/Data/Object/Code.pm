@@ -6,88 +6,42 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
+use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
 use Scalar::Util;
-
-use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Code';
 
 # VERSION
 
-method data () {
+method new ($class: @args) {
 
-    @_ = $self and goto &detract;
+    my $arg  = $args[0];
+    my $role = 'Data::Object::Role::Type';
 
-}
-
-method detract () {
-
-    return Data::Object::detract_deep($self);
-
-}
-
-method new (ClassName $class: ("CodeRef | InstanceOf['Data::Object::Code']") $data) {
-
-    my $role  = 'Data::Object::Role::Type';
-
-    $data = $data->data if Scalar::Util::blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $arg = $arg->data if Scalar::Util::blessed($arg)
+        and $arg->can('does')
+        and $arg->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not a CodeRef')
-        unless 'CODE' eq ref $data;
+        unless 'CODE' eq ref $arg;
 
-    return bless $data, $class;
+    return bless $arg, $class;
 
 }
 
-around 'call' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+our @METHODS = @{ __PACKAGE__->methods };
 
-around 'compose' => sub {
-    my ($orig, $self, @args) = @_;
-    my $next = Data::Object::deduce_deep shift @args;
-    my $result = $self->$orig($next, @args);
-    return scalar Data::Object::deduce_deep($result);
-};
+my  $exclude = qr/^data|detract|new$/;
 
-around 'conjoin' => sub {
-    my ($orig, $self, @args) = @_;
-    my $next = Data::Object::deduce_deep shift @args;
-    my $result = $self->$orig($next, @args);
-    return scalar Data::Object::deduce_deep($result);
-};
+around [ grep { !/$exclude/ } @METHODS ] => fun ($orig, $self, @args) {
 
-around 'curry' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    my $results = $self->$orig(@args);
 
-around 'disjoin' => sub {
-    my ($orig, $self, @args) = @_;
-    my $next = Data::Object::deduce_deep shift @args;
-    my $result = $self->$orig($next, @args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    return Data::Object::deduce_deep($results);
 
-around 'next' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'rcurry' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
 };
 
 1;
@@ -100,34 +54,53 @@ around 'rcurry' => sub {
 
     my $code = Data::Object::Code->new(sub { shift + 1 });
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Code provides common methods for operating on Perl 5 code
+Data::Object::Code provides routines for operating on Perl 5 code
 references. Code methods work on code references.
+
+=cut
 
 =head1 COMPOSITION
 
-This class inherits all functionality from the L<Data::Object::Role::Code>
+This package inherits all functionality from the L<Data::Object::Role::Code>
 role and implements proxy methods as documented herewith.
 
-=head1 CODIFICATION
+=cut
 
-Certain methods provided by the this module support codification, a process
-which converts a string argument into a code reference which can be used to
-supply a callback to the method called. A codified string can access its
-arguments by using variable names which correspond to letters in the alphabet
-which represent the position in the argument list. For example:
+=head1 ROLES
 
-    $array->example('$a + $b * $c', 100);
+This package is comprised of the following roles.
 
-    # if the example method does not supply any arguments automatically then
-    # the variable $a would be assigned the user-supplied value of 100,
-    # however, if the example method supplies two arguments automatically then
-    # those arugments would be assigned to the variables $a and $b whereas $c
-    # would be assigned the user-supplied value of 100
+=over 4
 
-Any place a codified string is accepted, a coderef or L<Data::Object::Code>
-object is also valid. Arguments are passed through the usual C<@_> list.
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
+
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
+
+=back
 
 =cut
 
@@ -195,6 +168,40 @@ L<Data::Object::Code> object.
 
 =cut
 
+=method data
+
+    # given $code
+
+    $code->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
+=method defined
+
+    # given $code
+
+    $code->defined; # 1
+
+The defined method returns true if the object represents a value that meets the
+criteria for being defined, otherwise it returns false. This method returns a
+L<Data::Object::Number> object.
+
+=cut
+
+=method detract
+
+    # given $code
+
+    $code->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
+
+=cut
+
 =method disjoin
 
     # given sub { $_[0] % 2 }
@@ -212,14 +219,25 @@ argument as the rvalue. This method returns a L<Data::Object::Code> object.
 
 =cut
 
-=method next
+=method dump
 
-    $code->next;
+    # given $code
 
-The next method is an alias to the call method. The naming is especially useful
-(i.e. helps with readability) when used with closure-based iterators. This
-method returns a L<Data::Object::Code> object. This method is an alias to the
-call method.
+    $code->dump; # sub { package Data::Object; goto \\&{\$data}; }
+
+The dump method returns returns a string string representation of the object.
+This method returns a L<Data::Object::String> object.
+
+=cut
+
+=method methods
+
+    # given $code
+
+    $code->methods;
+
+The methods method returns the list of methods attached to object. This method
+returns a L<Data::Object::Array> object.
 
 =cut
 
@@ -233,6 +251,17 @@ The new method expects a code reference and returns a new class instance.
 
 =cut
 
+=method next
+
+    $code->next;
+
+The next method is an alias to the call method. The naming is especially useful
+(i.e. helps with readability) when used with closure-based iterators. This
+method returns a L<Data::Object::Code> object. This method is an alias to the
+call method.
+
+=cut
+
 =method rcurry
 
     # given sub { [@_] }
@@ -243,6 +272,40 @@ The new method expects a code reference and returns a new class instance.
 The rcurry method returns a code reference which executes the code passing it
 the any additional parameters and any arguments when executed. This method
 returns a L<Data::Object::Code> object.
+
+=cut
+
+=method roles
+
+    # given $code
+
+    $code->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
+=method throw
+
+    # given $code
+
+    $code->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns a L<Data::Object::Exception> object.
+
+=cut
+
+=method type
+
+    # given $code
+
+    $code->type; # CODE
+
+The type method returns a string representing the internal data type object name.
+This method returns a L<Data::Object::String> object.
 
 =cut
 
@@ -320,8 +383,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

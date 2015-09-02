@@ -1,4 +1,4 @@
-# ABSTRACT: Singleton Declaration for Perl 5
+# ABSTRACT: Singleton Object for Perl 5
 package Data::Object::Singleton;
 
 use strict;
@@ -6,14 +6,16 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
+use Data::Object;
+use Data::Object::Library;
+use Data::Object::Signatures;
+use Scalar::Util;
 
 use parent 'Moo';
 
 # VERSION
 
-fun import (ClassName $class, Any @args) {
+fun import ($class, @args) {
 
     my $target = caller;
     my $state  = undef;
@@ -46,9 +48,11 @@ fun import (ClassName $class, Any @args) {
 
     1;
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Singleton inherits all methods and behaviour from L<Moo>
+Data::Object::Singleton inherits all methods and behaviour from L<Moo>.
 Please see that documentation for more usage information. Additionally, see
 L<Data::Object::Class::Syntax> which provides a DSL that makes declaring
 classes easier and more fun.
@@ -141,8 +145,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

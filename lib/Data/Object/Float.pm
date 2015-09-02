@@ -6,106 +6,44 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
+use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
 use Scalar::Util;
-
-use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Float';
 
-use overload (
-    'bool'   => 'data',
-    '""'     => 'data',
-    '~~'     => 'data',
-    fallback => 1,
-);
-
 # VERSION
 
-method data () {
+method new ($class: @args) {
 
-    @_ = $self and goto &detract;
+    my $arg  = $args[0];
+    my $role = 'Data::Object::Role::Type';
 
-}
+    $arg = $arg->data if Scalar::Util::blessed($arg)
+        and $arg->can('does')
+        and $arg->does($role);
 
-method detract () {
+    $arg =~ s/^\+//; # not keen on this but ...
 
-    return Data::Object::detract_deep($self);
+    Data::Object::throw('Type Instantiation Error: Not a Floating-Point Number')
+        unless defined($arg) && ! ref($arg) && Scalar::Util::looks_like_number($arg);
 
-}
-
-method new (ClassName $class: ("Str | Num | InstanceOf['Data::Object::Number']") $data) {
-
-    my $role  = 'Data::Object::Role::Type';
-
-    $data = $data->data if Scalar::Util::blessed($data)
-        and $data->can('does')
-        and $data->does($role);
-
-    $data =~ s/^\+//; # not keen on this but ...
-
-    Data::Object::throw('Type Instantiation Error: Not a Float or Number')
-        unless defined($data) && !ref($data) && Scalar::Util::looks_like_number($data);
-
-    return bless \$data, $class;
+    return bless \$arg, $class;
 
 }
 
-around 'downto' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+our @METHODS = @{ __PACKAGE__->methods };
 
-around 'eq' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+my  $exclude = qr/^data|detract|new$/;
 
-around 'gt' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+around [ grep { !/$exclude/ } @METHODS ] => fun ($orig, $self, @args) {
 
-around 'gte' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    my $results = $self->$orig(@args);
 
-around 'lt' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    return Data::Object::deduce_deep($results);
 
-around 'lte' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'ne' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'to' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'upto' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
 };
 
 1;
@@ -118,9 +56,11 @@ around 'upto' => sub {
 
     my $float = Data::Object::Float->new(9.9999);
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Float provides common methods for operating on Perl 5
+Data::Object::Float provides routines for operating on Perl 5
 floating-point data. Float methods work on data that meets the criteria for
 being a floating-point number. A float holds and manipulates an arbitrary
 sequence of bytes, typically representing numberic characters with decimals.
@@ -129,10 +69,96 @@ opposed to returning a new float. Unless stated, it may be safe to assume that
 the following methods copy, modify and return new floats based on their
 function.
 
+=cut
+
 =head1 COMPOSITION
 
-This class inherits all functionality from the L<Data::Object::Role::Float>
+This package inherits all functionality from the L<Data::Object::Role::Float>
 role and implements proxy methods as documented herewith.
+
+=cut
+
+=head1 ROLES
+
+This package is comprised of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Comparison>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
+
+=item *
+
+L<Data::Object::Role::Numeric>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
+
+=item *
+
+L<Data::Object::Role::Value>
+
+=back
+
+=cut
+
+=method data
+
+    # given $float
+
+    $float->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
+=method defined
+
+    # given $float
+
+    $float->defined; # 1
+
+The defined method returns true if the object represents a value that meets the
+criteria for being defined, otherwise it returns false. This method returns a
+L<Data::Object::Number> object.
+
+=cut
+
+=method detract
+
+    # given $float
+
+    $float->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
 
 =cut
 
@@ -148,6 +174,17 @@ L<Data::Object::Array> object.
 
 =cut
 
+=method dump
+
+    # given 1.23
+
+    $float->dump; # '1.23'
+
+The dump method returns returns a string string representation of the object.
+This method returns a L<Data::Object::String> object.
+
+=cut
+
 =method eq
 
     # given 1.23
@@ -156,6 +193,18 @@ L<Data::Object::Array> object.
 
 The eq method performs a numeric equality operation. This method returns a
 L<Data::Object::Number> object representing a boolean.
+
+=cut
+
+=method ge
+
+    # given 1.23
+
+    $float->ge(1); # 1
+
+The ge method returns true if the argument provided is greater-than or equal-to
+the value represented by the object. This method returns a Data::Object::Number
+object.
 
 =cut
 
@@ -170,14 +219,15 @@ L<Data::Object::Number> object representing a boolean.
 
 =cut
 
-=method gte
+=method le
 
     # given 1.23
 
-    $float->gte(1.23); # 1
+    $float->le(1); # 0
 
-The gte method performs a numeric greater-than-or-equal-to comparison. This
-method returns a L<Data::Object::Number> object representing a boolean.
+The le method returns true if the argument provided is less-than or equal-to
+the value represented by the object. This method returns a Data::Object::Number
+object.
 
 =cut
 
@@ -192,14 +242,14 @@ L<Data::Object::Number> object representing a boolean.
 
 =cut
 
-=method lte
+=method methods
 
-    # given 1.23
+    # given $float
 
-    $float->lte(1.23); # 1
+    $float->methods;
 
-The lte method performs a numeric less-than-or-equal-to comparison. This
-method returns a L<Data::Object::Number> object representing a boolean.
+The methods method returns the list of methods attached to object. This method
+returns a L<Data::Object::Array> object.
 
 =cut
 
@@ -224,6 +274,52 @@ The new method expects a floating-point number and returns a new class instance.
 
 =cut
 
+=method print
+
+    # given 1.23
+
+    $float->print; # '1.23'
+
+The print method outputs the value represented by the object to STDOUT and
+returns true. This method returns a L<Data::Object::Number> object.
+
+=cut
+
+=method roles
+
+    # given $float
+
+    $float->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
+=method say
+
+    # given 1.23
+
+    $float->say; # '1.23\n'
+
+The say method outputs the value represented by the object appeneded with a
+newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
+object.
+
+=cut
+
+=method throw
+
+    # given $float
+
+    $float->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns a L<Data::Object::Exception> object.
+
+=cut
+
 =method to
 
     # given 1.23
@@ -238,6 +334,17 @@ L<Data::Object::Array> object.
 
 =cut
 
+=method type
+
+    # given $float
+
+    $float->type; # FLOAT
+
+The type method returns a string representing the internal data type object name.
+This method returns a L<Data::Object::String> object.
+
+=cut
+
 =method upto
 
     # given 1.23
@@ -247,36 +354,6 @@ L<Data::Object::Array> object.
 The upto method returns an array reference containing integer increasing
 values up to and including the limit. This method returns a
 L<Data::Object::Array> object.
-
-=cut
-
-=head1 OPERATORS
-
-This class overloads the following operators for your convenience.
-
-=operator bool
-
-    !!$float
-
-    # equivilent to
-
-    $float->data
-
-=operator string
-
-    "$float"
-
-    # equivilent to
-
-    $float->data
-
-=operator smartmatch
-
-    $value ~~ $float
-
-    # equivilent to
-
-    $float->data
 
 =cut
 
@@ -354,8 +431,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

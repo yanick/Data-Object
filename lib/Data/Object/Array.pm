@@ -6,355 +6,50 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
+use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
 use Scalar::Util;
-
-use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Array';
 
 # VERSION
 
-method data () {
+method new ($class: @args) {
 
-    @_ = $self and goto &detract;
-
-}
-
-method detract () {
-
-    return Data::Object::detract_deep($self);
-
-}
-
-method list () {
-
-    @_ = $self and goto &values;
-
-}
-
-method new (ClassName $class: ("ArrayRef | InstanceOf['Data::Object::Array']") $data) {
-
+    my $arg  = @args > 1 ? [@args] : $args[0];
     my $role = 'Data::Object::Role::Type';
 
-    $data = $data->data if Scalar::Util::blessed($data)
-        and $data->can('does')
-        and $data->does($role);
+    $arg = $arg->data if Scalar::Util::blessed($arg)
+        and $arg->can('does')
+        and $arg->does($role);
 
     Data::Object::throw('Type Instantiation Error: Not an ArrayRef')
-        unless 'ARRAY' eq ref $data;
+        unless ref($arg) eq 'ARRAY';
 
-    return bless $data, $class;
+    return bless $arg, $class;
 
 }
 
-around 'all' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
+our @METHODS = @{ __PACKAGE__->methods };
+
+my  $exclude = qr/^data|detract|new$/;
+
+around [ grep { !/$exclude/ } @METHODS ] => fun ($orig, $self, @args) {
+
+    my $results = $self->$orig(@args);
+
+    return Data::Object::deduce_deep($results);
+
 };
 
-around 'any' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+around 'list' => fun ($orig, $self, @args) {
 
-around 'clear' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    my $results = $self->$orig(@args);
 
-around 'count' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    return wantarray ? (@$results) : $results;
 
-around 'defined' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'delete' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'each' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'each_key' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'each_n_values' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'each_value' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'empty' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'exists' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'first' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'get' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'grep' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'hashify' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'head' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'iterator' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'join' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'keyed' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'keys' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'last' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'length' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'map' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'max' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'min' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'new' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args > 1 ? [@args] : shift @args);
-    return $result;
-};
-
-around 'none' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'nsort' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'one' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'pairs' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'pairs_array' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'pairs_hash' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'part' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'pop' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'push' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'random' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'reverse' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'rnsort' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'rotate' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'rsort' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'set' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'shift' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'size' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'slice' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'sort' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'sum' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'tail' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'unique' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'unshift' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'values' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = Data::Object::deduce_deep($self->$orig(@args));
-    return wantarray ? (@$result) : $result;
 };
 
 1;
@@ -367,38 +62,73 @@ around 'values' => sub {
 
     my $array = Data::Object::Array->new([1..9]);
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Array provides common methods for operating on Perl 5 array
+Data::Object::Array provides routines for operating on Perl 5 array
 references. Array methods work on array references. Users of these methods
 should be aware of the methods that modify the array reference itself as opposed
 to returning a new array reference. Unless stated, it may be safe to assume that
 the following methods copy, modify and return new array references based on
 their function.
 
+=cut
+
 =head1 COMPOSITION
 
-This class inherits all functionality from the L<Data::Object::Role::Array>
+This package inherits all functionality from the L<Data::Object::Role::Array>
 role and implements proxy methods as documented herewith.
 
-=head1 CODIFICATION
+=cut
 
-Certain methods provided by the this module support codification, a process
-which converts a string argument into a code reference which can be used to
-supply a callback to the method called. A codified string can access its
-arguments by using variable names which correspond to letters in the alphabet
-which represent the position in the argument list. For example:
+=head1 ROLES
 
-    $array->example('$a + $b * $c', 100);
+This package is comprised of the following roles.
 
-    # if the example method does not supply any arguments automatically then
-    # the variable $a would be assigned the user-supplied value of 100,
-    # however, if the example method supplies two arguments automatically then
-    # those arugments would be assigned to the variables $a and $b whereas $c
-    # would be assigned the user-supplied value of 100
+=over 4
 
-Any place a codified string is accepted, a coderef or L<Data::Object::Code>
-object is also valid. Arguments are passed through the usual C<@_> list.
+=item *
+
+L<Data::Object::Role::Collection>
+
+=item *
+
+L<Data::Object::Role::Comparison>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
+
+=item *
+
+L<Data::Object::Role::List>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
+
+=back
 
 =cut
 
@@ -453,6 +183,17 @@ returns a L<Data::Object::Number> object.
 
 =cut
 
+=method data
+
+    # given $array
+
+    $array->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
 =method defined
 
     # given [1,2,undef,4,5]
@@ -476,6 +217,28 @@ The delete method returns the value of the element within the array at the
 index specified by the argument after removing it from the array. This method
 returns a data type object to be determined after execution. Note: This method
 modifies the array.
+
+=cut
+
+=method detract
+
+    # given $array
+
+    $array->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
+
+=cut
+
+=method dump
+
+    # given [1..5]
+
+    $array->dump; # '[1,2,3,4,5]'
+
+The dump method returns returns a string string representation of the object.
+This method returns a L<Data::Object::String> object.
 
 =cut
 
@@ -562,6 +325,17 @@ L<Data::Object::Array> object. Note: This method modifies the array.
 
 =cut
 
+=method eq
+
+    # given $array
+
+    $array->eq; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
 =method exists
 
     # given [1,2,3,4,5]
@@ -583,6 +357,17 @@ returns a L<Data::Object::Number> object.
 
 The first method returns the value of the first element in the array. This
 method returns a data type object to be determined after execution.
+
+=cut
+
+=method ge
+
+    # given $array
+
+    $array->ge; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
 
 =cut
 
@@ -618,6 +403,29 @@ L<Data::Object::Array> object.
 
 =cut
 
+=method gt
+
+    # given $array
+
+    $array->gt; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
+=method hash
+
+    # given [1..5]
+
+    $array->hash; # {0=>1,1=>2,2=>3,3=>4,4=>5}
+
+The hash method returns a hash reference where each key and value pairs
+corresponds to the index and value of each element in the array. This method
+returns a L<Data::Object::Hash> object.
+
+=cut
+
 =method hashify
 
     # given [1..5]
@@ -635,12 +443,23 @@ will be dropped. This method returns a L<Data::Object::Hash> object.
 
 =method head
 
+    # given [9,8,7,6,5]
+
+    my $head = $array->head; # 9
+
+The head method returns the value of the first element in the array. This
+method returns a data type object to be determined after execution.
+
+=cut
+
+=method invert
+
     # given [1..5]
 
-    $array->head; # 1
+    $array->invert; # [5,4,3,2,1]
 
-The head method returns the value of the first element in the array. This method
-returns a data type object to be determined after execution.
+The invert method returns an array reference containing the elements in the
+array in reverse order. This method returns a L<Data::Object::Array> object.
 
 =cut
 
@@ -709,6 +528,17 @@ returns a data type object to be determined after execution.
 
 =cut
 
+=method le
+
+    # given $array
+
+    $array->le; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
+
+=cut
+
 =method length
 
     # given [1..5]
@@ -717,6 +547,28 @@ returns a data type object to be determined after execution.
 
 The length method returns the number of elements in the array. This method
 returns a L<Data::Object::Number> object.
+
+=cut
+
+=method list
+
+    # given $array
+
+    my $list = $array->list;
+
+The list method returns a shallow copy of the underlying array reference as an
+array reference. This method return a L<Data::Object::Array> object.
+
+=cut
+
+=method lt
+
+    # given $array
+
+    $array->lt; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
 
 =cut
 
@@ -750,6 +602,17 @@ method returns a L<Data::Object::Number> object.
 
 =cut
 
+=method methods
+
+    # given $array
+
+    $array->methods;
+
+The methods method returns the list of methods attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
 =method min
 
     # given [8,9,1,2,3,4,5]
@@ -759,6 +622,17 @@ method returns a L<Data::Object::Number> object.
 The min method returns the element in the array with the lowest numerical
 value. All non-numerical element are skipped during the evaluation process. This
 method returns a L<Data::Object::Number> object.
+
+=cut
+
+=method ne
+
+    # given $array
+
+    $array->ne; # exception thrown
+
+This method is consumer requirement but has no function and is not implemented.
+This method will throw an exception if called.
 
 =cut
 
@@ -878,6 +752,17 @@ determined after execution. Note: This method modifies the array.
 
 =cut
 
+=method print
+
+    # given [1..5]
+
+    $array->print; # '[1,2,3,4,5]'
+
+The print method outputs the value represented by the object to STDOUT and
+returns true. This method returns a L<Data::Object::Number> object.
+
+=cut
+
 =method push
 
     # given [1..5]
@@ -924,6 +809,17 @@ L<Data::Object::Array> object.
 
 =cut
 
+=method roles
+
+    # given $array
+
+    $array->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
 =method rotate
 
     # given [1..5]
@@ -947,6 +843,18 @@ Note: This method modifies the array.
 
 The rsort method returns an array reference containing the values in the array
 sorted alphanumerically in reverse. This method returns a L<Data::Object::Array>
+object.
+
+=cut
+
+=method say
+
+    # given [1..5]
+
+    $array->say; # '[1,2,3,4,5]\n'
+
+The say method outputs the value represented by the object appeneded with a
+newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
 =cut
@@ -1031,6 +939,29 @@ method returns a L<Data::Object::Number> object.
 The tail method returns an array reference containing the second through the
 last elements in the array omitting the first. This method returns a
 L<Data::Object::Array> object.
+
+=cut
+
+=method throw
+
+    # given $array
+
+    $array->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns a L<Data::Object::Exception> object.
+
+=cut
+
+=method type
+
+    # given $array
+
+    $array->type; # ARRAY
+
+The type method returns a string representing the internal data type object name.
+This method returns a L<Data::Object::String> object.
 
 =cut
 
@@ -1143,8 +1074,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+

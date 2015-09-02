@@ -1,7 +1,7 @@
 use strict;
 use warnings;
-
 use Test::More;
+
 use Data::Object::Role::Syntax ();
 
 my @exports = qw(

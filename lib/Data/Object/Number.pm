@@ -6,192 +6,46 @@ use warnings;
 
 use 5.014;
 
-use Type::Tiny;
-use Type::Tiny::Signatures;
-
 use Data::Object;
+use Data::Object::Class;
+use Data::Object::Library;
+use Data::Object::Signatures;
 use Scalar::Util;
-
-use Data::Object::Class 'with';
 
 with 'Data::Object::Role::Number';
 
-use overload (
-    'bool'   => 'data',
-    '""'     => 'data',
-    '~~'     => 'data',
-    fallback => 1,
-);
-
 # VERSION
 
-method data () {
+method new ($class: @args) {
 
-    @_ = $self and goto &detract;
+    my $arg  = $args[0];
+    my $role = 'Data::Object::Role::Type';
 
-}
+    $arg = $arg->data if Scalar::Util::blessed($arg)
+        and $arg->can('does')
+        and $arg->does($role);
 
-method detract () {
-
-    return Data::Object::detract_deep($self);
-
-}
-
-method new (ClassName $class: ("Str | Num | InstanceOf['Data::Object::Number']") $data) {
-
-    my $role  = 'Data::Object::Role::Type';
-
-    $data = $data->data if Scalar::Util::blessed($data)
-        and $data->can('does')
-        and $data->does($role);
-
-    $data =~ s/^\+//; # not keen on this but ...
+    $arg =~ s/^\+//; # not keen on this but ...
 
     Data::Object::throw('Type Instantiation Error: Not a Number')
-        unless defined($data) && !ref($data) && Scalar::Util::looks_like_number($data);
+        unless defined($arg) && !ref($arg) && Scalar::Util::looks_like_number($arg);
 
-    $data += 0 unless $data =~ /[a-zA-Z]/;
+    $arg += 0 unless $arg =~ /[a-zA-Z]/;
 
-    return bless \$data, $class;
+    return bless \$arg, $class;
 
 }
 
-around 'abs' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+our @METHODS = @{ __PACKAGE__->methods };
 
-around 'atan2' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+my  $exclude = qr/^data|detract|new$/;
 
-around 'cos' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+around [ grep { !/$exclude/ } @METHODS ] => fun ($orig, $self, @args) {
 
-around 'decr' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    my $results = $self->$orig(@args);
 
-around 'downto' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
+    return Data::Object::deduce_deep($results);
 
-around 'eq' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'exp' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'gt' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'gte' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'hex' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'incr' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'int' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'lt' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'lte' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'log' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'mod' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'ne' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'neg' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'pow' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'sin' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'sqrt' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'to' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
-};
-
-around 'upto' => sub {
-    my ($orig, $self, @args) = @_;
-    my $result = $self->$orig(@args);
-    return scalar Data::Object::deduce_deep($result);
 };
 
 1;
@@ -204,9 +58,11 @@ around 'upto' => sub {
 
     my $number = Data::Object::Number->new(1_000_000);
 
+=cut
+
 =head1 DESCRIPTION
 
-Data::Object::Number provides common methods for operating on Perl 5 numeric
+Data::Object::Number provides routines for operating on Perl 5 numeric
 data. Number methods work on data that meets the criteria for being a number. A
 number holds and manipulates an arbitrary sequence of bytes, typically
 representing numberic characters (0-9). Users of numbers should be aware of the
@@ -214,10 +70,62 @@ methods that modify the number itself as opposed to returning a new number.
 Unless stated, it may be safe to assume that the following methods copy, modify
 and return new numbers based on their function.
 
+=cut
+
 =head1 COMPOSITION
 
-This class inherits all functionality from the L<Data::Object::Role::Number>
+This package inherits all functionality from the L<Data::Object::Role::Number>
 role and implements proxy methods as documented herewith.
+
+=cut
+
+=head1 ROLES
+
+This package is comprised of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Comparison>
+
+=item *
+
+L<Data::Object::Role::Defined>
+
+=item *
+
+L<Data::Object::Role::Detract>
+
+=item *
+
+L<Data::Object::Role::Dumper>
+
+=item *
+
+L<Data::Object::Role::Item>
+
+=item *
+
+L<Data::Object::Role::Numeric>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=item *
+
+L<Data::Object::Role::Throwable>
+
+=item *
+
+L<Data::Object::Role::Type>
+
+=item *
+
+L<Data::Object::Role::Value>
+
+=back
 
 =cut
 
@@ -258,6 +166,17 @@ method returns a L<Data::Object::Float> object.
 
 =cut
 
+=method data
+
+    # given $number
+
+    $number->data; # original value
+
+The data method returns the original and underlying value contained by the
+object. This method is an alias to the detract method.
+
+=cut
+
 =method decr
 
     # given 123456789
@@ -266,6 +185,29 @@ method returns a L<Data::Object::Float> object.
 
 The decr method returns the numeric number decremented by 1. This method returns
 a data type object to be determined after execution.
+
+=cut
+
+=method defined
+
+    # given $number
+
+    $number->defined; # 1
+
+The defined method returns true if the object represents a value that meets the
+criteria for being defined, otherwise it returns false. This method returns a
+L<Data::Object::Number> object.
+
+=cut
+
+=method detract
+
+    # given $number
+
+    $number->detract; # original value
+
+The detract method returns the original and underlying value contained by the
+object.
 
 =cut
 
@@ -278,6 +220,17 @@ a data type object to be determined after execution.
 The downto method returns an array reference containing integer decreasing
 values down to and including the limit. This method returns a
 L<Data::Object::Array> object.
+
+=cut
+
+=method dump
+
+    # given 12345
+
+    $number->dump; # '12345'
+
+The dump method returns returns a string string representation of the object.
+This method returns a L<Data::Object::String> object.
 
 =cut
 
@@ -311,6 +264,18 @@ number. This method returns a L<Data::Object::Float> object.
 
 =cut
 
+=method ge
+
+    # given 0
+
+    $number->ge(0); # 1
+
+The ge method returns true if the argument provided is greater-than or equal-to
+the value represented by the object. This method returns a Data::Object::Number
+object.
+
+=cut
+
 =method gt
 
     # given 99
@@ -319,17 +284,6 @@ number. This method returns a L<Data::Object::Float> object.
 
 The gt method performs a numeric greater-than comparison. This method returns a
 L<Data::Object::Number> object representing a boolean.
-
-=cut
-
-=method gte
-
-    # given 100
-
-    $number->gte(100); # 1
-
-The gte method performs a numeric greater-than-or-equal-to comparison. This
-method returns a L<Data::Object::Number> object representing a boolean.
 
 =cut
 
@@ -366,6 +320,18 @@ method for rounding. This method returns a L<Data::Object::Number> object.
 
 =cut
 
+=method le
+
+    # given 0
+
+    $number->le; # 0
+
+The le method returns true if the argument provided is less-than or equal-to
+the value represented by the object. This method returns a Data::Object::Number
+object.
+
+=cut
+
 =method log
 
     # given 12345
@@ -388,14 +354,14 @@ L<Data::Object::Number> object representing a boolean.
 
 =cut
 
-=method lte
+=method methods
 
-    # given 50
+    # given $number
 
-    $number->lte(50); # 1
+    $number->methods;
 
-The lte method performs a numeric less-than-or-equal-to comparison. This
-method returns a L<Data::Object::Number> object representing a boolean.
+The methods method returns the list of methods attached to object. This method
+returns a L<Data::Object::Array> object.
 
 =cut
 
@@ -458,6 +424,40 @@ L<Data::Object::Number> object.
 
 =cut
 
+=method print
+
+    # given 12345
+
+    $number->print; # '12345'
+
+The print method outputs the value represented by the object to STDOUT and
+returns true. This method returns a L<Data::Object::Number> object.
+
+=cut
+
+=method roles
+
+    # given $number
+
+    $number->roles;
+
+The roles method returns the list of roles attached to object. This method
+returns a L<Data::Object::Array> object.
+
+=cut
+
+=method say
+
+    # given 12345
+
+    $number->say; # '12345\n'
+
+The say method outputs the value represented by the object appeneded with a
+newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
+object.
+
+=cut
+
 =method sin
 
     # given 12345
@@ -480,6 +480,18 @@ returns a data type object to be determined after execution.
 
 =cut
 
+=method throw
+
+    # given $number
+
+    $number->throw;
+
+The throw method terminates the program using the core die keyword passing the
+object to the L<Data::Object::Exception> class as the named parameter C<object>.
+If captured this method returns a L<Data::Object::Exception> object.
+
+=cut
+
 =method to
 
     # given 5
@@ -494,6 +506,17 @@ L<Data::Object::Array> object.
 
 =cut
 
+=method type
+
+    # given $number
+
+    $number->type; # NUMBER
+
+The type method returns a string representing the internal data type object name.
+This method returns a L<Data::Object::String> object.
+
+=cut
+
 =method upto
 
     # given 23
@@ -503,36 +526,6 @@ L<Data::Object::Array> object.
 The upto method returns an array reference containing integer increasing
 values up to and including the limit. This method returns a
 L<Data::Object::Array> object.
-
-=cut
-
-=head1 OPERATORS
-
-This class overloads the following operators for your convenience.
-
-=operator bool
-
-    !!$number
-
-    # equivilent to
-
-    $number->data
-
-=operator string
-
-    "$number"
-
-    # equivilent to
-
-    $number->data
-
-=operator smartmatch
-
-    $value ~~ $number
-
-    # equivilent to
-
-    $number->data
 
 =cut
 
@@ -610,8 +603,13 @@ L<Data::Object::Library>
 
 =item *
 
+L<Data::Object::Prototype>
+
+=item *
+
 L<Data::Object::Signatures>
 
 =back
 
 =cut
+
