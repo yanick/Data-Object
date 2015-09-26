@@ -9,7 +9,7 @@ fun greeting (AllCaps $name) {
     return "hello, $name";
 }
 
-fun meeting (Int :$epoch = deduce $$) {
+fun meeting (NumberObj :$epoch = deduce $$) {
     return "our meeting is at $epoch";
 }
 
