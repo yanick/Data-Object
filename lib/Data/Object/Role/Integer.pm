@@ -145,8 +145,8 @@ array object.
 
     $integer->dump; # '1'
 
-The dump method returns returns a string string representation of the object.
-This method returns a string object.
+The dump method returns returns a string representation of the object.
+This method returns a string value.
 
 =cut
 
@@ -214,7 +214,7 @@ number object representing a boolean.
     $integer->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -246,7 +246,7 @@ The new method expects a number and returns a new class instance.
     $integer->print; # '0'
 
 The print method outputs the value represented by the object to STDOUT and
-returns true. This method returns a number object.
+returns true. This method returns a number value.
 
 =cut
 
@@ -257,7 +257,7 @@ returns true. This method returns a number object.
     $integer->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -267,7 +267,7 @@ returns an array object.
 
     $integer->say; # '0\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -279,9 +279,9 @@ object.
 
     $integer->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 
@@ -306,7 +306,7 @@ array object.
     $integer->type; # INTEGER
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 

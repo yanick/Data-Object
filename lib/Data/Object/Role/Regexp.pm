@@ -173,8 +173,8 @@ object.
 
     $regexp->dump; # qr/(?^u:test)/
 
-The dump method returns returns a string string representation of the object.
-This method returns a string object.
+The dump method returns returns a string representation of the object.
+This method returns a string value.
 
 =cut
 
@@ -185,7 +185,7 @@ This method returns a string object.
     $regexp->eq(qr(test)); # 1
 
 The eq method returns true if the argument provided is equal to the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
@@ -208,7 +208,7 @@ object.
     $regexp->gt(qr(test)); # 0
 
 The gt method returns true if the argument provided is greater-than the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
@@ -231,7 +231,7 @@ object.
     $regexp->lt(qr(test)); # 0
 
 The lt method returns true if the argument provided is less-than the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
@@ -242,7 +242,7 @@ represented by the object. This method returns a number object.
     $regexp->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -253,7 +253,7 @@ returns an array object.
     $regexp->ne(qr(test)); # 1
 
 The ne method returns true if the argument provided is not equal to the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
@@ -275,7 +275,7 @@ instance.
     $regexp->print; # 'qr/(?^u:test)/'
 
 The print method outputs the value represented by the object to STDOUT and
-returns true. This method returns a number object.
+returns true. This method returns a number value.
 
 =cut
 
@@ -302,7 +302,7 @@ used to introspect the result of the operation.
     $regexp->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -312,7 +312,7 @@ returns an array object.
 
     $regexp->say; # 'qr/(?^u:test)/\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -337,9 +337,9 @@ can be used to introspect the result of the operation.
 
     $regexp->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 
@@ -350,7 +350,7 @@ If captured this method returns an exception object.
     $regexp->type; # REGEXP
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 

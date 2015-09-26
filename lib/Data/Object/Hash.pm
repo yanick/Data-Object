@@ -208,7 +208,7 @@ object.
 
     $hash->dump; # '{1=>2,3=>4}'
 
-The dump method returns returns a string string representation of the object.
+The dump method returns returns a string representation of the object.
 This method returns a L<Data::Object::String> object.
 
 =cut
@@ -299,7 +299,7 @@ L<Data::Object::Hash> object. Note: This method modifies the hash.
 
     $hash->eq; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -360,7 +360,7 @@ returns a L<Data::Object::Hash> object.
 
     $hash->ge; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -403,7 +403,7 @@ L<Data::Object::Hash> object.
 
     $hash->gt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -414,7 +414,7 @@ This method will throw an exception if called.
 
     $hash->head; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -455,7 +455,7 @@ L<Data::Object::Code> object.
 
     $hash->join; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 =cut
 
@@ -476,7 +476,7 @@ hash. This method returns a L<Data::Object::Array> object.
 
     $hash->le; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -527,7 +527,7 @@ execution.
 
     $hash->lt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -580,7 +580,7 @@ returns a L<Data::Object::Array> object.
 
     $hash->ne; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -661,7 +661,7 @@ returns a L<Data::Object::Array> object.
 
     $hash->say; # '{1=>2,3=>4}\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -700,7 +700,7 @@ L<Data::Object::Hash> object.
 
     $hash->sort; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -711,7 +711,7 @@ This method will throw an exception if called.
 
     $hash->tail; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -722,7 +722,7 @@ This method will throw an exception if called.
 
     $hash->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
 If captured this method returns a L<Data::Object::Exception> object.
 

@@ -57,10 +57,10 @@ objects which meet the criteria for being dumpable.
 
     # given $dumper
 
-    $dumper->dump; # (...)
+    $dumper->dump;
 
-The dump method returns returns a string string representation of the object.
-This method returns a string object.
+The dump method returns returns a string representation of the object.
+This method returns a string value.
 
 =cut
 

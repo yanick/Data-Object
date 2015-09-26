@@ -237,7 +237,7 @@ object.
 
     $array->dump; # '[1,2,3,4,5]'
 
-The dump method returns returns a string string representation of the object.
+The dump method returns returns a string representation of the object.
 This method returns a L<Data::Object::String> object.
 
 =cut
@@ -331,7 +331,7 @@ L<Data::Object::Array> object. Note: This method modifies the array.
 
     $array->eq; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -366,7 +366,7 @@ method returns a data type object to be determined after execution.
 
     $array->ge; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -409,7 +409,7 @@ L<Data::Object::Array> object.
 
     $array->gt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -534,7 +534,7 @@ returns a data type object to be determined after execution.
 
     $array->le; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -567,7 +567,7 @@ array reference. This method return a L<Data::Object::Array> object.
 
     $array->lt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -631,7 +631,7 @@ method returns a L<Data::Object::Number> object.
 
     $array->ne; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -853,7 +853,7 @@ object.
 
     $array->say; # '[1,2,3,4,5]\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -948,7 +948,7 @@ L<Data::Object::Array> object.
 
     $array->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
 If captured this method returns a L<Data::Object::Exception> object.
 

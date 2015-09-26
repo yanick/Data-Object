@@ -199,7 +199,7 @@ number object.
     $number->atan2(1); # 0.785398163397448
 
 The atan2 method returns the arctangent of Y/X in the range -PI to PI This
-method returns a float object.
+method returns a float value.
 
 =cut
 
@@ -210,7 +210,7 @@ method returns a float object.
     $number->cos; # 0.843853958732492
 
 The cos method computes the cosine of the number (expressed in radians). This
-method returns a float object.
+method returns a float value.
 
 =cut
 
@@ -277,8 +277,8 @@ array object.
 
     $number->dump; # '12345'
 
-The dump method returns returns a string string representation of the object.
-This method returns a string object.
+The dump method returns returns a string representation of the object.
+This method returns a string value.
 
 =cut
 
@@ -308,7 +308,7 @@ number object representing a boolean.
     $number->exp; # 4.48168907033806
 
 The exp method returns e (the natural logarithm base) to the power of the
-number. This method returns a float object.
+number. This method returns a float value.
 
 =cut
 
@@ -342,7 +342,7 @@ number object representing a boolean.
     $number->hex; # 0xaf
 
 The hex method returns a hex string representing the value of the number. This
-method returns a string object.
+method returns a string value.
 
 =cut
 
@@ -364,7 +364,7 @@ a data type object to be determined after execution.
     $number->int; # 12
 
 The int method returns the integer portion of the number. Do not use this
-method for rounding. This method returns a number object.
+method for rounding. This method returns a number value.
 
 =cut
 
@@ -387,7 +387,7 @@ object.
     $number->log; # 9.42100640177928
 
 The log method returns the natural logarithm (base e) of the number. This method
-returns a float object.
+returns a float value.
 
 =cut
 
@@ -409,7 +409,7 @@ number object representing a boolean.
     $number->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -424,7 +424,7 @@ returns an array object.
     $number->mod(5); # 2
 
 The mod method returns the division remainder of the number divided by the
-argment. This method returns a number object.
+argment. This method returns a number value.
 
 =cut
 
@@ -479,7 +479,7 @@ number object.
     $number->print; # '12345'
 
 The print method outputs the value represented by the object to STDOUT and
-returns true. This method returns a number object.
+returns true. This method returns a number value.
 
 =cut
 
@@ -490,7 +490,7 @@ returns true. This method returns a number object.
     $number->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -500,7 +500,7 @@ returns an array object.
 
     $number->say; # '12345\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -534,9 +534,9 @@ returns a data type object to be determined after execution.
 
     $number->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 
@@ -561,7 +561,7 @@ array object.
     $number->type; # NUMBER
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 

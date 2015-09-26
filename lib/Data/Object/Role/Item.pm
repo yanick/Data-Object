@@ -90,10 +90,10 @@ object.
 
     # given $item
 
-    $item->methods; # (...)
+    $item->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -101,10 +101,10 @@ returns an array object.
 
     # given $item
 
-    $item->roles; # (...)
+    $item->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -112,11 +112,11 @@ returns an array object.
 
     # given $item
 
-    $item->throw; # (...)
+    $item->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 
@@ -127,7 +127,7 @@ If captured this method returns an exception object.
     $item->type; # ITEM
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 

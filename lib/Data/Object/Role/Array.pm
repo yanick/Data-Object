@@ -594,7 +594,7 @@ L<Data::Object::Role::Type>
 The all method returns true if all of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
 takes an argument which can be a codifiable string, a code reference, or a code
-data type object. This method returns a number object.
+data type object. This method returns a number value.
 
 =cut
 
@@ -608,7 +608,7 @@ data type object. This method returns a number object.
 The any method returns true if any of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
 takes an argument which can be a codifiable string, a code reference, or a code
-data type object. This method returns a number object.
+data type object. This method returns a number value.
 
 =cut
 
@@ -631,7 +631,7 @@ Note: This method modifies the array.
     $array->count; # 5
 
 The count method returns the number of elements within the array. This method
-returns a number object.
+returns a number value.
 
 =cut
 
@@ -655,7 +655,7 @@ object. This method is an alias to the detract method.
 
 The defined method returns true if the element within the array at the index
 specified by the argument meets the criteria for being defined, otherwise it
-returns false. This method returns a number object.
+returns false. This method returns a number value.
 
 =cut
 
@@ -689,8 +689,8 @@ object.
 
     $array->dump; # '[1,2,3,4,5]'
 
-The dump method returns returns a string string representation of the object.
-This method returns a string object.
+The dump method returns returns a string representation of the object.
+This method returns a string value.
 
 =cut
 
@@ -708,7 +708,7 @@ The each method iterates over each element in the array, executing the code
 reference supplied in the argument, passing the routine the index and value at
 the current position in the loop. This method supports codification, i.e, takes
 an argument which can be a codifiable string, a code reference, or a code data
-type object. This method returns an array object.
+type object. This method returns an array value.
 
 =cut
 
@@ -725,7 +725,7 @@ The each_key method iterates over each element in the array, executing the
 code reference supplied in the argument, passing the routine the index at the
 current position in the loop. This method supports codification, i.e, takes an
 argument which can be a codifiable string, a code reference, or a code data type
-object. This method returns an array object.
+object. This method returns an array value.
 
 =cut
 
@@ -745,7 +745,7 @@ The each_n_values method iterates over each element in the array, executing
 the code reference supplied in the argument, passing the routine the next n
 values until all values have been seen. This method supports codification, i.e,
 takes an argument which can be a codifiable string, a code reference, or a code
-data type object. This method returns an array object.
+data type object. This method returns an array value.
 
 =cut
 
@@ -762,7 +762,7 @@ The each_value method iterates over each element in the array, executing the
 code reference supplied in the argument, passing the routine the value at the
 current position in the loop. This method supports codification, i.e, takes an
 argument which can be a codifiable string, a code reference, or a code data type
-object. This method returns an array object.
+object. This method returns an array value.
 
 =cut
 
@@ -783,7 +783,7 @@ array object. Note: This method modifies the array.
 
     $array->eq; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -797,7 +797,7 @@ This method will throw an exception if called.
 
 The exists method returns true if the element within the array at the index
 specified by the argument exists, otherwise it returns false. This method
-returns a number object.
+returns a number value.
 
 =cut
 
@@ -818,7 +818,7 @@ method returns a data type object to be determined after execution.
 
     $array->ge; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -861,7 +861,7 @@ array object.
 
     $array->gt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -874,7 +874,7 @@ This method will throw an exception if called.
 
 The hash method returns a hash reference where each key and value pairs
 corresponds to the index and value of each element in the array. This method
-returns a hash object.
+returns a hash value.
 
 =cut
 
@@ -889,7 +889,7 @@ The hashify method returns a hash reference where the elements of array become
 the hash keys and the corresponding values are assigned a value of 1. This
 method supports codification, i.e, takes an argument which can be a codifiable
 string, a code reference, or a code data type object. Note, undefined elements
-will be dropped. This method returns a hash object.
+will be dropped. This method returns a hash value.
 
 =cut
 
@@ -911,7 +911,7 @@ method returns a data type object to be determined after execution.
     $array->invert; # [5,4,3,2,1]
 
 The invert method returns an array reference containing the elements in the
-array in reverse order. This method returns an array object.
+array in reverse order. This method returns an array value.
 
 =cut
 
@@ -965,7 +965,7 @@ hash object.
     $array->keys; # [0,1,2,3]
 
 The keys method returns an array reference consisting of the indicies of the
-array. This method returns an array object.
+array. This method returns an array value.
 
 =cut
 
@@ -986,7 +986,7 @@ returns a data type object to be determined after execution.
 
     $array->le; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -998,7 +998,7 @@ This method will throw an exception if called.
     $array->length; # 5
 
 The length method returns the number of elements in the array. This method
-returns a number object.
+returns a number value.
 
 =cut
 
@@ -1019,7 +1019,7 @@ array reference. This method return an array object.
 
     $array->lt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -1038,7 +1038,7 @@ The map method iterates over each element in the array, executing the
 code reference supplied in the argument, passing the routine the value at the
 current position in the loop and returning a new array reference containing
 the elements for which the argument returns a value or non-empty list. This
-method returns an array object.
+method returns an array value.
 
 =cut
 
@@ -1050,7 +1050,7 @@ method returns an array object.
 
 The max method returns the element in the array with the highest numerical
 value. All non-numerical element are skipped during the evaluation process. This
-method returns a number object.
+method returns a number value.
 
 =cut
 
@@ -1061,7 +1061,7 @@ method returns a number object.
     $array->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -1073,7 +1073,7 @@ returns an array object.
 
 The min method returns the element in the array with the lowest numerical
 value. All non-numerical element are skipped during the evaluation process. This
-method returns a number object.
+method returns a number value.
 
 =cut
 
@@ -1083,7 +1083,7 @@ method returns a number object.
 
     $array->ne; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -1110,7 +1110,7 @@ instance.
 The none method returns true if none of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
 takes an argument which can be a codifiable string, a code reference, or a code
-data type object. This method returns a number object.
+data type object. This method returns a number value.
 
 =cut
 
@@ -1121,7 +1121,7 @@ data type object. This method returns a number object.
     $array->nsort; # [1,2,3,4,5]
 
 The nsort method returns an array reference containing the values in the array
-sorted numerically. This method returns an array object.
+sorted numerically. This method returns an array value.
 
 =cut
 
@@ -1135,7 +1135,7 @@ sorted numerically. This method returns an array object.
 The one method returns true if only one of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
 takes an argument which can be a codifiable string, a code reference, or a code
-data type object. This method returns a number object.
+data type object. This method returns a number value.
 
 =cut
 
@@ -1172,7 +1172,7 @@ object.
 
 The pairs_hash method returns a hash reference where each key and value pairs
 corresponds to the index and value of each element in the array. This method
-returns a hash object.
+returns a hash value.
 
 =cut
 
@@ -1211,7 +1211,7 @@ determined after execution. Note: This method modifies the array.
     $array->print; # '[1,2,3,4,5]'
 
 The print method outputs the value represented by the object to STDOUT and
-returns true. This method returns a number object.
+returns true. This method returns a number value.
 
 =cut
 
@@ -1245,7 +1245,7 @@ data type object to be determined after execution.
     $array->reverse; # [5,4,3,2,1]
 
 The reverse method returns an array reference containing the elements in the
-array in reverse order. This method returns an array object.
+array in reverse order. This method returns an array value.
 
 =cut
 
@@ -1268,7 +1268,7 @@ array object.
     $array->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -1282,7 +1282,7 @@ returns an array object.
 
 The rotate method rotates the elements in the array such that first elements
 becomes the last element and the second element becomes the first element each
-time this method is called. This method returns an array object.
+time this method is called. This method returns an array value.
 Note: This method modifies the array.
 
 =cut
@@ -1305,7 +1305,7 @@ object.
 
     $array->say; # '[1,2,3,4,5]\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -1366,7 +1366,7 @@ array object.
     $array->sort; # ['a','b','c','d']
 
 The sort method returns an array reference containing the values in the array
-sorted alphanumerically. This method returns an array object.
+sorted alphanumerically. This method returns an array value.
 
 =cut
 
@@ -1378,7 +1378,7 @@ sorted alphanumerically. This method returns an array object.
 
 The sum method returns the sum of all values for all numerical elements in the
 array. All non-numerical element are skipped during the evaluation process. This
-method returns a number object.
+method returns a number value.
 
 =cut
 
@@ -1400,9 +1400,9 @@ array object.
 
     $array->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 
@@ -1413,7 +1413,7 @@ If captured this method returns an exception object.
     $array->type; # ARRAY
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 
@@ -1424,7 +1424,7 @@ This method returns a string object.
     $array->unique; # [1,2,3]
 
 The unique method returns an array reference consisting of the unique elements
-in the array. This method returns an array object.
+in the array. This method returns an array value.
 
 =cut
 
@@ -1448,7 +1448,7 @@ execution. Note: This method modifies the array.
 
 The values method returns an array reference consisting of the elements in the
 array. This method essentially copies the content of the array into a new
-container. This method returns an array object.
+container. This method returns an array value.
 
 =cut
 

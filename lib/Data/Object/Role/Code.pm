@@ -171,7 +171,7 @@ code object.
 
 The conjoin method creates a code reference which execute the code and the
 argument in a logical AND operation having the code as the lvalue and the
-argument as the rvalue. This method returns a code object.
+argument as the rvalue. This method returns a code value.
 
 =cut
 
@@ -235,7 +235,7 @@ object.
 
 The disjoin method creates a code reference which execute the code and the
 argument in a logical OR operation having the code as the lvalue and the
-argument as the rvalue. This method returns a code object.
+argument as the rvalue. This method returns a code value.
 
 =cut
 
@@ -245,8 +245,8 @@ argument as the rvalue. This method returns a code object.
 
     $code->dump; # sub { package Data::Object; goto \\&{\$data}; }
 
-The dump method returns returns a string string representation of the object.
-This method returns a string object.
+The dump method returns returns a string representation of the object.
+This method returns a string value.
 
 =cut
 
@@ -257,7 +257,7 @@ This method returns a string object.
     $code->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -277,7 +277,7 @@ The new method expects a code reference and returns a new class instance.
 
 The next method is an alias to the call method. The naming is especially useful
 (i.e. helps with readability) when used with closure-based iterators. This
-method returns a code object. This method is an alias to the
+method returns a code value. This method is an alias to the
 call method.
 
 =cut
@@ -291,7 +291,7 @@ call method.
 
 The rcurry method returns a code reference which executes the code passing it
 the any additional parameters and any arguments when executed. This method
-returns a code object.
+returns a code value.
 
 =cut
 
@@ -302,7 +302,7 @@ returns a code object.
     $code->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -312,9 +312,9 @@ returns an array object.
 
     $code->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 
@@ -325,7 +325,7 @@ If captured this method returns an exception object.
     $code->type; # CODE
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 

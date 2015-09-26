@@ -116,10 +116,10 @@ objects which meet the criteria for being considered type objects.
 
     # given $type
 
-    $type->methods; # (...)
+    $type->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -127,10 +127,10 @@ returns an array object.
 
     # given $type
 
-    $type->roles; # (...)
+    $type->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -141,7 +141,7 @@ returns an array object.
     $type->type; # TYPE
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 

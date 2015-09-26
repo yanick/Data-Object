@@ -137,7 +137,7 @@ The dump method returns a stringified version of the exception object.
 
     $exception->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 exception object as the only argument.
 
 =cut

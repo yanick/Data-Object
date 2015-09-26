@@ -180,7 +180,7 @@ L<Data::Object::Array> object.
 
     $float->dump; # '1.23'
 
-The dump method returns returns a string string representation of the object.
+The dump method returns returns a string representation of the object.
 This method returns a L<Data::Object::String> object.
 
 =cut
@@ -302,7 +302,7 @@ returns a L<Data::Object::Array> object.
 
     $float->say; # '1.23\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -314,7 +314,7 @@ object.
 
     $float->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
 If captured this method returns a L<Data::Object::Exception> object.
 

@@ -24,13 +24,19 @@ our @DEFAULTS = @Type::Tiny::Signatures::DEFAULTS = 'Data::Object::Library';
 
     use Data::Object::Signatures;
 
+    method hello (Str $name) {
+
+        say "Hello $name, how are you?";
+
+    }
+
 =cut
 
 =head1 DESCRIPTION
 
-Data::Object::Signatures is a subclass of Type::Tiny::Signatures providing
+Data::Object::Signatures is a subclass of L<Type::Tiny::Signatures> providing
 method and function signatures supporting all the type constraints provided by
-Data::Object::Library.
+L<Data::Object::Library>.
 
 =cut
 

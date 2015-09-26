@@ -46,11 +46,11 @@ data objects which meet the criteria for being throwable.
 
     # given $throwable
 
-    $throwable->throw; # (...)
+    $throwable->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 

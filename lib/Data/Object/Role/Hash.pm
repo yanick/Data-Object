@@ -623,8 +623,8 @@ object.
 
     $hash->dump; # '{1=>2,3=>4}'
 
-The dump method returns returns a string string representation of the object.
-This method returns a string object.
+The dump method returns returns a string representation of the object.
+This method returns a string value.
 
 =cut
 
@@ -641,7 +641,7 @@ The each method iterates over each element in the hash, executing the code
 reference supplied in the argument, passing the routine the key and value at the
 current position in the loop. This method supports codification, i.e, takes an
 argument which can be a codifiable string, a code reference, or a code data type
-object. This method returns a hash object.
+object. This method returns a hash value.
 
 =cut
 
@@ -657,7 +657,7 @@ The each_key method iterates over each element in the hash, executing the code
 reference supplied in the argument, passing the routine the key at the current
 position in the loop. This method supports codification, i.e, takes an argument
 which can be a codifiable string, a code reference, or a code data type object.
-This method returns a hash object.
+This method returns a hash value.
 
 =cut
 
@@ -677,7 +677,7 @@ The each_n_values method iterates over each element in the hash, executing the
 code reference supplied in the argument, passing the routine the next n values
 until all values have been seen. This method supports codification, i.e, takes
 an argument which can be a codifiable string, a code reference, or a code data
-type object. This method returns a hash object.
+type object. This method returns a hash value.
 
 =cut
 
@@ -693,7 +693,7 @@ The each_value method iterates over each element in the hash, executing the code
 reference supplied in the argument, passing the routine the value at the current
 position in the loop. This method supports codification, i.e, takes an argument
 which can be a codifiable string, a code reference, or a code data type object.
-This method returns a hash object.
+This method returns a hash value.
 
 =cut
 
@@ -714,7 +714,7 @@ hash object. Note: This method modifies the hash.
 
     $hash->eq; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -740,7 +740,7 @@ number object.
 
 The filter_exclude method returns a hash reference consisting of all key/value
 pairs in the hash except for the pairs whose keys are specified in the
-arguments. This method returns a hash object.
+arguments. This method returns a hash value.
 
 =cut
 
@@ -765,7 +765,7 @@ hash object.
 The fold method returns a single-level hash reference consisting of key/value
 pairs whose keys are paths (using dot-notation where the segments correspond to
 nested hash keys and array indices) mapped to the nested values. This method
-returns a hash object.
+returns a hash value.
 
 =cut
 
@@ -775,7 +775,7 @@ returns a hash object.
 
     $hash->ge; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -818,7 +818,7 @@ hash object.
 
     $hash->gt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -829,7 +829,7 @@ This method will throw an exception if called.
 
     $hash->head; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -842,7 +842,7 @@ This method will throw an exception if called.
 
 The invert method returns the hash after inverting the keys and values
 respectively. Note, keys with undefined values will be dropped, also, this
-method modifies the hash. This method returns a hash object.
+method modifies the hash. This method returns a hash value.
 Note: This method modifies the hash.
 
 =cut
@@ -870,7 +870,7 @@ code object.
 
     $hash->join; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 =cut
 
@@ -881,7 +881,7 @@ This method will throw an exception if called.
     $hash->keys; # [1,3,5,7]
 
 The keys method returns an array reference consisting of all the keys in the
-hash. This method returns an array object.
+hash. This method returns an array value.
 
 =cut
 
@@ -891,7 +891,7 @@ hash. This method returns an array object.
 
     $hash->le; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -942,7 +942,7 @@ execution.
 
     $hash->lt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -959,7 +959,7 @@ The map method iterates over each key/value in the hash, executing the code
 reference supplied in the argument, passing the routine the value at the
 current position in the loop and returning a new hash reference containing the
 elements for which the argument returns a value or non-empty list. This method
-returns a hash object.
+returns a hash value.
 
 =cut
 
@@ -985,7 +985,7 @@ object.
     $hash->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -995,7 +995,7 @@ returns an array object.
 
     $hash->ne; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -1031,7 +1031,7 @@ method.
     $hash->print; # '{1=>2,3=>4}'
 
 The print method outputs the value represented by the object to STDOUT and
-returns true. This method returns a number object.
+returns true. This method returns a number value.
 
 =cut
 
@@ -1042,7 +1042,7 @@ returns true. This method returns a number object.
     $hash->reset; # {1=>undef,3=>undef,5=>undef,7=>undef}
 
 The reset method returns nullifies the value of each element in the hash. This
-method returns a hash object. Note: This method modifies the
+method returns a hash value. Note: This method modifies the
 hash.
 
 =cut
@@ -1055,7 +1055,7 @@ hash.
 
 The reverse method returns a hash reference consisting of the hash's keys and
 values inverted. Note, keys with undefined values will be dropped. This method
-returns a hash object.
+returns a hash value.
 
 =cut
 
@@ -1066,7 +1066,7 @@ returns a hash object.
     $hash->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -1076,7 +1076,7 @@ returns an array object.
 
     $hash->say; # '{1=>2,3=>4}\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -1115,7 +1115,7 @@ hash object.
 
     $hash->sort; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -1126,7 +1126,7 @@ This method will throw an exception if called.
 
     $hash->tail; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -1137,9 +1137,9 @@ This method will throw an exception if called.
 
     $hash->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 
@@ -1150,7 +1150,7 @@ If captured this method returns an exception object.
     $hash->type; # HASH
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 
@@ -1175,7 +1175,7 @@ hash object.
     $hash->values; # [2,4,6,8]
 
 The values method returns an array reference consisting of the values of the
-elements in the hash. This method returns an array object.
+elements in the hash. This method returns an array value.
 
 =cut
 

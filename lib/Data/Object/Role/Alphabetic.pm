@@ -69,20 +69,20 @@ alpha-numeric data.
 
 =method eq
 
-    # given $alphabetic
+    # given 'exciting'
 
-    $alphabetic->eq; # (...)
+    $alphabetic->eq('Exciting'); # 0
 
 The eq method returns true if the argument provided is equal to the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
 =method ge
 
-    # given $alphabetic
+    # given 'exciting'
 
-    $alphabetic->ge; # (...)
+    $alphabetic->ge('Exciting'); # 1
 
 The ge method returns true if the argument provided is greater-than or equal-to
 the value represented by the object. This method returns a Data::Object::Number
@@ -92,20 +92,20 @@ object.
 
 =method gt
 
-    # given $alphabetic
+    # given 'exciting'
 
-    $alphabetic->gt; # (...)
+    $alphabetic->gt('Exciting'); # 1
 
 The gt method returns true if the argument provided is greater-than the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
 =method le
 
-    # given $alphabetic
+    # given 'exciting'
 
-    $alphabetic->le; # (...)
+    $alphabetic->le('Exciting'); # 0
 
 The le method returns true if the argument provided is less-than or equal-to
 the value represented by the object. This method returns a Data::Object::Number
@@ -115,23 +115,23 @@ object.
 
 =method lt
 
-    # given $alphabetic
+    # given 'exciting'
 
-    $alphabetic->lt; # (...)
+    $alphabetic->lt('Exciting'); # 0
 
 The lt method returns true if the argument provided is less-than the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
 =method ne
 
-    # given $alphabetic
+    # given 'exciting'
 
-    $alphabetic->ne; # (...)
+    $alphabetic->ne('Exciting'); # 1
 
 The ne method returns true if the argument provided is not equal to the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 

@@ -225,7 +225,7 @@ argument as the rvalue. This method returns a L<Data::Object::Code> object.
 
     $code->dump; # sub { package Data::Object; goto \\&{\$data}; }
 
-The dump method returns returns a string string representation of the object.
+The dump method returns returns a string representation of the object.
 This method returns a L<Data::Object::String> object.
 
 =cut
@@ -292,7 +292,7 @@ returns a L<Data::Object::Array> object.
 
     $code->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
 If captured this method returns a L<Data::Object::Exception> object.
 

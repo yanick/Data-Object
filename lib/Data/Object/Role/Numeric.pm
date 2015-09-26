@@ -89,9 +89,9 @@ numeric data.
 
 =method downto
 
-    # given ...
+    # given 5
 
-    my $object = $numeric->downto(...);
+    my $array = $numeric->downto(1); # [5,4,3,2,1]
 
 The downto method returns a ...
 
@@ -99,20 +99,20 @@ The downto method returns a ...
 
 =method eq
 
-    # given $numeric
+    # given 1
 
-    $numeric->eq; # (...)
+    $numeric->eq(0); # 0
 
 The eq method returns true if the argument provided is equal to the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
 =method ge
 
-    # given $numeric
+    # given 1
 
-    $numeric->ge; # (...)
+    $numeric->ge(0); # 1
 
 The ge method returns true if the argument provided is greater-than or equal-to
 the value represented by the object. This method returns a Data::Object::Number
@@ -122,20 +122,20 @@ object.
 
 =method gt
 
-    # given $numeric
+    # given 1
 
-    $numeric->gt; # (...)
+    $numeric->gt(0); # 1
 
 The gt method returns true if the argument provided is greater-than the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
 =method le
 
-    # given $numeric
+    # given 1
 
-    $numeric->le; # (...)
+    $numeric->le(0); # 0
 
 The le method returns true if the argument provided is less-than or equal-to
 the value represented by the object. This method returns a Data::Object::Number
@@ -145,43 +145,47 @@ object.
 
 =method lt
 
-    # given $numeric
+    # given 1
 
-    $numeric->lt; # (...)
+    $numeric->lt(0); # 0
 
 The lt method returns true if the argument provided is less-than the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
 =method ne
 
-    # given $numeric
+    # given 1
 
-    $numeric->ne; # (...)
+    $numeric->ne(0); # 1
 
 The ne method returns true if the argument provided is not equal to the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
 =method to
 
-    # given ...
+    # given 5
 
-    my $object = $numeric->to(...);
+    my $object = $numeric->to(-5); # [5,4,3,2,1,0,-1,2,3,4,5]
 
-The to method returns a ...
+The to method returns an array reference containing integer increasing or
+decreasing values to and including the limit in ascending or descending order
+based on the value of the floating-point object. This method returns an array
+value.
 
 =cut
 
 =method upto
 
-    # given ...
+    # given 23
 
-    my $object = $numeric->upto(...);
+    my $object = $numeric->upto(25); # [23,24,25]
 
-The upto method returns a ...
+The upto method returns an array reference containing integer increasing values
+up to and including the limit. This method returns an array value.
 
 =cut
 

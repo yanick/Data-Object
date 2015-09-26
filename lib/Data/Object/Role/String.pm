@@ -345,7 +345,7 @@ string object.
 The chop method removes the last character of a string and returns the character
 chopped. It is much more efficient than "s/.$//s" because it neither scans nor
 copies the string. Note, this method modifies and returns the string. This
-method returns a string object.
+method returns a string value.
 
 =cut
 
@@ -356,7 +356,7 @@ method returns a string object.
     $string->concat('DEF', 'GHI'); # ABCDEFGHI
 
 The concat method modifies and returns the string with the argument list
-appended to it. This method returns a string object.
+appended to it. This method returns a string value.
 
 =cut
 
@@ -419,8 +419,8 @@ object.
 
     $string->dump; # 'exciting'
 
-The dump method returns returns a string string representation of the object.
-This method returns a string object.
+The dump method returns returns a string representation of the object.
+This method returns a string value.
 
 =cut
 
@@ -431,7 +431,7 @@ This method returns a string object.
     $string->eq('Exciting'); # 0
 
 The eq method returns true if the argument provided is equal to the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
@@ -454,7 +454,7 @@ object.
     $string->gt('Exciting'); # 1
 
 The gt method returns true if the argument provided is greater-than the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
@@ -508,7 +508,7 @@ string object. This method is an alias to the lowercase method.
     $string->lcfirst; # eXCITING
 
 The lcfirst method returns a the string with the first character lowercased.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 
@@ -531,7 +531,7 @@ object.
     $string->length; # 9
 
 The length method returns the number of characters within the string. This
-method returns a number object.
+method returns a number value.
 
 =cut
 
@@ -543,7 +543,7 @@ method returns a number object.
 
 The lines method breaks the string into pieces, split on 1 or more newline
 characters, and returns an array reference consisting of the pieces. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -565,7 +565,7 @@ string object.
     $string->lt('Exciting'); # 0
 
 The lt method returns true if the argument provided is less-than the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
@@ -576,7 +576,7 @@ represented by the object. This method returns a number object.
     $string->methods;
 
 The methods method returns the list of methods attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -587,7 +587,7 @@ returns an array object.
     $string->ne('Exciting'); # 1
 
 The ne method returns true if the argument provided is not equal to the value
-represented by the object. This method returns a number object.
+represented by the object. This method returns a number value.
 
 =cut
 
@@ -608,7 +608,7 @@ The new method expects a string and returns a new class instance.
     $string->print; # 'exciting'
 
 The print method outputs the value represented by the object to STDOUT and
-returns true. This method returns a number object.
+returns true. This method returns a number value.
 
 =cut
 
@@ -636,7 +636,7 @@ string object.
     $string->reverse; # Hello, world
 
 The reverse method returns a string where the characters in the string are in
-the opposite order. This method returns a string object.
+the opposite order. This method returns a string value.
 
 =cut
 
@@ -671,7 +671,7 @@ be determined after execution.
     $string->roles;
 
 The roles method returns the list of roles attached to object. This method
-returns an array object.
+returns an array value.
 
 =cut
 
@@ -681,7 +681,7 @@ returns an array object.
 
     $string->say; # 'exciting\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -698,7 +698,7 @@ non-alphanumeric characters and each word (group of alphanumeric characters
 separated by 1 or more non-alphanumeric characters) is capitalized. The only
 difference between this method and the camelcase method is that this method
 ensures that the first character will always be lowercased. Note, this method
-modifies the string. This method returns a string object.
+modifies the string. This method returns a string value.
 
 =cut
 
@@ -738,9 +738,9 @@ string object.
 
     $string->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
-If captured this method returns an exception object.
+If captured this method returns an exception value.
 
 =cut
 
@@ -764,7 +764,7 @@ string object.
     $string->trim; # system is   ready
 
 The trim method removes 1 or more consecutive leading and/or trailing spaces
-from the string. This method returns a string object.
+from the string. This method returns a string value.
 
 =cut
 
@@ -775,7 +775,7 @@ from the string. This method returns a string object.
     $string->type; # STRING
 
 The type method returns a string representing the internal data type object name.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 
@@ -797,7 +797,7 @@ string object. This method is an alias to the uppercase method.
     $string->ucfirst; # Exciting
 
 The ucfirst method returns a the string with the first character uppercased.
-This method returns a string object.
+This method returns a string value.
 
 =cut
 
@@ -820,7 +820,7 @@ string object.
 
 The words method splits the string into a list of strings, separating each
 group of characters by 1 or more consecutive spaces, and returns that list as an
-array reference. This method returns an array object.
+array reference. This method returns an array value.
 
 =cut
 

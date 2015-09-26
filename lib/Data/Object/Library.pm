@@ -355,7 +355,7 @@ DECLARE ["AnyObj", "AnyObject", "UniversalObj", "UniversalObject"] => (
 
 =head1 DESCRIPTION
 
-Data::Object::Library is a <Type::Tiny> type library that extends the
+Data::Object::Library is a L<Type::Tiny> type library that extends the
 L<Types::Standard>, L<Types::Common::Numeric>, and L<Types::Common::String>
 libraries and adds type constraints and coercions for L<Data::Object> objects.
 
@@ -366,8 +366,8 @@ libraries and adds type constraints and coercions for L<Data::Object> objects.
     has data => (isa => Any);
 
 The Any type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Any function can be
-used to throw an exception is the argument can not be validated. The is_Any
+see that documentation for more information. The C<assert_Any> function can be
+used to throw an exception is the argument can not be validated. The C<is_Any>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -379,8 +379,8 @@ validated.
 
 The AnyObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Universal> object. The
-assert_AnyObj function can be used to throw an exception if the argument can
-not be validated. The is_AnyObj function can be used to return true or false if
+C<assert_AnyObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_AnyObj> function can be used to return true or false if
 the argument can not be validated.
 
 =cut
@@ -391,8 +391,8 @@ the argument can not be validated.
 
 The AnyObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Universal> object. The
-assert_AnyObject function can be used to throw an exception if the argument can
-not be validated. The is_AnyObject function can be used to return true or false
+C<assert_AnyObject> function can be used to throw an exception if the argument can
+not be validated. The C<is_AnyObject> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -403,8 +403,8 @@ if the argument can not be validated.
 
 The ArrayObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Array> object. The
-assert_ArrayObj function can be used to throw an exception if the argument can
-not be validated. The is_ArrayObj function can be used to return true or false
+C<assert_ArrayObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_ArrayObj> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -415,8 +415,8 @@ if the argument can not be validated.
 
 The ArrayObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Array> object. The
-assert_ArrayObject function can be used to throw an exception if the argument
-can not be validated. The is_ArrayObject function can be used to return true or
+C<assert_ArrayObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_ArrayObject> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -426,9 +426,9 @@ false if the argument can not be validated.
     has data => (isa => ArrayRef);
 
 The ArrayRef type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_ArrayRef
-function can be used to throw an exception if the argument can not be
-validated. The is_ArrayRef function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_ArrayRef
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_ArrayRef> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -438,8 +438,8 @@ argument can not be validated.
     has data => (isa => Bool);
 
 The Bool type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Bool function can be
-used to throw an exception if the argument can not be validated. The is_Bool
+see that documentation for more information. The C<assert_Bool> function can be
+used to throw an exception if the argument can not be validated. The C<is_Bool>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -450,9 +450,9 @@ validated.
     has data => (isa => ClassName['MyClass']);
 
 The ClassName type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_ClassName
-function can be used to throw an exception if the argument can not be
-validated. The is_ClassName function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_ClassName
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_ClassName> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -462,9 +462,9 @@ argument can not be validated.
     has data => (isa => CodeObj);
 
 The CodeObj type constraint is provided by this library and accepts any object
-that is, or is derived from, a L<Data::Object::Code> object. The assert_CodeObj
-function can be used to throw an exception if the argument can not be
-validated. The is_CodeObj function can be used to return true or false if the
+that is, or is derived from, a L<Data::Object::Code> object. The C<assert_CodeObj
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_CodeObj> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -475,8 +475,8 @@ argument can not be validated.
 
 The CodeObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Code> object. The
-assert_CodeObject function can be used to throw an exception if the argument
-can not be validated. The is_CodeObject function can be used to return true or
+C<assert_CodeObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_CodeObject> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -486,9 +486,9 @@ false if the argument can not be validated.
     has data => (isa => CodeRef);
 
 The CodeRef type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_CodeRef function
+Please see that documentation for more information. The C<assert_CodeRef> function
 can be used to throw an exception if the argument can not be validated. The
-is_CodeRef function can be used to return true or false if the argument can not
+C<is_CodeRef> function can be used to return true or false if the argument can not
 be validated.
 
 =cut
@@ -498,9 +498,9 @@ be validated.
     has data => (isa => ConsumerOf['MyRole']);
 
 The ConsumerOf type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_ConsumerOf
-function can be used to throw an exception if the argument can not be
-validated. The is_ConsumerOf function can be used to return true or false if
+Please see that documentation for more information. The C<assert_ConsumerOf
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_ConsumerOf> function can be used to return true or false if
 the argument can not be validated.
 
 =cut
@@ -510,9 +510,9 @@ the argument can not be validated.
     has data => (isa => Defined);
 
 The Defined type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_Defined function
+Please see that documentation for more information. The C<assert_Defined> function
 can be used to throw an exception if the argument can not be validated. The
-is_Defined function can be used to return true or false if the argument can not
+C<is_Defined> function can be used to return true or false if the argument can not
 be validated.
 
 =cut
@@ -522,8 +522,8 @@ be validated.
     has data => (isa => Dict);
 
 The Dict type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Dict function can be
-used to throw an exception if the argument can not be validated. The is_Dict
+see that documentation for more information. The C<assert_Dict> function can be
+used to throw an exception if the argument can not be validated. The C<is_Dict>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -534,8 +534,8 @@ validated.
     has data => (isa => Enum);
 
 The Enum type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Enum function can be
-used to throw an exception if the argument can not be validated. The is_Enum
+see that documentation for more information. The C<assert_Enum> function can be
+used to throw an exception if the argument can not be validated. The C<is_Enum>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -546,9 +546,9 @@ validated.
     has data => (isa => FileHandle);
 
 The FileHandle type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_FileHandle
-function can be used to throw an exception if the argument can not be
-validated. The is_FileHandle function can be used to return true or false if
+Please see that documentation for more information. The C<assert_FileHandle
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_FileHandle> function can be used to return true or false if
 the argument can not be validated.
 
 =cut
@@ -559,8 +559,8 @@ the argument can not be validated.
 
 The FloatObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Float> object. The
-assert_FloatObj function can be used to throw an exception if the argument can
-not be validated. The is_FloatObj function can be used to return true or false
+C<assert_FloatObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_FloatObj> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -571,8 +571,8 @@ if the argument can not be validated.
 
 The FloatObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Float> object. The
-assert_FloatObject function can be used to throw an exception if the argument
-can not be validated. The is_FloatObject function can be used to return true or
+C<assert_FloatObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_FloatObject> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -582,9 +582,9 @@ false if the argument can not be validated.
     has data => (isa => GlobRef);
 
 The GlobRef type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_GlobRef function
+Please see that documentation for more information. The C<assert_GlobRef> function
 can be used to throw an exception if the argument can not be validated. The
-is_GlobRef function can be used to return true or false if the argument can not
+C<is_GlobRef> function can be used to return true or false if the argument can not
 be validated.
 
 =cut
@@ -594,9 +594,9 @@ be validated.
     has data => (isa => HasMethods);
 
 The HasMethods type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_HasMethods
-function can be used to throw an exception if the argument can not be
-validated. The is_HasMethods function can be used to return true or false if
+Please see that documentation for more information. The C<assert_HasMethods
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_HasMethods> function can be used to return true or false if
 the argument can not be validated.
 
 =cut
@@ -606,9 +606,9 @@ the argument can not be validated.
     has data => (isa => HashObj);
 
 The HashObj type constraint is provided by this library and accepts any object
-that is, or is derived from, a L<Data::Object::Hash> object. The assert_HashObj
-function can be used to throw an exception if the argument can not be
-validated. The is_HashObj function can be used to return true or false if the
+that is, or is derived from, a L<Data::Object::Hash> object. The C<assert_HashObj
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_HashObj> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -619,8 +619,8 @@ argument can not be validated.
 
 The HashObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Hash> object. The
-assert_HashObject function can be used to throw an exception if the argument
-can not be validated. The is_HashObject function can be used to return true or
+C<assert_HashObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_HashObject> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -630,9 +630,9 @@ false if the argument can not be validated.
     has data => (isa => HashRef);
 
 The HashRef type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_HashRef function
+Please see that documentation for more information. The C<assert_HashRef> function
 can be used to throw an exception if the argument can not be validated. The
-is_HashRef function can be used to return true or false if the argument can not
+C<is_HashRef> function can be used to return true or false if the argument can not
 be validated.
 
 =cut
@@ -642,9 +642,9 @@ be validated.
     has data => (isa => InstanceOf['MyClass']);
 
 The InstanceOf type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_InstanceOf
-function can be used to throw an exception if the argument can not be
-validated. The is_InstanceOf function can be used to return true or false if
+Please see that documentation for more information. The C<assert_InstanceOf
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_InstanceOf> function can be used to return true or false if
 the argument can not be validated.
 
 =cut
@@ -654,8 +654,8 @@ the argument can not be validated.
     has data => (isa => Int);
 
 The Int type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Int function can be
-used to throw an exception if the argument can not be validated. The is_Int
+see that documentation for more information. The C<assert_Int> function can be
+used to throw an exception if the argument can not be validated. The C<is_Int>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -667,8 +667,8 @@ validated.
 
 The IntObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Integer> object. The
-assert_IntObj function can be used to throw an exception if the argument can
-not be validated. The is_IntObj function can be used to return true or false if
+C<assert_IntObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_IntObj> function can be used to return true or false if
 the argument can not be validated.
 
 =cut
@@ -679,8 +679,8 @@ the argument can not be validated.
 
 The IntObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Integer> object. The
-assert_IntObject function can be used to throw an exception if the argument can
-not be validated. The is_IntObject function can be used to return true or false
+C<assert_IntObject> function can be used to throw an exception if the argument can
+not be validated. The C<is_IntObject> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -691,8 +691,8 @@ if the argument can not be validated.
 
 The IntegerObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Integer> object. The
-assert_IntegerObj function can be used to throw an exception if the argument
-can not be validated. The is_IntegerObj function can be used to return true or
+C<assert_IntegerObj> function can be used to throw an exception if the argument
+can not be validated. The C<is_IntegerObj> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -703,8 +703,8 @@ false if the argument can not be validated.
 
 The IntegerObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Integer> object. The
-assert_IntegerObject function can be used to throw an exception if the argument
-can not be validated. The is_IntegerObject function can be used to return true
+C<assert_IntegerObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_IntegerObject> function can be used to return true
 or false if the argument can not be validated.
 
 =cut
@@ -714,8 +714,8 @@ or false if the argument can not be validated.
     has data => (isa => Item);
 
 The Item type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Item function can be
-used to throw an exception if the argument can not be validated. The is_Item
+see that documentation for more information. The C<assert_Item> function can be
+used to throw an exception if the argument can not be validated. The C<is_Item>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -726,9 +726,9 @@ validated.
     has data => (isa => LaxNum);
 
 The LaxNum type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_LaxNum function
+Please see that documentation for more information. The C<assert_LaxNum> function
 can be used to throw an exception if the argument can not be validated. The
-is_LaxNum function can be used to return true or false if the argument can not
+C<is_LaxNum> function can be used to return true or false if the argument can not
 be validated.
 
 =cut
@@ -739,8 +739,8 @@ be validated.
 
 The LowerCaseSimpleStr type constraint is provided by the
 L<Types::Common::String> library. Please see that documentation for more The
-assert_LowerCaseSimpleStr function can be used to throw an exception if the
-argument can not be validated. The is_LowerCaseSimpleStr function can be used
+C<assert_LowerCaseSimpleStr> function can be used to throw an exception if the
+argument can not be validated. The C<is_LowerCaseSimpleStr> function can be used
 to return true or false if the argument can not be validated.
 information.
 
@@ -751,9 +751,9 @@ information.
     has data => (isa => LowerCaseStr);
 
 The LowerCaseStr type constraint is provided by the L<Types::Common::String>
-library. Please see that documentation for more information. The assert_type
-function can be used to throw an exception if the argument can not be
-validated. The is_type function can be used to return true or false if the
+library. Please see that documentation for more information. The C<assert_type
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_type> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -763,8 +763,8 @@ argument can not be validated.
     has data => (isa => Map[Int, HashRef]);
 
 The Map type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Map function can be
-used to throw an exception if the argument can not be validated. The is_Map
+see that documentation for more information. The C<assert_Map> function can be
+used to throw an exception if the argument can not be validated. The C<is_Map>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -775,8 +775,8 @@ validated.
     has data => (isa => Maybe);
 
 The Maybe type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Maybe function can be
-used to throw an exception if the argument can not be validated. The is_Maybe
+see that documentation for more information. The C<assert_Maybe> function can be
+used to throw an exception if the argument can not be validated. The C<is_Maybe>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -788,8 +788,8 @@ validated.
 
 The NegativeInt type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
-assert_NegativeInt function can be used to throw an exception if the argument
-can not be validated. The is_NegativeInt function can be used to return true or
+C<assert_NegativeInt> function can be used to throw an exception if the argument
+can not be validated. The C<is_NegativeInt> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -800,8 +800,8 @@ false if the argument can not be validated.
 
 The NegativeNum type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
-assert_NegativeNum function can be used to throw an exception if the argument
-can not be validated. The is_NegativeNum function can be used to return true or
+C<assert_NegativeNum> function can be used to throw an exception if the argument
+can not be validated. The C<is_NegativeNum> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -812,8 +812,8 @@ false if the argument can not be validated.
 
 The NegativeOrZeroInt type constraint is provided by the
 L<Types::Common::Numeric> library. Please see that documentation for more The
-assert_NegativeOrZeroInt function can be used to throw an exception if the
-argument can not be validated. The is_NegativeOrZeroInt function can be used to
+C<assert_NegativeOrZeroInt> function can be used to throw an exception if the
+argument can not be validated. The C<is_NegativeOrZeroInt> function can be used to
 return true or false if the argument can not be validated.
 information.
 
@@ -825,8 +825,8 @@ information.
 
 The NegativeOrZeroNum type constraint is provided by the
 L<Types::Common::Numeric> library. Please see that documentation for more The
-assert_type function can be used to throw an exception if the argument can not
-be validated. The is_type function can be used to return true or false if the
+C<assert_type> function can be used to throw an exception if the argument can not
+be validated. The C<is_type> function can be used to return true or false if the
 argument can not be validated.
 information.
 
@@ -838,8 +838,8 @@ information.
 
 The NonEmptySimpleStr type constraint is provided by the
 L<Types::Common::String> library. Please see that documentation for more The
-assert_type function can be used to throw an exception if the argument can not
-be validated. The is_type function can be used to return true or false if the
+C<assert_type> function can be used to throw an exception if the argument can not
+be validated. The C<is_type> function can be used to return true or false if the
 argument can not be validated.
 information.
 
@@ -850,9 +850,9 @@ information.
     has data => (isa => NonEmptyStr);
 
 The NonEmptyStr type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_type function
+Please see that documentation for more information. The C<assert_type> function
 can be used to throw an exception if the argument can not be validated. The
-is_type function can be used to return true or false if the argument can not be
+C<is_type> function can be used to return true or false if the argument can not be
 validated.
 
 =cut
@@ -862,8 +862,8 @@ validated.
     has data => (isa => Num);
 
 The Num type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Num function can be
-used to throw an exception if the argument can not be validated. The is_Num
+see that documentation for more information. The C<assert_Num> function can be
+used to throw an exception if the argument can not be validated. The C<is_Num>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -875,8 +875,8 @@ validated.
 
 The NumObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Number> object. The
-assert_NumObj function can be used to throw an exception if the argument can
-not be validated. The is_NumObj function can be used to return true or false if
+C<assert_NumObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_NumObj> function can be used to return true or false if
 the argument can not be validated.
 
 =cut
@@ -887,8 +887,8 @@ the argument can not be validated.
 
 The NumObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Number> object. The
-assert_NumObject function can be used to throw an exception if the argument can
-not be validated. The is_NumObject function can be used to return true or false
+C<assert_NumObject> function can be used to throw an exception if the argument can
+not be validated. The C<is_NumObject> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -899,8 +899,8 @@ if the argument can not be validated.
 
 The NumberObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Number> object. The
-assert_NumberObj function can be used to throw an exception if the argument can
-not be validated. The is_NumberObj function can be used to return true or false
+C<assert_NumberObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_NumberObj> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -911,8 +911,8 @@ if the argument can not be validated.
 
 The NumberObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Number> object. The
-assert_NumberObject function can be used to throw an exception if the argument
-can not be validated. The is_NumberObject function can be used to return true
+C<assert_NumberObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_NumberObject> function can be used to return true
 or false if the argument can not be validated.
 
 =cut
@@ -923,8 +923,8 @@ or false if the argument can not be validated.
 
 The NumericCode type constraint is provided by the L<Types::Common::String>
 library. Please see that documentation for more information. The
-assert_NumericCode function can be used to throw an exception if the argument
-can not be validated. The is_NumericCode function can be used to return true or
+C<assert_NumericCode> function can be used to throw an exception if the argument
+can not be validated. The C<is_NumericCode> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -934,9 +934,9 @@ false if the argument can not be validated.
     has data => (isa => Object);
 
 The Object type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_Object function
+Please see that documentation for more information. The C<assert_Object> function
 can be used to throw an exception if the argument can not be validated. The
-is_Object function can be used to return true or false if the argument can not
+C<is_Object> function can be used to return true or false if the argument can not
 be validated.
 
 =cut
@@ -946,9 +946,9 @@ be validated.
     has data => (isa => OptList);
 
 The OptList type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_OptList function
+Please see that documentation for more information. The C<assert_OptList> function
 can be used to throw an exception if the argument can not be validated. The
-is_OptList function can be used to return true or false if the argument can not
+C<is_OptList> function can be used to return true or false if the argument can not
 be validated.
 
 =cut
@@ -958,9 +958,9 @@ be validated.
     has data => (isa => Dict[id => Optional[Int]]);
 
 The Optional type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_Optional
-function can be used to throw an exception if the argument can not be
-validated. The is_Optional function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_Optional
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_Optional> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -970,9 +970,9 @@ argument can not be validated.
     has data => (isa => Overload);
 
 The Overload type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_Overload
-function can be used to throw an exception if the argument can not be
-validated. The is_Overload function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_Overload
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_Overload> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -982,9 +982,9 @@ argument can not be validated.
     has data => (isa => Password);
 
 The Password type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_Password
-function can be used to throw an exception if the argument can not be
-validated. The is_Password function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_Password
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_Password> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -995,8 +995,8 @@ argument can not be validated.
 
 The PositiveInt type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
-assert_PositiveInt function can be used to throw an exception if the argument
-can not be validated. The is_PositiveInt function can be used to return true or
+C<assert_PositiveInt> function can be used to throw an exception if the argument
+can not be validated. The C<is_PositiveInt> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -1007,8 +1007,8 @@ false if the argument can not be validated.
 
 The PositiveNum type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
-assert_PositiveNum function can be used to throw an exception if the argument
-can not be validated. The is_PositiveNum function can be used to return true or
+C<assert_PositiveNum> function can be used to throw an exception if the argument
+can not be validated. The C<is_PositiveNum> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -1019,8 +1019,8 @@ false if the argument can not be validated.
 
 The PositiveOrZeroInt type constraint is provided by the
 L<Types::Common::Numeric> library. Please see that documentation for more The
-assert_PositiveOrZeroInt function can be used to throw an exception if the
-argument can not be validated. The is_PositiveOrZeroInt function can be used to
+C<assert_PositiveOrZeroInt> function can be used to throw an exception if the
+argument can not be validated. The C<is_PositiveOrZeroInt> function can be used to
 return true or false if the argument can not be validated.
 information.
 
@@ -1032,8 +1032,8 @@ information.
 
 The PositiveOrZeroNum type constraint is provided by the
 L<Types::Common::Numeric> library. Please see that documentation for more The
-assert_type function can be used to throw an exception if the argument can not
-be validated. The is_type function can be used to return true or false if the
+C<assert_type> function can be used to throw an exception if the argument can not
+be validated. The C<is_type> function can be used to return true or false if the
 argument can not be validated.
 information.
 
@@ -1044,8 +1044,8 @@ information.
     has data => (isa => Ref['SCALAR']);
 
 The Ref type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_type function can be
-used to throw an exception if the argument can not be validated. The is_type
+see that documentation for more information. The C<assert_type> function can be
+used to throw an exception if the argument can not be validated. The C<is_type>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -1057,8 +1057,8 @@ validated.
 
 The RegexpObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Regexp> object. The
-assert_RegexpObj function can be used to throw an exception if the argument can
-not be validated. The is_RegexpObj function can be used to return true or false
+C<assert_RegexpObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_RegexpObj> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -1069,8 +1069,8 @@ if the argument can not be validated.
 
 The RegexpObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Regexp> object. The
-assert_RegexpObject function can be used to throw an exception if the argument
-can not be validated. The is_RegexpObject function can be used to return true
+C<assert_RegexpObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_RegexpObject> function can be used to return true
 or false if the argument can not be validated.
 
 =cut
@@ -1080,9 +1080,9 @@ or false if the argument can not be validated.
     has data => (isa => RegexpRef);
 
 The RegexpRef type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_RegexpRef
-function can be used to throw an exception if the argument can not be
-validated. The is_RegexpRef function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_RegexpRef
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_RegexpRef> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -1092,9 +1092,9 @@ argument can not be validated.
     has data => (isa => RoleName);
 
 The RoleName type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_RoleName
-function can be used to throw an exception if the argument can not be
-validated. The is_RoleName function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_RoleName
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_RoleName> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -1105,8 +1105,8 @@ argument can not be validated.
 
 The ScalarObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Scalar> object. The
-assert_ScalarObj function can be used to throw an exception if the argument can
-not be validated. The is_ScalarObj function can be used to return true or false
+C<assert_ScalarObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_ScalarObj> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -1117,8 +1117,8 @@ if the argument can not be validated.
 
 The ScalarObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Scalar> object. The
-assert_ScalarObject function can be used to throw an exception if the argument
-can not be validated. The is_ScalarObject function can be used to return true
+C<assert_ScalarObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_ScalarObject> function can be used to return true
 or false if the argument can not be validated.
 
 =cut
@@ -1128,9 +1128,9 @@ or false if the argument can not be validated.
     has data => (isa => ScalarRef);
 
 The ScalarRef type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_ScalarRef
-function can be used to throw an exception if the argument can not be
-validated. The is_ScalarRef function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_ScalarRef
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_ScalarRef> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -1141,8 +1141,8 @@ argument can not be validated.
 
 The SimpleStr type constraint is provided by the L<Types::Common::String>
 library. Please see that documentation for more information. The
-assert_SimpleStr function can be used to throw an exception if the argument can
-not be validated. The is_SimpleStr function can be used to return true or false
+C<assert_SimpleStr> function can be used to throw an exception if the argument can
+not be validated. The C<is_SimpleStr> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -1153,8 +1153,8 @@ if the argument can not be validated.
 
 The SingleDigit type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
-assert_SingleDigit function can be used to throw an exception if the argument
-can not be validated. The is_SingleDigit function can be used to return true or
+C<assert_SingleDigit> function can be used to throw an exception if the argument
+can not be validated. The C<is_SingleDigit> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -1164,8 +1164,8 @@ false if the argument can not be validated.
     has data => (isa => Str);
 
 The Str type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Str function can be
-used to throw an exception if the argument can not be validated. The is_Str
+see that documentation for more information. The C<assert_Str> function can be
+used to throw an exception if the argument can not be validated. The C<is_Str>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -1176,9 +1176,9 @@ validated.
     has data => (isa => StrMatch);
 
 The StrMatch type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_StrMatch
-function can be used to throw an exception if the argument can not be
-validated. The is_StrMatch function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_StrMatch
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_StrMatch> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -1189,8 +1189,8 @@ argument can not be validated.
 
 The StrObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::String> object. The
-assert_StrObj function can be used to throw an exception if the argument can
-not be validated. The is_StrObj function can be used to return true or false if
+C<assert_StrObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_StrObj> function can be used to return true or false if
 the argument can not be validated.
 
 =cut
@@ -1201,8 +1201,8 @@ the argument can not be validated.
 
 The StrObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::String> object. The
-assert_StrObject function can be used to throw an exception if the argument can
-not be validated. The is_StrObject function can be used to return true or false
+C<assert_StrObject> function can be used to throw an exception if the argument can
+not be validated. The C<is_StrObject> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -1212,9 +1212,9 @@ if the argument can not be validated.
     has data => (isa => StrictNum);
 
 The StrictNum type constraint is provided by the L<Types::Standard> library.
-Please see that documentation for more information. The assert_StrictNum
-function can be used to throw an exception if the argument can not be
-validated. The is_StrictNum function can be used to return true or false if the
+Please see that documentation for more information. The C<assert_StrictNum
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_StrictNum> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -1225,8 +1225,8 @@ argument can not be validated.
 
 The StringObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::String> object. The
-assert_StringObj function can be used to throw an exception if the argument can
-not be validated. The is_StringObj function can be used to return true or false
+C<assert_StringObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_StringObj> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -1237,8 +1237,8 @@ if the argument can not be validated.
 
 The StringObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::String> object. The
-assert_StringObject function can be used to throw an exception if the argument
-can not be validated. The is_StringObject function can be used to return true
+C<assert_StringObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_StringObject> function can be used to return true
 or false if the argument can not be validated.
 
 =cut
@@ -1249,8 +1249,8 @@ or false if the argument can not be validated.
 
 The StrongPassword type constraint is provided by the L<Types::Common::String>
 library. Please see that documentation for more information. The
-assert_StrongPassword function can be used to throw an exception if the
-argument can not be validated. The is_StrongPassword function can be used to
+C<assert_StrongPassword> function can be used to throw an exception if the
+argument can not be validated. The C<is_StrongPassword> function can be used to
 return true or false if the argument can not be validated.
 
 =cut
@@ -1260,8 +1260,8 @@ return true or false if the argument can not be validated.
     has data => (isa => Tied['MyClass']);
 
 The Tied type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Tied function can be
-used to throw an exception if the argument can not be validated. The is_Tied
+see that documentation for more information. The C<assert_Tied> function can be
+used to throw an exception if the argument can not be validated. The C<is_Tied>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -1272,8 +1272,8 @@ validated.
     has data => (isa => Tuple[Int, Str, Str]);
 
 The Tuple type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Tuple function can be
-used to throw an exception if the argument can not be validated. The is_Tuple
+see that documentation for more information. The C<assert_Tuple> function can be
+used to throw an exception if the argument can not be validated. The C<is_Tuple>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -1284,8 +1284,8 @@ validated.
     has data => (isa => Undef);
 
 The Undef type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Undef function can be
-used to throw an exception if the argument can not be validated. The is_Undef
+see that documentation for more information. The C<assert_Undef> function can be
+used to throw an exception if the argument can not be validated. The C<is_Undef>
 function can be used to return true or false if the argument can not be
 validated.
 
@@ -1297,8 +1297,8 @@ validated.
 
 The UndefObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Undef> object. The
-assert_UndefObj function can be used to throw an exception if the argument can
-not be validated. The is_UndefObj function can be used to return true or false
+C<assert_UndefObj> function can be used to throw an exception if the argument can
+not be validated. The C<is_UndefObj> function can be used to return true or false
 if the argument can not be validated.
 
 =cut
@@ -1309,8 +1309,8 @@ if the argument can not be validated.
 
 The UndefObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Undef> object. The
-assert_UndefObject function can be used to throw an exception if the argument
-can not be validated. The is_UndefObject function can be used to return true or
+C<assert_UndefObject> function can be used to throw an exception if the argument
+can not be validated. The C<is_UndefObject> function can be used to return true or
 false if the argument can not be validated.
 
 =cut
@@ -1321,8 +1321,8 @@ false if the argument can not be validated.
 
 The UniversalObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Universal> object. The
-assert_UniversalObj function can be used to throw an exception if the argument
-can not be validated. The is_UniversalObj function can be used to return true
+C<assert_UniversalObj> function can be used to throw an exception if the argument
+can not be validated. The C<is_UniversalObj> function can be used to return true
 or false if the argument can not be validated.
 
 =cut
@@ -1333,8 +1333,8 @@ or false if the argument can not be validated.
 
 The UniversalObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Universal> object. The
-assert_UniversalObject function can be used to throw an exception if the
-argument can not be validated. The is_UniversalObject function can be used to
+C<assert_UniversalObject> function can be used to throw an exception if the
+argument can not be validated. The C<is_UniversalObject> function can be used to
 return true or false if the argument can not be validated.
 
 =cut
@@ -1345,8 +1345,8 @@ return true or false if the argument can not be validated.
 
 The UpperCaseSimpleStr type constraint is provided by the
 L<Types::Common::String> library. Please see that documentation for more The
-assert_UpperCaseSimpleStr function can be used to throw an exception if the
-argument can not be validated. The is_UpperCaseSimpleStr function can be used
+C<assert_UpperCaseSimpleStr> function can be used to throw an exception if the
+argument can not be validated. The C<is_UpperCaseSimpleStr> function can be used
 to return true or false if the argument can not be validated.
 information.
 
@@ -1357,9 +1357,9 @@ information.
     has data => (isa => UpperCaseStr);
 
 The UpperCaseStr type constraint is provided by the L<Types::Common::String>
-library. Please see that documentation for more information. The assert_type
-function can be used to throw an exception if the argument can not be
-validated. The is_type function can be used to return true or false if the
+library. Please see that documentation for more information. The C<assert_type
+function> can be used to throw an exception if the argument can not be
+validated. The C<is_type> function can be used to return true or false if the
 argument can not be validated.
 
 =cut
@@ -1369,8 +1369,8 @@ argument can not be validated.
     has data => (isa => Value);
 
 The Value type constraint is provided by the L<Types::Standard> library. Please
-see that documentation for more information. The assert_Value function can be
-used to throw an exception if the argument can not be validated. The is_Value
+see that documentation for more information. The C<assert_Value> function can be
+used to throw an exception if the argument can not be validated. The C<is_Value>
 function can be used to return true or false if the argument can not be
 validated.
 

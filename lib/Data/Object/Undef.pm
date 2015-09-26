@@ -155,7 +155,7 @@ object.
 
     $undef->dump; # 'undef'
 
-The dump method returns returns a string string representation of the object.
+The dump method returns returns a string representation of the object.
 This method returns a L<Data::Object::String> object.
 
 =cut
@@ -166,7 +166,7 @@ This method returns a L<Data::Object::String> object.
 
     $undef->eq; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -177,7 +177,7 @@ This method will throw an exception if called.
 
     $undef->ge; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -188,7 +188,7 @@ This method will throw an exception if called.
 
     $undef->gt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -199,7 +199,7 @@ This method will throw an exception if called.
 
     $undef->le; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -210,7 +210,7 @@ This method will throw an exception if called.
 
     $undef->lt; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -232,7 +232,7 @@ returns a L<Data::Object::Array> object.
 
     $undef->ne; # exception thrown
 
-This method is consumer requirement but has no function and is not implemented.
+This method is a consumer requirement but has no function and is not implemented.
 This method will throw an exception if called.
 
 =cut
@@ -275,7 +275,7 @@ returns a L<Data::Object::Array> object.
 
     $undef->say; # 'undef\n'
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
@@ -287,7 +287,7 @@ object.
 
     $undef->throw;
 
-The throw method terminates the program using the core die keyword passing the
+The throw method terminates the program using the core die keyword, passing the
 object to the L<Data::Object::Exception> class as the named parameter C<object>.
 If captured this method returns a L<Data::Object::Exception> object.
 

@@ -55,10 +55,10 @@ objects which meet the criteria for being output.
 
     # given $output
 
-    $output->print; # (...)
+    $output->print;
 
 The print method outputs the value represented by the object to STDOUT and
-returns true. This method returns a number object.
+returns true. This method returns a number value.
 
 =cut
 
@@ -66,9 +66,9 @@ returns true. This method returns a number object.
 
     # given $output
 
-    $output->say; # (...)
+    $output->say;
 
-The say method outputs the value represented by the object appeneded with a
+The say method outputs the value represented by the object appended with a
 newline to STDOUT and returns true. This method returns a L<Data::Object::Number>
 object.
 
