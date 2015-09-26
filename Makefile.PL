@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.010000;
+use 5.014000;
 
 use ExtUtils::MakeMaker;
 
@@ -15,21 +15,25 @@ my %WriteMakefileArgs = (
   "DISTNAME" => "Data-Object",
   "EXE_FILES" => [],
   "LICENSE" => "perl",
-  "MIN_PERL_VERSION" => "5.010000",
+  "MIN_PERL_VERSION" => "5.014000",
   "NAME" => "Data::Object",
   "PREREQ_PM" => {
-    "Moo" => "2.000001"
+    "Moo" => "2.000001",
+    "Type::Tiny" => "1.000005",
+    "Type::Tiny::Signatures" => "0.05"
   },
-  "VERSION" => "0.42",
+  "VERSION" => "0.50",
   "test" => {
-    "TESTS" => "t/data/*.t t/data/object/*.t t/data/object/array/*.t t/data/object/class/*.t t/data/object/code/*.t t/data/object/float/*.t t/data/object/hash/*.t t/data/object/integer/*.t t/data/object/number/*.t t/data/object/regexp/*.t t/data/object/role/*.t t/data/object/scalar/*.t t/data/object/string/*.t t/data/object/undef/*.t t/data/object/universal/*.t"
+    "TESTS" => "t/data/*.t t/data/object/*.t t/data/object/class/*.t t/data/object/regexp/*.t t/data/object/role/*.t t/prev/data/*.t t/prev/data/object/*.t t/prev/data/object/array/*.t t/prev/data/object/class/*.t t/prev/data/object/code/*.t t/prev/data/object/float/*.t t/prev/data/object/hash/*.t t/prev/data/object/integer/*.t t/prev/data/object/library/*.t t/prev/data/object/number/*.t t/prev/data/object/regexp/*.t t/prev/data/object/role/*.t t/prev/data/object/scalar/*.t t/prev/data/object/signatures/*.t t/prev/data/object/string/*.t t/prev/data/object/undef/*.t t/prev/data/object/universal/*.t"
   }
 );
 
 
 my %FallbackPrereqs = (
   "ExtUtils::MakeMaker" => 0,
-  "Moo" => "2.000001"
+  "Moo" => "2.000001",
+  "Type::Tiny" => "1.000005",
+  "Type::Tiny::Signatures" => "0.05"
 );
 
 

@@ -6,7 +6,7 @@ Data::Object - Object Orientation for Perl 5
 
 # VERSION
 
-version 0.42
+version 0.50
 
 # SYNOPSIS
 
@@ -35,8 +35,9 @@ version 0.42
 # DESCRIPTION
 
 Data::Object is a framework for writing structured and highly object-oriented
-Perl 5 software programs. This distribution contains classes which wrap Perl 5
-native data types and provides methods for operating on the data.
+Perl 5 software programs. Additionally, this distribution provides classes
+which wrap Perl 5 native data types and provides methods for operating on the
+data.
 
 # EXPORTS
 
@@ -51,7 +52,8 @@ The all export tag will export all exportable functions.
     use Data::Object qw(:core);
 
 The core export tag will export the exportable functions `const`, `deduce`,
-`deduce_deep`, `detract`, `detract_deep`, `load`, and `throw` exclusively.
+`deduce_deep`, `detract`, `detract_deep`, `immutable`, `load`, `prototype`,
+and `throw` exclusively.
 
 ## data
 
@@ -266,6 +268,17 @@ is complex, this function traverses the data converting all nested data type
 objects into native values using the objects underlying reference. Note:
 Blessed objects are not traversed.
 
+## immutable
+
+    # given [1,2,3];
+
+    $object = immutable data_array [1,2,3];
+    $object->isa('Data::Object::Array); # via Data::Object::Immutable
+
+The immutable function makes the data type object provided immutable. This
+function loads [Data::Object::Immutable](https://metacpan.org/pod/Data::Object::Immutable) and returns the object provided as an
+argument.
+
 ## load
 
     # given 'List::Util';
@@ -274,6 +287,19 @@ Blessed objects are not traversed.
 
 The load function attempts to dynamically load a module and either dies or
 returns the package name of the loaded module.
+
+## prototype
+
+    # given ('$name' => [is => 'ro']);
+
+    my $proto  = data_prototype '$name' => [is => 'ro'];
+    my $class  = $proto->create; # via Data::Object::Prototype
+    my $object = $class->new(name => '...');
+
+The prototype function returns a prototype object which can be used to
+generate classes, objects, and derivatives. This function loads
+[Data::Object::Prototype](https://metacpan.org/pod/Data::Object::Prototype) and returns an object based on the arguments
+provided.
 
 ## throw
 
@@ -303,15 +329,12 @@ function takes all arguments accepted by the [Data::Object::Exception](https://m
 - [Data::Object::Universal](https://metacpan.org/pod/Data::Object::Universal)
 - [Data::Object::Autobox](https://metacpan.org/pod/Data::Object::Autobox)
 - [Data::Object::Library](https://metacpan.org/pod/Data::Object::Library)
+- [Data::Object::Prototype](https://metacpan.org/pod/Data::Object::Prototype)
 - [Data::Object::Signatures](https://metacpan.org/pod/Data::Object::Signatures)
 
 # AUTHOR
 
 Al Newkirk <anewkirk@ana.io>
-
-# CONTRIBUTOR
-
-Anthony Brummett <abrummet@genome.wustl.edu>
 
 # COPYRIGHT AND LICENSE
 

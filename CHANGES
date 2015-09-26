@@ -1,6 +1,24 @@
 Changelog for Data-Object
 
-0.42 2015-09-17T17:14:59
+0.50 2015-09-26T09:21:53
+ - Complete refactoring, massive changes and cleanup.
+ - Miscellaneous changes.
+ - Imported Data::Object::Signatures into the codebase.
+ - Imported Data::Object::Library into the codebase.
+ - Updated dist.ini, .gitignore, and POD for Data::Object, etc.
+ - Added method and function signatures to type classes.
+ - Miscellaneous changes and cleanup.
+ - Added support for producing immutable type objects.
+ - Make all data type objects throwable.
+ - Refactor import statements and foreign function calls.
+ - Added Perl 5.14 and Type::Tiny(::Signatues) dependencies.
+ - Updated POD for Data::Object.
+ - Updated the distribution description.
+ - Updated the POD for the new method on each class.
+ - Removed the Constructor role.
+
+0.42 2015-09-17T17:15:23
+ - v0.42
  - Updated build.
  - Updated gitignore.
  - Miscellaneous changes.
