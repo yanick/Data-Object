@@ -26,7 +26,7 @@ our @EXPORT = @Data::Object::Syntax::EXPORT;
 
     package Person;
 
-    use namespace::autoclean;
+    use namespace::autoclean -except => 'has';
 
     use Data::Object::Class;
     use Data::Object::Class::Syntax;

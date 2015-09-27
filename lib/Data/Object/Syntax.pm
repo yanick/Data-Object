@@ -45,13 +45,6 @@ sub import {
     my $class  = $_[0];
     my $target = caller;
 
-    unless ($target->can('BUILD')) {
-        no strict 'refs';
-        no warnings 'redefine';
-
-        *{"${target}::BUILD"} = sub { shift };
-    }
-
     if (my $orig = $target->can('has')) {
         no strict 'refs';
         no warnings 'redefine';

@@ -26,7 +26,7 @@ our @EXPORT = @Data::Object::Syntax::EXPORT;
 
     package Persona;
 
-    use namespace::autoclean;
+    use namespace::autoclean -except => 'has';
 
     use Data::Object::Role;
     use Data::Object::Role::Syntax;
