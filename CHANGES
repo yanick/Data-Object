@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.55 2015-09-27T20:36:33
+0.55 2015-09-27T20:39:16
+ - Updated build.
  - Updated POD for Syntax packages and removed dead code.
 
 0.54 2015-09-27T12:01:24
