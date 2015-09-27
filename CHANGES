@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.54 2015-09-27T12:00:20
+0.55 2015-09-27T20:36:33
+ - Updated POD for Syntax packages and removed dead code.
+
+0.54 2015-09-27T12:01:24
+ - v0.54
  - Updated build.
  - Updated the .travis.yml file to include Perl versions 5.14+.
  - Fixed code object dump method test failure.
@@ -225,8 +229,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Update documentation for class Scalar.
+ - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.
