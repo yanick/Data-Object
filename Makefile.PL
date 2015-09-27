@@ -22,7 +22,7 @@ my %WriteMakefileArgs = (
     "Type::Tiny" => "1.000005",
     "Type::Tiny::Signatures" => "0.05"
   },
-  "VERSION" => "0.53",
+  "VERSION" => "0.54",
   "test" => {
     "TESTS" => "t/data/*.t t/data/object/*.t t/data/object/class/*.t t/data/object/regexp/*.t t/data/object/role/*.t t/prev/data/*.t t/prev/data/object/*.t t/prev/data/object/array/*.t t/prev/data/object/class/*.t t/prev/data/object/code/*.t t/prev/data/object/float/*.t t/prev/data/object/hash/*.t t/prev/data/object/integer/*.t t/prev/data/object/library/*.t t/prev/data/object/number/*.t t/prev/data/object/regexp/*.t t/prev/data/object/role/*.t t/prev/data/object/scalar/*.t t/prev/data/object/signatures/*.t t/prev/data/object/string/*.t t/prev/data/object/undef/*.t t/prev/data/object/universal/*.t"
   }
