@@ -1,6 +1,10 @@
 Changelog for Data-Object
 
-0.56 2015-10-10T11:17:59
+0.57 2015-10-10T12:03:02
+ - Updated codification examples for Array, Hash, and Code packages.
+
+0.56 2015-10-10T11:39:35
+ - v0.56
  - Updated build.
  - Updated POD.
  - Updated codification implementation.
@@ -239,8 +243,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Update documentation for class Scalar.
  - Removed scalar routines for "or", "and", "not", and "xor" operations.
+ - Update documentation for class Scalar.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.

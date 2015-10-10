@@ -6,7 +6,7 @@ Data::Object - Object Orientation for Perl 5
 
 # VERSION
 
-version 0.56
+version 0.57
 
 # SYNOPSIS
 
