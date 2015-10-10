@@ -19,17 +19,27 @@ use parent 'Moo';
 
 =head1 SYNOPSIS
 
-    package Person;
+    use Data::Object;
 
-    use Data::Object::Class;
+    # returns a code object
+    my $object = Data::Object->new(sub{
+        join ' ', @_
+    });
 
-    extends 'Entity';
-    with    'Identity';
+    # returns true
+    $object->isa('Data::Object::Code');
 
-    has firstname => ( is => 'ro' );
-    has lastname  => ( is => 'ro' );
+    # returns a string object
+    my $string = $code->call('Hello', 'World');
 
-    1;
+    # returns a new string object
+    $string = $string->split('')->reverse->join('')->uppercase;
+
+    # returns a number object (returns true) and outputs "DLROW OLLEH"
+    my $result = $string->say;
+
+    # returns true
+    $result->isa('Data::Object::Number');
 
 =cut
 
