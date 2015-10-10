@@ -51,6 +51,20 @@ objects which meet the criteria for being output.
 
 =cut
 
+=head1 ROLES
+
+This package is comprised of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Dumper>
+
+=back
+
+=cut
+
 =method print
 
     # given $output

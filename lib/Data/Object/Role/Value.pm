@@ -36,6 +36,24 @@ objects which meet the criteria for being a single value.
 
 =cut
 
+=head1 ROLES
+
+This package is comprised of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::Comparison>
+
+=item *
+
+L<Data::Object::Role::Output>
+
+=back
+
+=cut
+
 =head1 SEE ALSO
 
 =over 4

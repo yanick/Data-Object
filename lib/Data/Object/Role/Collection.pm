@@ -49,6 +49,20 @@ objects which meet the criteria for being a collection.
 
 =cut
 
+=head1 ROLES
+
+This package is comprised of the following roles.
+
+=over 4
+
+=item *
+
+L<Data::Object::Role::List>
+
+=back
+
+=cut
+
 =head1 REQUIRES
 
 This package requires the consumer to implement the following methods.
