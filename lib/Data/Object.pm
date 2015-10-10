@@ -455,27 +455,25 @@ sub detract_deep {
 
 =head1 SYNOPSIS
 
-    package Person;
+    use Data::Object;
 
-    use Data::Object::Class;
-    use Data::Object::Class::Syntax;
+    # returns a code object
+    my $object = Data::Object->new(sub{ join ' ', @_ });
 
-    extends 'Entity';
-    with    'Identity';
+    # returns true
+    $object->isa('Data::Object::Code');
 
-    alt id => is required, ro;
+    # returns a string object
+    my $string = $code->call('Hello', 'World');
 
-    has ['firstname', 'lastname'] => is required, ro;
+    # returns a new string object
+    $string = $string->split('')->reverse->join('')->uppercase;
 
-    has address1  => is required, rw;
-    has address2  => is optional, rw;
+    # returns a number object (returns true) and outputs "DLROW OLLEH"
+    my $result = $string->say;
 
-    has ['city', 'state', 'zip'] => is required, rw;
-
-    def city  => 'San Franscisco';
-    def state => 'CA';
-
-    1;
+    # returns true
+    $result->isa('Data::Object::Number');
 
 =head1 DESCRIPTION
 
