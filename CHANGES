@@ -1,6 +1,14 @@
 Changelog for Data-Object
 
-0.55 2015-09-27T20:39:16
+0.56 2015-10-10T11:08:26
+ - Updated POD.
+ - Updated codification implementation.
+ - Added reify function.
+ - Refactored codification to to use Sub::Quote.
+ - Updated main module synopsis.
+
+0.55 2015-09-27T20:40:42
+ - v0.55
  - Updated build.
  - Updated POD for Syntax packages and removed dead code.
 
@@ -230,8 +238,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Update documentation for class Scalar.
  - Removed scalar routines for "or", "and", "not", and "xor" operations.
+ - Update documentation for class Scalar.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.
