@@ -8,6 +8,7 @@ use 5.014;
 
 use Carp;
 use Scalar::Util;
+use Sub::Quote;
 
 use Exporter qw(import);
 
@@ -83,15 +84,16 @@ sub const ($$) {
 
 sub codify ($) {
 
-    my $code = shift // 'return @_';
+    my $code = shift;
+    my $refs = shift;
+
+    # (facepalm) purely for backwards compatibility
     my $vars = sprintf 'my ($%s) = @_;', join ',$', 'a'..'z';
-    my $body = sprintf 'sub { %s do { %s } }', $vars, $code;
+    my $body = sprintf '%s do { %s; }', $vars, $code // '@_';
 
-    my $sub; my $error = do { local $@; $sub = eval $body; $@ };
+    my $func = Sub::Quote::quote_sub($body, ref($refs) ? $refs : {});
 
-    croak $error unless $sub;
-
-    return $sub;
+    return $func;
 
 }
 
