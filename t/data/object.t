@@ -4,7 +4,6 @@ use Test::More;
 
 use_ok 'Data::Object';
 
-
 can_ok 'Data::Object', 'codify';
 can_ok 'Data::Object', 'const';
 can_ok 'Data::Object', 'data_array';

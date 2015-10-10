@@ -36,6 +36,7 @@ my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
     immutable
     load
     prototype
+    reify
     throw
     type_array
     type_code
@@ -133,6 +134,11 @@ sub prototype (@) {
 
 }
 
+sub reify ($) {
+
+    goto &deduce_deep;
+
+}
 sub throw (@) {
 
     my $class = load('Data::Object::Exception');
@@ -475,7 +481,7 @@ The all export tag will export all exportable functions.
 
 The core export tag will export the exportable functions C<const>, C<deduce>,
 C<deduce_deep>, C<detract>, C<detract_deep>, C<immutable>, C<load>, C<prototype>,
-and C<throw> exclusively.
+C<reify>, and C<throw> exclusively.
 
 =cut
 
@@ -764,6 +770,17 @@ The prototype function returns a prototype object which can be used to
 generate classes, objects, and derivatives. This function loads
 L<Data::Object::Prototype> and returns an object based on the arguments
 provided.
+
+=cut
+
+=function reify
+
+    # given [1..9];
+
+    $array = reify [1..9]; # Data::Object::Array
+
+The reify function will determine the type of the value provided and return it
+as a data type object. This method is an alias to the C<deduce_deep> function.
 
 =cut
 
