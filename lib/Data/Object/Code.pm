@@ -78,10 +78,6 @@ supply a callback to the method called. A codified string can access its
 arguments by using variable names which correspond to letters in the alphabet
 which represent the position in the argument list. For example:
 
-    $code->example('($code)');
-
-    # or
-
     $code->example('$a + $b * $c', 100);
 
     # if the example method does not supply any arguments automatically then
@@ -89,6 +85,12 @@ which represent the position in the argument list. For example:
     # however, if the example method supplies two arguments automatically then
     # those arugments would be assigned to the variables $a and $b whereas $c
     # would be assigned the user-supplied value of 100
+
+    # e.g.
+
+    $code->conjoin('$code->(123)');
+
+    # etc
 
 Any place a codified string is accepted, a coderef or L<Data::Object::Code>
 object is also valid. Arguments are passed through the usual C<@_> list.

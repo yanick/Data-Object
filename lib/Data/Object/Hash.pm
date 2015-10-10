@@ -90,21 +90,23 @@ supply a callback to the method called. A codified string can access its
 arguments by using variable names which correspond to letters in the alphabet
 which represent the position in the argument list. For example:
 
-    $array->example('($index, $value)');
-
-    # or
-
-    $array->example_batch('($index0, $value0)');
-
-    # or
-
-    $array->example('$a + $b * $c', 100);
+    $hash->example('$a + $b * $c', 100);
 
     # if the example method does not supply any arguments automatically then
     # the variable $a would be assigned the user-supplied value of 100,
     # however, if the example method supplies two arguments automatically then
     # those arugments would be assigned to the variables $a and $b whereas $c
     # would be assigned the user-supplied value of 100
+
+    # e.g.
+
+    $hash->each('the value at $key is $value');
+
+    # or
+
+    $hash->each_n_values(4, 'the value at $key0 is $value0');
+
+    # etc
 
 Any place a codified string is accepted, a coderef or L<Data::Object::Code>
 object is also valid. Arguments are passed through the usual C<@_> list.

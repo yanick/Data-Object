@@ -559,14 +559,6 @@ supply a callback to the method called. A codified string can access its
 arguments by using variable names which correspond to letters in the alphabet
 which represent the position in the argument list. For example:
 
-    $hash->example('($key, $value)');
-
-    # or
-
-    $hash->example_batch('($key0, $value0)');
-
-    # or
-
     $hash->example('$a + $b * $c', 100);
 
     # if the example method does not supply any arguments automatically then
@@ -575,11 +567,20 @@ which represent the position in the argument list. For example:
     # those arugments would be assigned to the variables $a and $b whereas $c
     # would be assigned the user-supplied value of 100
 
+    # e.g.
+
+    $hash->each('the value at $key is $value');
+
+    # or
+
+    $hash->each_n_values(4, 'the value at $key0 is $value0');
+
+    # etc
+
 Any place a codified string is accepted, a coderef or L<Data::Object::Code>
 object is also valid. Arguments are passed through the usual C<@_> list.
 
 =cut
-
 
 =head1 ROLES
 
