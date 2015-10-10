@@ -83,14 +83,33 @@ sub const ($$) {
 
 }
 
-sub codify ($) {
+sub codify ($;$) {
 
     my $code = shift;
     my $refs = shift;
 
+    $code = reify($code);
+
+    if ($code->type eq 'UNDEF') {
+
+        # as you were !!!
+        $code = q{ @_ };
+
+    }
+
+    elsif ($code->type eq 'CODE') {
+
+        my $func = $code;
+
+        # perform inception !!!
+        $refs->{'$exec'} = \$func;
+        $code = q{ goto &{$exec} };
+
+    }
+
     # (facepalm) purely for backwards compatibility
     my $vars = sprintf 'my ($%s) = @_;', join ',$', 'a'..'z';
-    my $body = sprintf '%s do { %s; }', $vars, $code // '@_';
+    my $body = sprintf '%s do { %s; }', $vars, "$code" // '@_';
 
     my $func = Sub::Quote::quote_sub($body, ref($refs) ? $refs : {});
 

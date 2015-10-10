@@ -82,6 +82,31 @@ role and implements proxy methods as documented herewith.
 
 =cut
 
+=head1 CODIFICATION
+
+Certain methods provided by the this module support codification, a process
+which converts a string argument into a code reference which can be used to
+supply a callback to the method called. A codified string can access its
+arguments by using variable names which correspond to letters in the alphabet
+which represent the position in the argument list. For example:
+
+    $code->example('($code)');
+
+    # or
+
+    $code->example('$a + $b * $c', 100);
+
+    # if the example method does not supply any arguments automatically then
+    # the variable $a would be assigned the user-supplied value of 100,
+    # however, if the example method supplies two arguments automatically then
+    # those arugments would be assigned to the variables $a and $b whereas $c
+    # would be assigned the user-supplied value of 100
+
+Any place a codified string is accepted, a coderef or L<Data::Object::Code>
+object is also valid. Arguments are passed through the usual C<@_> list.
+
+=cut
+
 =head1 ROLES
 
 This package is comprised of the following roles.
@@ -136,8 +161,8 @@ L<Data::Object::Role::Type>
 
     # given [2..5]
 
-    $array->all('$a > 1'); # 1; true
-    $array->all('$a > 3'); # 0; false
+    $array->all('$value > 1'); # 1; true
+    $array->all('$value > 3'); # 0; false
 
 The all method returns true if all of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
@@ -150,8 +175,8 @@ data type object. This method returns a L<Data::Object::Number> object.
 
     # given [2..5]
 
-    $array->any('$a > 5'); # 0; false
-    $array->any('$a > 3'); # 1; true
+    $array->any('$value > 5'); # 0; false
+    $array->any('$value > 3'); # 1; true
 
 The any method returns true if any of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
@@ -652,8 +677,8 @@ instance.
 
     # given [2..5]
 
-    $array->none('$a <= 1'); # 1; true
-    $array->none('$a <= 2'); # 0; false
+    $array->none('$value <= 1'); # 1; true
+    $array->none('$value <= 2'); # 0; false
 
 The none method returns true if none of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
@@ -677,8 +702,8 @@ sorted numerically. This method returns a L<Data::Object::Array> object.
 
     # given [2..5]
 
-    $array->one('$a == 5'); # 1; true
-    $array->one('$a == 6'); # 0; false
+    $array->one('$value == 5'); # 1; true
+    $array->one('$value == 6'); # 0; false
 
 The one method returns true if only one of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,

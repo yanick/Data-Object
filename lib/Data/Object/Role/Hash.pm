@@ -45,11 +45,16 @@ method delete ($key) {
 
 method each ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    for my $key (CORE::keys %$self) {
 
-    foreach my $key (CORE::keys %$self) {
+        my $value = $self->{$key};
 
-        $code->($key, $self->{$key}, @args);
+        my $refs = {
+            '$key'   => \$key,
+            '$value' => \$value,
+        };
+
+        Data::Object::codify($code, $refs)->($key, $value, @args);
 
     }
 
@@ -59,9 +64,18 @@ method each ($code, @args) {
 
 method each_key ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    for my $key (CORE::keys %$self) {
 
-    $code->($_, @args) for (CORE::keys %$self);
+        my $value = $self->{$key};
+
+        my $refs = {
+            '$key'   => \$key,
+            '$value' => \$value,
+        };
+
+        Data::Object::codify($code, $refs)->($key, @args);
+
+    }
 
     return $self;
 
@@ -69,11 +83,29 @@ method each_key ($code, @args) {
 
 method each_n_values ($number, $code, @args) {
 
-    my @values = CORE::values %$self;
+    my $refs = {};
+    my @list = CORE::keys %$self;
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    while (my @keys = CORE::splice(@list, 0, $number)) {
 
-    $code->(CORE::splice(@values, 0, $number), @args) while @values;
+        my @values;
+
+        for (my $i = 0; $i < @keys; $i++) {
+
+            my $pos   = $i;
+            my $key   = $keys[$pos];
+            my $value = CORE::defined($key) ? $self->{$key} : undef;
+
+            $refs->{"\$key${i}"}   = $key   if CORE::defined $key;
+            $refs->{"\$value${i}"} = $value if CORE::defined $value;
+
+            push @values, $value;
+
+        }
+
+        Data::Object::codify($code, $refs)->(@values, @args);
+
+    }
 
     return $self;
 
@@ -81,9 +113,18 @@ method each_n_values ($number, $code, @args) {
 
 method each_value ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    for my $key (CORE::keys %$self) {
 
-    $code->($_, @args) for (CORE::values %$self);
+        my $value = $self->{$key};
+
+        my $refs = {
+            '$key'   => \$key,
+            '$value' => \$value,
+        };
+
+        Data::Object::codify($code, $refs)->($value, @args);
+
+    }
 
     return $self;
 
@@ -219,17 +260,24 @@ method get ($key) {
 
 method grep ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    my @caught;
 
-    return {
+    for my $key (CORE::keys %$self) {
 
-        CORE::map { ($_, $self->{$_}) }
+        my $value = $self->{$key};
 
-        CORE::grep { $code->($self->{$_}, @args) }
+        my $refs = {
+            '$key'   => \$key,
+            '$value' => \$value,
+        };
 
-        CORE::keys %$self
+        my $result = Data::Object::codify($code, $refs)->($value, @args);
 
-    };
+        push @caught, $key, $value if $result;
+
+    }
+
+    return { @caught };
 
 }
 
@@ -337,16 +385,22 @@ method lt {
 
 method map ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    my @caught;
 
-    return {
+    for my $key (CORE::keys %$self) {
 
-        CORE::map { ($code->($self->{$_}, @args)) }
+        my $value = $self->{$key};
 
-        CORE::keys %$self
+        my $refs = {
+            '$key'   => \$key,
+            '$value' => \$value,
+        };
 
-    };
+        push @caught, (Data::Object::codify($code, $refs)->($key, @args));
 
+    }
+
+    return [ @caught ];
 
 }
 
@@ -496,6 +550,36 @@ Data::Object::Role::Hash provides routines for operating on Perl 5 hash
 references.
 
 =cut
+
+=head1 CODIFICATION
+
+Certain methods provided by the this module support codification, a process
+which converts a string argument into a code reference which can be used to
+supply a callback to the method called. A codified string can access its
+arguments by using variable names which correspond to letters in the alphabet
+which represent the position in the argument list. For example:
+
+    $hash->example('($key, $value)');
+
+    # or
+
+    $hash->example_batch('($key0, $value0)');
+
+    # or
+
+    $hash->example('$a + $b * $c', 100);
+
+    # if the example method does not supply any arguments automatically then
+    # the variable $a would be assigned the user-supplied value of 100,
+    # however, if the example method supplies two arguments automatically then
+    # those arugments would be assigned to the variables $a and $b whereas $c
+    # would be assigned the user-supplied value of 100
+
+Any place a codified string is accepted, a coderef or L<Data::Object::Code>
+object is also valid. Arguments are passed through the usual C<@_> list.
+
+=cut
+
 
 =head1 ROLES
 
@@ -957,9 +1041,9 @@ This method will throw an exception if called.
 
 The map method iterates over each key/value in the hash, executing the code
 reference supplied in the argument, passing the routine the value at the
-current position in the loop and returning a new hash reference containing the
+current position in the loop and returning a new array reference containing the
 elements for which the argument returns a value or non-empty list. This method
-returns a hash value.
+returns a L<Data::Object::Array> object.
 
 =cut
 

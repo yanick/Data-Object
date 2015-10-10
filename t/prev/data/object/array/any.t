@@ -29,4 +29,15 @@ subtest 'test the any method - codified' => sub {
     isa_ok $any, 'Data::Object::Number';
 };
 
+subtest 'test the any method - codified with refs' => sub {
+    my $array = Data::Object::Array->new([2..5]);
+    my $any = $array->any('$value > 5 ');
+
+    isnt refaddr($array), refaddr($any);
+    is $any, 0;
+
+    isa_ok $array, 'Data::Object::Array';
+    isa_ok $any, 'Data::Object::Number';
+};
+
 ok 1 and done_testing;

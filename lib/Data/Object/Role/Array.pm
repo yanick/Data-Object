@@ -21,9 +21,21 @@ map with($_), our @ROLES = qw(
 
 method all ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    my $found = 0;
 
-    my $found = CORE::grep { $code->($_, @args) } @$self;
+    for (my $i = 0; $i < @$self; $i++) {
+
+        my $index = $i;
+        my $value = $self->[$i];
+
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        $found++ if Data::Object::codify($code, $refs)->($value, @args);
+
+    }
 
     return $found == @$self ? 1 : 0;
 
@@ -31,9 +43,21 @@ method all ($code, @args) {
 
 method any ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    my $found = 0;
 
-    my $found = CORE::grep { $code->($_, @args) } @$self;
+    for (my $i = 0; $i < @$self; $i++) {
+
+        my $index = $i;
+        my $value = $self->[$i];
+
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        $found++ if Data::Object::codify($code, $refs)->($value, @args);
+
+    }
 
     return $found ? 1 : 0;
 
@@ -65,13 +89,17 @@ method delete ($index) {
 
 method each ($code, @args) {
 
-    my $i=0;
+    for (my $i = 0; $i < @$self; $i++) {
 
-    $code = Data::Object::codify($code) if ! CORE::ref $code;
+        my $index = $i;
+        my $value = $self->[$i];
 
-    foreach my $value (@$self) {
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
 
-        $code->($i, $value, @args); $i++;
+        Data::Object::codify($code, $refs)->($index, $value, @args);
 
     }
 
@@ -81,9 +109,19 @@ method each ($code, @args) {
 
 method each_key ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    for (my $i = 0; $i < @$self; $i++) {
 
-    $code->($_, @args) for (0 .. $#{$self});
+        my $index = $i;
+        my $value = $self->[$i];
+
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        Data::Object::codify($code, $refs)->($index, @args);
+
+    }
 
     return $self;
 
@@ -91,11 +129,29 @@ method each_key ($code, @args) {
 
 method each_n_values ($number, $code, @args) {
 
-    my @values = @$self;
+    my $refs = {};
+    my @list = (0 .. $#{$self});
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    while (my @indexes = CORE::splice(@list, 0, $number)) {
 
-    $code->(CORE::splice(@values, 0, $number), @args) while @values;
+        my @values;
+
+        for (my $i = 0; $i < $number; $i++) {
+
+            my $pos   = $i;
+            my $index = $indexes[$pos];
+            my $value = CORE::defined($index) ? $self->[$index] : undef;
+
+            $refs->{"\$index${i}"} = $index if CORE::defined $index;
+            $refs->{"\$value${i}"} = $value if CORE::defined $value;
+
+            push @values, $value;
+
+        }
+
+        Data::Object::codify($code, $refs)->(@values, @args);
+
+    }
 
     return $self;
 
@@ -103,9 +159,19 @@ method each_n_values ($number, $code, @args) {
 
 method each_value ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    for (my $i = 0; $i < @$self; $i++) {
 
-    $code->($self->[$_], @args) for (0 .. $#{$self});
+        my $index = $i;
+        my $value = $self->[$i];
+
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        Data::Object::codify($code, $refs)->($value, @args);
+
+    }
 
     return $self;
 
@@ -155,9 +221,28 @@ method get ($index) {
 
 method grep ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    my @caught;
 
-    return [ CORE::grep { $code->($_, @args) } @$self ];
+    for (my $i = 0; $i < @$self; $i++) {
+
+        my $index = $i;
+        my $value = $self->[$i];
+
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        if (Data::Object::codify($code, $refs)->($value, @args)) {
+
+            push @caught, $value;
+
+        }
+
+    }
+
+
+    return [ @caught ];
 
 }
 
@@ -179,11 +264,23 @@ method hashify ($code, @args) {
 
     my $data = {};
 
-    $code = Data::Object::codify($code) // 1 if ! ref $code;
+    for (my $i = 0; $i < @$self; $i++) {
 
-    for (CORE::grep { CORE::defined($_) } @$self) {
+        my $index = $i;
+        my $value = $self->[$i];
 
-        $data->{$_} = $code->($_, @args);
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        if (CORE::defined($value)) {
+
+            my $result = Data::Object::codify($code, $refs)->($value, @args);
+
+            $data->{$value} = $result if CORE::defined($result);
+
+        }
 
     }
 
@@ -273,9 +370,23 @@ method lt {
 
 method map ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    my @caught;
 
-    return [ CORE::map { $code->($_, @args) } @$self ];
+    for (my $i = 0; $i < @$self; $i++) {
+
+        my $index = $i;
+        my $value = $self->[$i];
+
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        push @caught, Data::Object::codify($code, $refs)->($value, @args);
+
+    }
+
+    return [ @caught ];
 
 }
 
@@ -327,9 +438,21 @@ method ne {
 
 method none ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    my $found = 0;
 
-    my $found = CORE::grep { $code->($_, @args) } @$self;
+    for (my $i = 0; $i < @$self; $i++) {
+
+        my $index = $i;
+        my $value = $self->[$i];
+
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        $found++ if Data::Object::codify($code, $refs)->($value, @args);
+
+    }
 
     return $found ? 0 : 1;
 
@@ -343,9 +466,21 @@ method nsort () {
 
 method one ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! ref $code;
+    my $found = 0;
 
-    my $found = CORE::grep { $code->($_, @args) } @$self;
+    for (my $i = 0; $i < @$self; $i++) {
+
+        my $index = $i;
+        my $value = $self->[$i];
+
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        $found++ if Data::Object::codify($code, $refs)->($value, @args);
+
+    }
 
     return $found == 1 ? 1 : 0;
 
@@ -375,19 +510,27 @@ method pairs_hash () {
 
 method part ($code, @args) {
 
-    $code = Data::Object::codify($code) if ! CORE::ref $code;
+    my $data = [[],[]];
 
-    my $result = [[],[]];
+    for (my $i = 0; $i < @$self; $i++) {
 
-    foreach my $value (@$self) {
+        my $index = $i;
+        my $value = $self->[$i];
 
-        my $slot = $code->($value, @args) ?  $$result[0] : $$result[1] ;
+        my $refs = {
+            '$index' => \$index,
+            '$value' => \$value,
+        };
+
+        my $result = Data::Object::codify($code, $refs)->($value, @args);
+
+        my $slot = $result ? $$data[0] : $$data[1] ;
 
         CORE::push @$slot, $value;
 
     }
 
-    return $result;
+    return $data;
 
 }
 
@@ -534,6 +677,36 @@ references.
 
 =cut
 
+=head1 CODIFICATION
+
+Certain methods provided by the this module support codification, a process
+which converts a string argument into a code reference which can be used to
+supply a callback to the method called. A codified string can access its
+arguments by using variable names which correspond to letters in the alphabet
+which represent the position in the argument list. For example:
+
+    $array->example('($index, $value)');
+
+    # or
+
+    $array->example_batch('($index0, $value0)');
+
+    # or
+
+    $array->example('$a + $b * $c', 100);
+
+    # if the example method does not supply any arguments automatically then
+    # the variable $a would be assigned the user-supplied value of 100,
+    # however, if the example method supplies two arguments automatically then
+    # those arugments would be assigned to the variables $a and $b whereas $c
+    # would be assigned the user-supplied value of 100
+
+Any place a codified string is accepted, a coderef or L<Data::Object::Code>
+object is also valid. Arguments are passed through the usual C<@_> list.
+
+=cut
+
+
 =head1 ROLES
 
 This package is comprised of the following roles.
@@ -588,8 +761,8 @@ L<Data::Object::Role::Type>
 
     # given [2..5]
 
-    $array->all('$a > 1'); # 1; true
-    $array->all('$a > 3'); # 0; false
+    $array->all('$value > 1'); # 1; true
+    $array->all('$value > 3'); # 0; false
 
 The all method returns true if all of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
@@ -602,8 +775,8 @@ data type object. This method returns a number value.
 
     # given [2..5]
 
-    $array->any('$a > 5'); # 0; false
-    $array->any('$a > 3'); # 1; true
+    $array->any('$value > 5'); # 0; false
+    $array->any('$value > 3'); # 1; true
 
 The any method returns true if any of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
@@ -1104,8 +1277,8 @@ instance.
 
     # given [2..5]
 
-    $array->none('$a <= 1'); # 1; true
-    $array->none('$a <= 2'); # 0; false
+    $array->none('$value <= 1'); # 1; true
+    $array->none('$value <= 2'); # 0; false
 
 The none method returns true if none of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
@@ -1129,8 +1302,8 @@ sorted numerically. This method returns an array value.
 
     # given [2..5]
 
-    $array->one('$a == 5'); # 1; true
-    $array->one('$a == 6'); # 0; false
+    $array->one('$value == 5'); # 1; true
+    $array->one('$value == 6'); # 0; false
 
 The one method returns true if only one of the elements in the array meet the
 criteria set by the operand and rvalue. This method supports codification, i.e,
