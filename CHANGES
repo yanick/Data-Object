@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.56 2015-10-10T11:08:26
+0.56 2015-10-10T11:17:59
+ - Updated build.
  - Updated POD.
  - Updated codification implementation.
  - Added reify function.
@@ -238,8 +239,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Update documentation for class Scalar.
+ - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.
