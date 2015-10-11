@@ -1446,6 +1446,10 @@ L<Data::Object::Autobox>
 
 =item *
 
+L<Data::Object::Immutable>
+
+=item *
+
 L<Data::Object::Library>
 
 =item *
