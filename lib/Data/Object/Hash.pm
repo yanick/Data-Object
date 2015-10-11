@@ -789,6 +789,7 @@ L<Data::Object::Hash> object.
     # given {1..8}
 
     $hash->values; # [2,4,6,8]
+    $hash->values(1,3); # [2,4]
 
 The values method returns an array reference consisting of the values of the
 elements in the hash. This method returns a L<Data::Object::Array> object.
