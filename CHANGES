@@ -1,6 +1,7 @@
 Changelog for Data-Object
 
-0.58 2015-10-11T05:45:03
+0.58 2015-10-11T05:47:49
+ - Updated build.
  - Updated SEE ALSO POD.
  - Updated POD for Hash values method.
  - Modify the Hash fold method to support empty hashes.
