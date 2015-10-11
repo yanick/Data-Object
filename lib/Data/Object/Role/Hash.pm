@@ -236,7 +236,7 @@ method fold ($path, $store, $cache) {
 
     } else {
 
-        $store->{$path} = $self;
+        $store->{$path} = $self if $path;
 
     }
 
