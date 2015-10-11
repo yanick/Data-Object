@@ -1,6 +1,12 @@
 Changelog for Data-Object
 
-0.57 2015-10-10T12:04:09
+0.58 2015-10-11T05:45:03
+ - Updated SEE ALSO POD.
+ - Updated POD for Hash values method.
+ - Modify the Hash fold method to support empty hashes.
+
+0.57 2015-10-10T12:07:44
+ - v0.57
  - Updated build.
  - Updated codification examples for Array, Hash, and Code packages.
 
@@ -244,8 +250,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Update documentation for class Scalar.
+ - Removed scalar routines for "or", "and", "not", and "xor" operations.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.

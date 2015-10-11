@@ -4,7 +4,7 @@ NAME
 
 VERSION
 
-    version 0.57
+    version 0.58
 
 SYNOPSIS
 
@@ -351,6 +351,8 @@ SEE ALSO
       * Data::Object::Universal
 
       * Data::Object::Autobox
+
+      * Data::Object::Immutable
 
       * Data::Object::Library
 

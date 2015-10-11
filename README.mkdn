@@ -6,7 +6,7 @@ Data::Object - Object Orientation for Perl 5
 
 # VERSION
 
-version 0.57
+version 0.58
 
 # SYNOPSIS
 
@@ -335,6 +335,7 @@ function takes all arguments accepted by the [Data::Object::Exception](https://m
 - [Data::Object::Undef](https://metacpan.org/pod/Data::Object::Undef)
 - [Data::Object::Universal](https://metacpan.org/pod/Data::Object::Universal)
 - [Data::Object::Autobox](https://metacpan.org/pod/Data::Object::Autobox)
+- [Data::Object::Immutable](https://metacpan.org/pod/Data::Object::Immutable)
 - [Data::Object::Library](https://metacpan.org/pod/Data::Object::Library)
 - [Data::Object::Prototype](https://metacpan.org/pod/Data::Object::Prototype)
 - [Data::Object::Signatures](https://metacpan.org/pod/Data::Object::Signatures)
