@@ -12,6 +12,8 @@ use Sub::Quote;
 
 use Exporter qw(import);
 
+our $NAMESPACE = 'Data::Object';
+
 # VERSION
 
 my @CORE = grep !/^(data|type)_/, our @EXPORT_OK = qw(
@@ -70,7 +72,7 @@ sub const ($$) {
     my $data = shift;
 
     my $class = caller(0);
-       $class = caller(1) if __PACKAGE__ eq $class;
+       $class = caller(1) if $NAMESPACE eq $class;
 
     my $fqsn  = $name =~ /(::|')/ ? $name : "${class}::${name}";
 
@@ -119,7 +121,7 @@ sub codify ($;$) {
 
 sub immutable ($) {
 
-    my $class = load('Data::Object::Immutable');
+    my $class = load("${NAMESPACE}::Immutable");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -147,7 +149,7 @@ sub load ($) {
 
 sub prototype (@) {
 
-    my $class = load('Data::Object::Prototype');
+    my $class = load("${NAMESPACE}::Prototype");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -160,7 +162,7 @@ sub reify ($) {
 }
 sub throw (@) {
 
-    my $class = load('Data::Object::Exception');
+    my $class = load("${NAMESPACE}::Exception");
 
     unshift @_, $class and goto $class->can('throw');
 
@@ -168,7 +170,7 @@ sub throw (@) {
 
 sub data_array ($) {
 
-    my $class = load('Data::Object::Array');
+    my $class = load("${NAMESPACE}::Array");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -176,7 +178,7 @@ sub data_array ($) {
 
 sub data_code ($) {
 
-    my $class = load('Data::Object::Code');
+    my $class = load("${NAMESPACE}::Code");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -184,7 +186,7 @@ sub data_code ($) {
 
 sub data_float ($) {
 
-    my $class = load('Data::Object::Float');
+    my $class = load("${NAMESPACE}::Float");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -192,7 +194,7 @@ sub data_float ($) {
 
 sub data_hash ($) {
 
-    my $class = load('Data::Object::Hash');
+    my $class = load("${NAMESPACE}::Hash");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -200,7 +202,7 @@ sub data_hash ($) {
 
 sub data_integer ($) {
 
-    my $class = load('Data::Object::Integer');
+    my $class = load("${NAMESPACE}::Integer");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -208,7 +210,7 @@ sub data_integer ($) {
 
 sub data_number ($) {
 
-    my $class = load('Data::Object::Number');
+    my $class = load("${NAMESPACE}::Number");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -216,7 +218,7 @@ sub data_number ($) {
 
 sub data_regexp ($) {
 
-    my $class = load('Data::Object::Regexp');
+    my $class = load("${NAMESPACE}::Regexp");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -224,7 +226,7 @@ sub data_regexp ($) {
 
 sub data_scalar ($) {
 
-    my $class = load('Data::Object::Scalar');
+    my $class = load("${NAMESPACE}::Scalar");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -232,7 +234,7 @@ sub data_scalar ($) {
 
 sub data_string ($) {
 
-    my $class = load('Data::Object::String');
+    my $class = load("${NAMESPACE}::String");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -240,7 +242,7 @@ sub data_string ($) {
 
 sub data_undef (;$) {
 
-    my $class = load('Data::Object::Undef');
+    my $class = load("${NAMESPACE}::Undef");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -248,7 +250,7 @@ sub data_undef (;$) {
 
 sub data_universal ($) {
 
-    my $class = load('Data::Object::Universal');
+    my $class = load("${NAMESPACE}::Universal");
 
     unshift @_, $class and goto $class->can('new');
 
@@ -336,20 +338,20 @@ sub deduce_type ($) {
 
     $data = deduce $data;
 
-    return 'ARRAY'     if $data->isa('Data::Object::Array');
-    return 'HASH'      if $data->isa('Data::Object::Hash');
-    return 'CODE'      if $data->isa('Data::Object::Code');
+    return "ARRAY"     if $data->isa("${NAMESPACE}::Array");
+    return "HASH"      if $data->isa("${NAMESPACE}::Hash");
+    return "CODE"      if $data->isa("${NAMESPACE}::Code");
 
-    return 'FLOAT'     if $data->isa('Data::Object::Float');
-    return 'NUMBER'    if $data->isa('Data::Object::Number');
-    return 'INTEGER'   if $data->isa('Data::Object::Integer');
+    return "FLOAT"     if $data->isa("${NAMESPACE}::Float");
+    return "NUMBER"    if $data->isa("${NAMESPACE}::Number");
+    return "INTEGER"   if $data->isa("${NAMESPACE}::Integer");
 
-    return 'STRING'    if $data->isa('Data::Object::String');
-    return 'SCALAR'    if $data->isa('Data::Object::Scalar');
-    return 'REGEXP'    if $data->isa('Data::Object::Regexp');
+    return "STRING"    if $data->isa("${NAMESPACE}::String");
+    return "SCALAR"    if $data->isa("${NAMESPACE}::Scalar");
+    return "REGEXP"    if $data->isa("${NAMESPACE}::Regexp");
 
-    return 'UNDEF'     if $data->isa('Data::Object::Undef');
-    return 'UNIVERSAL' if $data->isa('Data::Object::Universal');
+    return "UNDEF"     if $data->isa("${NAMESPACE}::Undef");
+    return "UNIVERSAL" if $data->isa("${NAMESPACE}::Universal");
 
     return undef;
 
