@@ -540,7 +540,9 @@ method values (@args) {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Hash;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Hash';
 
 =cut
 

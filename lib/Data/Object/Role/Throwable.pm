@@ -31,7 +31,9 @@ method throw (@args) {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Throwable;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Throwable';
 
 =cut
 

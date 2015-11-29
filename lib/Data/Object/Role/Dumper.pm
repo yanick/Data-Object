@@ -42,7 +42,9 @@ method dump () {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Dumper;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Dumper';
 
 =cut
 

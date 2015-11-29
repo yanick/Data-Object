@@ -116,7 +116,9 @@ method sqrt () {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Number;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Number';
 
 =cut
 

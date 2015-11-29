@@ -85,7 +85,9 @@ method rcurry (@args) {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Code;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Code';
 
 =cut
 

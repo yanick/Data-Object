@@ -72,7 +72,9 @@ method replace ($string, $replacement, $flags) {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Regexp;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Regexp';
 
 =cut
 

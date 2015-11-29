@@ -76,7 +76,9 @@ method upto ($arg1) {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Numeric;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Numeric';
 
 =cut
 

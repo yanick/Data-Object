@@ -32,7 +32,9 @@ method defined () {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Integer;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Integer';
 
 =cut
 

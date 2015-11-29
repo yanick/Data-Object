@@ -56,7 +56,9 @@ method ne ($arg1) {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Alphabetic;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Alphabetic';
 
 =cut
 

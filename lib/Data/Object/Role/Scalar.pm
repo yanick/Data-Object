@@ -79,7 +79,9 @@ method ne {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Scalar;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Scalar';
 
 =cut
 

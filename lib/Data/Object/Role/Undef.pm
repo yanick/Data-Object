@@ -67,7 +67,9 @@ method ne ($arg1) {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Undef;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Undef';
 
 =cut
 

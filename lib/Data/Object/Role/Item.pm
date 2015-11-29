@@ -27,7 +27,9 @@ map with($_), our @ROLES = qw(
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Item;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Item';
 
 =cut
 

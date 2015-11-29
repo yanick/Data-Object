@@ -79,7 +79,9 @@ method ne {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Universal;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Universal';
 
 =cut
 

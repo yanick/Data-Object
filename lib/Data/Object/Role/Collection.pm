@@ -38,7 +38,9 @@ requires 'values';
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Collection;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Collection';
 
 =cut
 

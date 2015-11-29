@@ -36,7 +36,9 @@ requires 'values';
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::List;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::List';
 
 =cut
 

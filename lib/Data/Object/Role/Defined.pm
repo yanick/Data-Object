@@ -22,7 +22,9 @@ requires 'defined';
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Defined;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Defined';
 
 =cut
 

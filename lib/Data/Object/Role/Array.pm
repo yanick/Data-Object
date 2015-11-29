@@ -666,7 +666,9 @@ method values (@args) {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Array;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Array';
 
 =cut
 

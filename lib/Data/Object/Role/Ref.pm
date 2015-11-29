@@ -20,7 +20,9 @@ use Scalar::Util;
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Ref;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Ref';
 
 =cut
 

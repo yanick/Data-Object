@@ -41,7 +41,9 @@ method detract () {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Detract;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Detract';
 
 =cut
 

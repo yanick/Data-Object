@@ -40,7 +40,9 @@ method say () {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Output;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Output';
 
 =cut
 

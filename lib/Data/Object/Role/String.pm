@@ -236,7 +236,9 @@ method words () {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::String;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::String';
 
 =cut
 

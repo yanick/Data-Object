@@ -101,7 +101,9 @@ method type () {
 
 =head1 SYNOPSIS
 
-    use Data::Object::Role::Type;
+    use Data::Object::Class;
+
+    with 'Data::Object::Role::Type';
 
 =cut
 
