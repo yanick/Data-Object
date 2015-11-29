@@ -18,6 +18,93 @@ extends 'Types::Standard';
 extends 'Types::Common::Numeric';
 extends 'Types::Common::String';
 
+our @TYPES = qw(
+    Any
+    AnyObj
+    AnyObject
+    ArrayObj
+    ArrayObject
+    ArrayRef
+    Bool
+    ClassName
+    CodeObj
+    CodeObject
+    CodeRef
+    ConsumerOf
+    Defined
+    Dict
+    Enum
+    FileHandle
+    FloatObj
+    FloatObject
+    GlobRef
+    HasMethods
+    HashObj
+    HashObject
+    HashRef
+    InstanceOf
+    Int
+    IntObj
+    IntObject
+    IntegerObj
+    IntegerObject
+    Item
+    LaxNum
+    LowerCaseSimpleStr
+    LowerCaseStr
+    Map
+    Maybe
+    NegativeInt
+    NegativeNum
+    NegativeOrZeroInt
+    NegativeOrZeroNum
+    NonEmptySimpleStr
+    NonEmptyStr
+    Num
+    NumObj
+    NumObject
+    NumberObj
+    NumberObject
+    NumericCode
+    Object
+    OptList
+    Optional
+    Overload
+    Password
+    PositiveInt
+    PositiveNum
+    PositiveOrZeroInt
+    PositiveOrZeroNum
+    Ref
+    RegexpObj
+    RegexpObject
+    RegexpRef
+    RoleName
+    ScalarObj
+    ScalarObject
+    ScalarRef
+    SimpleStr
+    SingleDigit
+    Str
+    StrMatch
+    StrObj
+    StrObject
+    StrictNum
+    StringObj
+    StringObject
+    StrongPassword
+    Tied
+    Tuple
+    Undef
+    UndefObj
+    UndefObject
+    UniversalObj
+    UniversalObject
+    UpperCaseSimpleStr
+    UpperCaseStr
+    Value
+);
+
 my $registry = __PACKAGE__->meta;
 
 sub DECLARE {
@@ -363,7 +450,10 @@ libraries and adds type constraints and coercions for L<Data::Object> objects.
 
 =type Any
 
-    has data => (isa => Any);
+    has data => (
+        is  => 'rw',
+        isa => Any,
+    );
 
 The Any type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Any> function can be
@@ -375,7 +465,10 @@ validated.
 
 =type AnyObj
 
-    has data => (isa => AnyObj);
+    has data => (
+        is  => 'rw',
+        isa => AnyObj,
+    );
 
 The AnyObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Universal> object. The
@@ -387,7 +480,10 @@ the argument can not be validated.
 
 =type AnyObject
 
-    has data => (isa => AnyObject);
+    has data => (
+        is  => 'rw',
+        isa => AnyObject,
+    );
 
 The AnyObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Universal> object. The
@@ -399,7 +495,10 @@ if the argument can not be validated.
 
 =type ArrayObj
 
-    has data => (isa => ArrayObj);
+    has data => (
+        is  => 'rw',
+        isa => ArrayObj,
+    );
 
 The ArrayObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Array> object. The
@@ -411,7 +510,10 @@ if the argument can not be validated.
 
 =type ArrayObject
 
-    has data => (isa => ArrayObject);
+    has data => (
+        is  => 'rw',
+        isa => ArrayObject,
+    );
 
 The ArrayObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Array> object. The
@@ -423,7 +525,10 @@ false if the argument can not be validated.
 
 =type ArrayRef
 
-    has data => (isa => ArrayRef);
+    has data => (
+        is  => 'rw',
+        isa => ArrayRef,
+    );
 
 The ArrayRef type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_ArrayRef
@@ -435,7 +540,10 @@ argument can not be validated.
 
 =type Bool
 
-    has data => (isa => Bool);
+    has data => (
+        is  => 'rw',
+        isa => Bool,
+    );
 
 The Bool type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Bool> function can be
@@ -447,7 +555,10 @@ validated.
 
 =type ClassName
 
-    has data => (isa => ClassName['MyClass']);
+    has data => (
+        is  => 'rw',
+        isa => ClassName['MyClass'],
+    );
 
 The ClassName type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_ClassName
@@ -459,7 +570,10 @@ argument can not be validated.
 
 =type CodeObj
 
-    has data => (isa => CodeObj);
+    has data => (
+        is  => 'rw',
+        isa => CodeObj,
+    );
 
 The CodeObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Code> object. The C<assert_CodeObj
@@ -471,7 +585,10 @@ argument can not be validated.
 
 =type CodeObject
 
-    has data => (isa => CodeObject);
+    has data => (
+        is  => 'rw',
+        isa => CodeObject,
+    );
 
 The CodeObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Code> object. The
@@ -483,7 +600,10 @@ false if the argument can not be validated.
 
 =type CodeRef
 
-    has data => (isa => CodeRef);
+    has data => (
+        is  => 'rw',
+        isa => CodeRef,
+    );
 
 The CodeRef type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_CodeRef> function
@@ -495,7 +615,10 @@ be validated.
 
 =type ConsumerOf
 
-    has data => (isa => ConsumerOf['MyRole']);
+    has data => (
+        is  => 'rw',
+        isa => ConsumerOf['MyRole'],
+    );
 
 The ConsumerOf type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_ConsumerOf
@@ -507,7 +630,10 @@ the argument can not be validated.
 
 =type Defined
 
-    has data => (isa => Defined);
+    has data => (
+        is  => 'rw',
+        isa => Defined,
+    );
 
 The Defined type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_Defined> function
@@ -519,7 +645,10 @@ be validated.
 
 =type Dict
 
-    has data => (isa => Dict);
+    has data => (
+        is  => 'rw',
+        isa => Dict,
+    );
 
 The Dict type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Dict> function can be
@@ -531,7 +660,10 @@ validated.
 
 =type Enum
 
-    has data => (isa => Enum);
+    has data => (
+        is  => 'rw',
+        isa => Enum,
+    );
 
 The Enum type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Enum> function can be
@@ -543,7 +675,10 @@ validated.
 
 =type FileHandle
 
-    has data => (isa => FileHandle);
+    has data => (
+        is  => 'rw',
+        isa => FileHandle,
+    );
 
 The FileHandle type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_FileHandle
@@ -555,7 +690,10 @@ the argument can not be validated.
 
 =type FloatObj
 
-    has data => (isa => FloatObj);
+    has data => (
+        is  => 'rw',
+        isa => FloatObj,
+    );
 
 The FloatObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Float> object. The
@@ -567,7 +705,10 @@ if the argument can not be validated.
 
 =type FloatObject
 
-    has data => (isa => FloatObject);
+    has data => (
+        is  => 'rw',
+        isa => FloatObject,
+    );
 
 The FloatObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Float> object. The
@@ -579,7 +720,10 @@ false if the argument can not be validated.
 
 =type GlobRef
 
-    has data => (isa => GlobRef);
+    has data => (
+        is  => 'rw',
+        isa => GlobRef,
+    );
 
 The GlobRef type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_GlobRef> function
@@ -591,7 +735,10 @@ be validated.
 
 =type HasMethods
 
-    has data => (isa => HasMethods);
+    has data => (
+        is  => 'rw',
+        isa => HasMethods[...],
+    );
 
 The HasMethods type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_HasMethods
@@ -603,7 +750,10 @@ the argument can not be validated.
 
 =type HashObj
 
-    has data => (isa => HashObj);
+    has data => (
+        is  => 'rw',
+        isa => HashObj,
+    );
 
 The HashObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Hash> object. The C<assert_HashObj
@@ -615,7 +765,10 @@ argument can not be validated.
 
 =type HashObject
 
-    has data => (isa => HashObject);
+    has data => (
+        is  => 'rw',
+        isa => HashObject,
+    );
 
 The HashObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Hash> object. The
@@ -627,7 +780,10 @@ false if the argument can not be validated.
 
 =type HashRef
 
-    has data => (isa => HashRef);
+    has data => (
+        is  => 'rw',
+        isa => HashRef,
+    );
 
 The HashRef type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_HashRef> function
@@ -639,7 +795,10 @@ be validated.
 
 =type InstanceOf
 
-    has data => (isa => InstanceOf['MyClass']);
+    has data => (
+        is  => 'rw',
+        isa => InstanceOf['MyClass'],
+    );
 
 The InstanceOf type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_InstanceOf
@@ -651,7 +810,10 @@ the argument can not be validated.
 
 =type Int
 
-    has data => (isa => Int);
+    has data => (
+        is  => 'rw',
+        isa => Int,
+    );
 
 The Int type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Int> function can be
@@ -663,7 +825,10 @@ validated.
 
 =type IntObj
 
-    has data => (isa => IntObj);
+    has data => (
+        is  => 'rw',
+        isa => IntObj,
+    );
 
 The IntObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Integer> object. The
@@ -675,7 +840,10 @@ the argument can not be validated.
 
 =type IntObject
 
-    has data => (isa => IntObject);
+    has data => (
+        is  => 'rw',
+        isa => IntObject,
+    );
 
 The IntObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Integer> object. The
@@ -687,7 +855,10 @@ if the argument can not be validated.
 
 =type IntegerObj
 
-    has data => (isa => IntegerObj);
+    has data => (
+        is  => 'rw',
+        isa => IntegerObj,
+    );
 
 The IntegerObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Integer> object. The
@@ -699,7 +870,10 @@ false if the argument can not be validated.
 
 =type IntegerObject
 
-    has data => (isa => IntegerObject);
+    has data => (
+        is  => 'rw',
+        isa => IntegerObject,
+    );
 
 The IntegerObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Integer> object. The
@@ -711,7 +885,10 @@ or false if the argument can not be validated.
 
 =type Item
 
-    has data => (isa => Item);
+    has data => (
+        is  => 'rw',
+        isa => Item,
+    );
 
 The Item type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Item> function can be
@@ -723,7 +900,10 @@ validated.
 
 =type LaxNum
 
-    has data => (isa => LaxNum);
+    has data => (
+        is  => 'rw',
+        isa => LaxNum,
+    );
 
 The LaxNum type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_LaxNum> function
@@ -735,7 +915,10 @@ be validated.
 
 =type LowerCaseSimpleStr
 
-    has data => (isa => LowerCaseSimpleStr);
+    has data => (
+        is  => 'rw',
+        isa => LowerCaseSimpleStr,
+    );
 
 The LowerCaseSimpleStr type constraint is provided by the
 L<Types::Common::String> library. Please see that documentation for more The
@@ -748,7 +931,10 @@ information.
 
 =type LowerCaseStr
 
-    has data => (isa => LowerCaseStr);
+    has data => (
+        is  => 'rw',
+        isa => LowerCaseStr,
+    );
 
 The LowerCaseStr type constraint is provided by the L<Types::Common::String>
 library. Please see that documentation for more information. The C<assert_type
@@ -760,7 +946,10 @@ argument can not be validated.
 
 =type Map
 
-    has data => (isa => Map[Int, HashRef]);
+    has data => (
+        is  => 'rw',
+        isa => Map[Int, HashRef],
+    );
 
 The Map type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Map> function can be
@@ -772,7 +961,10 @@ validated.
 
 =type Maybe
 
-    has data => (isa => Maybe);
+    has data => (
+        is  => 'rw',
+        isa => Maybe,
+    );
 
 The Maybe type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Maybe> function can be
@@ -784,7 +976,10 @@ validated.
 
 =type NegativeInt
 
-    has data => (isa => NegativeInt);
+    has data => (
+        is  => 'rw',
+        isa => NegativeInt,
+    );
 
 The NegativeInt type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
@@ -796,7 +991,10 @@ false if the argument can not be validated.
 
 =type NegativeNum
 
-    has data => (isa => NegativeNum);
+    has data => (
+        is  => 'rw',
+        isa => NegativeNum,
+    );
 
 The NegativeNum type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
@@ -808,7 +1006,10 @@ false if the argument can not be validated.
 
 =type NegativeOrZeroInt
 
-    has data => (isa => NegativeOrZeroInt);
+    has data => (
+        is  => 'rw',
+        isa => NegativeOrZeroInt,
+    );
 
 The NegativeOrZeroInt type constraint is provided by the
 L<Types::Common::Numeric> library. Please see that documentation for more The
@@ -821,7 +1022,10 @@ information.
 
 =type NegativeOrZeroNum
 
-    has data => (isa => NegativeOrZeroNum);
+    has data => (
+        is  => 'rw',
+        isa => NegativeOrZeroNum,
+    );
 
 The NegativeOrZeroNum type constraint is provided by the
 L<Types::Common::Numeric> library. Please see that documentation for more The
@@ -834,7 +1038,10 @@ information.
 
 =type NonEmptySimpleStr
 
-    has data => (isa => NonEmptySimpleStr);
+    has data => (
+        is  => 'rw',
+        isa => NonEmptySimpleStr,
+    );
 
 The NonEmptySimpleStr type constraint is provided by the
 L<Types::Common::String> library. Please see that documentation for more The
@@ -847,7 +1054,10 @@ information.
 
 =type NonEmptyStr
 
-    has data => (isa => NonEmptyStr);
+    has data => (
+        is  => 'rw',
+        isa => NonEmptyStr,
+    );
 
 The NonEmptyStr type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_type> function
@@ -859,7 +1069,10 @@ validated.
 
 =type Num
 
-    has data => (isa => Num);
+    has data => (
+        is  => 'rw',
+        isa => Num,
+    );
 
 The Num type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Num> function can be
@@ -871,7 +1084,10 @@ validated.
 
 =type NumObj
 
-    has data => (isa => NumObj);
+    has data => (
+        is  => 'rw',
+        isa => NumObj,
+    );
 
 The NumObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Number> object. The
@@ -883,7 +1099,10 @@ the argument can not be validated.
 
 =type NumObject
 
-    has data => (isa => NumObject);
+    has data => (
+        is  => 'rw',
+        isa => NumObject,
+    );
 
 The NumObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Number> object. The
@@ -895,7 +1114,10 @@ if the argument can not be validated.
 
 =type NumberObj
 
-    has data => (isa => NumberObj);
+    has data => (
+        is  => 'rw',
+        isa => NumberObj,
+    );
 
 The NumberObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Number> object. The
@@ -907,7 +1129,10 @@ if the argument can not be validated.
 
 =type NumberObject
 
-    has data => (isa => NumberObject);
+    has data => (
+        is  => 'rw',
+        isa => NumberObject,
+    );
 
 The NumberObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Number> object. The
@@ -919,7 +1144,10 @@ or false if the argument can not be validated.
 
 =type NumericCode
 
-    has data => (isa => NumericCode);
+    has data => (
+        is  => 'rw',
+        isa => NumericCode,
+    );
 
 The NumericCode type constraint is provided by the L<Types::Common::String>
 library. Please see that documentation for more information. The
@@ -931,7 +1159,10 @@ false if the argument can not be validated.
 
 =type Object
 
-    has data => (isa => Object);
+    has data => (
+        is  => 'rw',
+        isa => Object,
+    );
 
 The Object type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_Object> function
@@ -943,7 +1174,10 @@ be validated.
 
 =type OptList
 
-    has data => (isa => OptList);
+    has data => (
+        is  => 'rw',
+        isa => OptList,
+    );
 
 The OptList type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_OptList> function
@@ -955,7 +1189,10 @@ be validated.
 
 =type Optional
 
-    has data => (isa => Dict[id => Optional[Int]]);
+    has data => (
+        is  => 'rw',
+        isa => Dict[id => Optional[Int]],
+    );
 
 The Optional type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_Optional
@@ -967,7 +1204,10 @@ argument can not be validated.
 
 =type Overload
 
-    has data => (isa => Overload);
+    has data => (
+        is  => 'rw',
+        isa => Overload,
+    );
 
 The Overload type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_Overload
@@ -979,7 +1219,10 @@ argument can not be validated.
 
 =type Password
 
-    has data => (isa => Password);
+    has data => (
+        is  => 'rw',
+        isa => Password,
+    );
 
 The Password type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_Password
@@ -991,7 +1234,10 @@ argument can not be validated.
 
 =type PositiveInt
 
-    has data => (isa => PositiveInt);
+    has data => (
+        is  => 'rw',
+        isa => PositiveInt,
+    );
 
 The PositiveInt type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
@@ -1003,7 +1249,10 @@ false if the argument can not be validated.
 
 =type PositiveNum
 
-    has data => (isa => PositiveNum);
+    has data => (
+        is  => 'rw',
+        isa => PositiveNum,
+    );
 
 The PositiveNum type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
@@ -1015,7 +1264,10 @@ false if the argument can not be validated.
 
 =type PositiveOrZeroInt
 
-    has data => (isa => PositiveOrZeroInt);
+    has data => (
+        is  => 'rw',
+        isa => PositiveOrZeroInt,
+    );
 
 The PositiveOrZeroInt type constraint is provided by the
 L<Types::Common::Numeric> library. Please see that documentation for more The
@@ -1028,7 +1280,10 @@ information.
 
 =type PositiveOrZeroNum
 
-    has data => (isa => PositiveOrZeroNum);
+    has data => (
+        is  => 'rw',
+        isa => PositiveOrZeroNum,
+    );
 
 The PositiveOrZeroNum type constraint is provided by the
 L<Types::Common::Numeric> library. Please see that documentation for more The
@@ -1041,7 +1296,10 @@ information.
 
 =type Ref
 
-    has data => (isa => Ref['SCALAR']);
+    has data => (
+        is  => 'rw',
+        isa => Ref['SCALAR'],
+    );
 
 The Ref type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_type> function can be
@@ -1053,7 +1311,10 @@ validated.
 
 =type RegexpObj
 
-    has data => (isa => RegexpObj);
+    has data => (
+        is  => 'rw',
+        isa => RegexpObj,
+    );
 
 The RegexpObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Regexp> object. The
@@ -1065,7 +1326,10 @@ if the argument can not be validated.
 
 =type RegexpObject
 
-    has data => (isa => RegexpObject);
+    has data => (
+        is  => 'rw',
+        isa => RegexpObject,
+    );
 
 The RegexpObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Regexp> object. The
@@ -1077,7 +1341,10 @@ or false if the argument can not be validated.
 
 =type RegexpRef
 
-    has data => (isa => RegexpRef);
+    has data => (
+        is  => 'rw',
+        isa => RegexpRef,
+    );
 
 The RegexpRef type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_RegexpRef
@@ -1089,7 +1356,10 @@ argument can not be validated.
 
 =type RoleName
 
-    has data => (isa => RoleName);
+    has data => (
+        is  => 'rw',
+        isa => RoleName,
+    );
 
 The RoleName type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_RoleName
@@ -1101,7 +1371,10 @@ argument can not be validated.
 
 =type ScalarObj
 
-    has data => (isa => ScalarObj);
+    has data => (
+        is  => 'rw',
+        isa => ScalarObj,
+    );
 
 The ScalarObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Scalar> object. The
@@ -1113,7 +1386,10 @@ if the argument can not be validated.
 
 =type ScalarObject
 
-    has data => (isa => ScalarObject);
+    has data => (
+        is  => 'rw',
+        isa => ScalarObject,
+    );
 
 The ScalarObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Scalar> object. The
@@ -1125,7 +1401,10 @@ or false if the argument can not be validated.
 
 =type ScalarRef
 
-    has data => (isa => ScalarRef);
+    has data => (
+        is  => 'rw',
+        isa => ScalarRef,
+    );
 
 The ScalarRef type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_ScalarRef
@@ -1137,7 +1416,10 @@ argument can not be validated.
 
 =type SimpleStr
 
-    has data => (isa => SimpleStr);
+    has data => (
+        is  => 'rw',
+        isa => SimpleStr,
+    );
 
 The SimpleStr type constraint is provided by the L<Types::Common::String>
 library. Please see that documentation for more information. The
@@ -1149,7 +1431,10 @@ if the argument can not be validated.
 
 =type SingleDigit
 
-    has data => (isa => SingleDigit);
+    has data => (
+        is  => 'rw',
+        isa => SingleDigit,
+    );
 
 The SingleDigit type constraint is provided by the L<Types::Common::Numeric>
 library. Please see that documentation for more information. The
@@ -1161,7 +1446,10 @@ false if the argument can not be validated.
 
 =type Str
 
-    has data => (isa => Str);
+    has data => (
+        is  => 'rw',
+        isa => Str,
+    );
 
 The Str type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Str> function can be
@@ -1173,7 +1461,10 @@ validated.
 
 =type StrMatch
 
-    has data => (isa => StrMatch);
+    has data => (
+        is  => 'rw',
+        isa => StrMatch,
+    );
 
 The StrMatch type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_StrMatch
@@ -1185,7 +1476,10 @@ argument can not be validated.
 
 =type StrObj
 
-    has data => (isa => StrObj);
+    has data => (
+        is  => 'rw',
+        isa => StrObj,
+    );
 
 The StrObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::String> object. The
@@ -1197,7 +1491,10 @@ the argument can not be validated.
 
 =type StrObject
 
-    has data => (isa => StrObject);
+    has data => (
+        is  => 'rw',
+        isa => StrObject,
+    );
 
 The StrObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::String> object. The
@@ -1209,7 +1506,10 @@ if the argument can not be validated.
 
 =type StrictNum
 
-    has data => (isa => StrictNum);
+    has data => (
+        is  => 'rw',
+        isa => StrictNum,
+    );
 
 The StrictNum type constraint is provided by the L<Types::Standard> library.
 Please see that documentation for more information. The C<assert_StrictNum
@@ -1221,7 +1521,10 @@ argument can not be validated.
 
 =type StringObj
 
-    has data => (isa => StringObj);
+    has data => (
+        is  => 'rw',
+        isa => StringObj,
+    );
 
 The StringObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::String> object. The
@@ -1233,7 +1536,10 @@ if the argument can not be validated.
 
 =type StringObject
 
-    has data => (isa => StringObject);
+    has data => (
+        is  => 'rw',
+        isa => StringObject,
+    );
 
 The StringObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::String> object. The
@@ -1245,7 +1551,10 @@ or false if the argument can not be validated.
 
 =type StrongPassword
 
-    has data => (isa => StrongPassword);
+    has data => (
+        is  => 'rw',
+        isa => StrongPassword,
+    );
 
 The StrongPassword type constraint is provided by the L<Types::Common::String>
 library. Please see that documentation for more information. The
@@ -1257,7 +1566,10 @@ return true or false if the argument can not be validated.
 
 =type Tied
 
-    has data => (isa => Tied['MyClass']);
+    has data => (
+        is  => 'rw',
+        isa => Tied['MyClass'],
+    );
 
 The Tied type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Tied> function can be
@@ -1269,7 +1581,10 @@ validated.
 
 =type Tuple
 
-    has data => (isa => Tuple[Int, Str, Str]);
+    has data => (
+        is  => 'rw',
+        isa => Tuple[Int, Str, Str],
+    );
 
 The Tuple type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Tuple> function can be
@@ -1281,7 +1596,10 @@ validated.
 
 =type Undef
 
-    has data => (isa => Undef);
+    has data => (
+        is  => 'rw',
+        isa => Undef,
+    );
 
 The Undef type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Undef> function can be
@@ -1293,7 +1611,10 @@ validated.
 
 =type UndefObj
 
-    has data => (isa => UndefObj);
+    has data => (
+        is  => 'rw',
+        isa => UndefObj,
+    );
 
 The UndefObj type constraint is provided by this library and accepts any object
 that is, or is derived from, a L<Data::Object::Undef> object. The
@@ -1305,7 +1626,10 @@ if the argument can not be validated.
 
 =type UndefObject
 
-    has data => (isa => UndefObject);
+    has data => (
+        is  => 'rw',
+        isa => UndefObject,
+    );
 
 The UndefObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Undef> object. The
@@ -1317,7 +1641,10 @@ false if the argument can not be validated.
 
 =type UniversalObj
 
-    has data => (isa => UniversalObj);
+    has data => (
+        is  => 'rw',
+        isa => UniversalObj,
+    );
 
 The UniversalObj type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Universal> object. The
@@ -1329,7 +1656,10 @@ or false if the argument can not be validated.
 
 =type UniversalObject
 
-    has data => (isa => UniversalObject);
+    has data => (
+        is  => 'rw',
+        isa => UniversalObject,
+    );
 
 The UniversalObject type constraint is provided by this library and accepts any
 object that is, or is derived from, a L<Data::Object::Universal> object. The
@@ -1341,7 +1671,10 @@ return true or false if the argument can not be validated.
 
 =type UpperCaseSimpleStr
 
-    has data => (isa => UpperCaseSimpleStr);
+    has data => (
+        is  => 'rw',
+        isa => UpperCaseSimpleStr,
+    );
 
 The UpperCaseSimpleStr type constraint is provided by the
 L<Types::Common::String> library. Please see that documentation for more The
@@ -1354,7 +1687,10 @@ information.
 
 =type UpperCaseStr
 
-    has data => (isa => UpperCaseStr);
+    has data => (
+        is  => 'rw',
+        isa => UpperCaseStr,
+    );
 
 The UpperCaseStr type constraint is provided by the L<Types::Common::String>
 library. Please see that documentation for more information. The C<assert_type
@@ -1366,7 +1702,10 @@ argument can not be validated.
 
 =type Value
 
-    has data => (isa => Value);
+    has data => (
+        is  => 'rw',
+        isa => Value,
+    );
 
 The Value type constraint is provided by the L<Types::Standard> library. Please
 see that documentation for more information. The C<assert_Value> function can be
