@@ -1,6 +1,13 @@
 Changelog for Data-Object
 
-0.58 2015-10-11T05:47:49
+0.59 2015-11-29T11:46:26
+ - Added global types array to library.
+ - Added the Proxyable role to support proxy methods and autoloading.
+ - Modified POD in SYNOPSIS for existing roles.
+ - Added support for alternate Data::Object namespacing.
+
+0.58 2015-10-11T05:48:56
+ - v0.58
  - Updated build.
  - Updated SEE ALSO POD.
  - Updated POD for Hash values method.
@@ -251,8 +258,8 @@ Changelog for Data-Object
  - Added Regexp link to SEE ALSO section.
  - Miscellaneous cleanup of typos and layouts.
  - Upgraded to Moo v2.
- - Update documentation for class Scalar.
  - Removed scalar routines for "or", "and", "not", and "xor" operations.
+ - Update documentation for class Scalar.
  - Document roles usages.
  - Rework roles and composition.
  - Miscellaneous cleanup.
