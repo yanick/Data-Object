@@ -14,7 +14,7 @@ use Scalar::Util;
 
 # VERSION
 
-method downto ($arg1) {
+method downto ($arg1=0) {
 
     return [ CORE::reverse( CORE::int("$arg1")..CORE::int("$self") ) ];
 

@@ -185,7 +185,7 @@ method empty () {
 
 }
 
-method eq {
+method eq() {
 
     $self->throw("The eq() comparison operation is not supported");
 
@@ -205,7 +205,7 @@ method first () {
 
 }
 
-method ge {
+method ge() {
 
     $self->throw("the ge() comparison operation is not supported");
 
@@ -246,7 +246,7 @@ method grep ($code, @args) {
 
 }
 
-method gt {
+method gt() {
 
     $self->throw("the gt() comparison operation is not supported");
 
@@ -340,7 +340,7 @@ method last () {
 
 }
 
-method le {
+method le() {
 
     $self->throw("the le() comparison operation is not supported");
 
@@ -360,7 +360,7 @@ method list () {
 
 }
 
-method lt {
+method lt($other) {
 
     $self->throw("the lt() comparison operation is not supported");
 
@@ -428,7 +428,7 @@ method min () {
 
 }
 
-method ne {
+method ne($other) {
 
     $self->throw("the ne() comparison operation is not supported");
 
