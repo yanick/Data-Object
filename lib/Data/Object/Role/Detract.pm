@@ -23,7 +23,7 @@ use overload (
     fallback => 1,
 );
 
-method data () {
+method data (@whatev) {
 
     return $self->detract;
 

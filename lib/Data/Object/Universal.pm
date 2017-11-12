@@ -9,8 +9,9 @@ use 5.014;
 use Data::Object;
 use Data::Object::Class;
 use Data::Object::Library;
-use Data::Object::Signatures;
 use Scalar::Util;
+
+use Function::Parameters;
 
 with 'Data::Object::Role::Universal';
 

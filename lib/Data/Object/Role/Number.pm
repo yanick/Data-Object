@@ -9,7 +9,7 @@ use 5.014;
 use Data::Object;
 use Data::Object::Role;
 use Data::Object::Library;
-use Data::Object::Signatures;
+use Function::Parameters;
 use Scalar::Util;
 
 map with($_), our @ROLES = qw(
@@ -20,10 +20,8 @@ map with($_), our @ROLES = qw(
 
 # VERSION
 
-method abs () {
-
+method abs() {
     return CORE::abs($self);
-
 }
 
 method atan2 ($arg) {
