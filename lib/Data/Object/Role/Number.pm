@@ -36,9 +36,9 @@ method cos () {
 
 }
 
-method decr ($arg) {
+method decr ($arg=1) {
 
-    return $self - ($arg || 1);
+    return $self - $arg;
 
 }
 
