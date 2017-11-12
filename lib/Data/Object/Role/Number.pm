@@ -60,9 +60,9 @@ method hex () {
 
 }
 
-method incr ($arg) {
+method incr ($arg=1) {
 
-    return $self + ($arg || 1);
+    return $self + $arg;
 
 }
 
